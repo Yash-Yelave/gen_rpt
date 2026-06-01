@@ -1,6 +1,7 @@
 import argparse
 import sys
 from pathlib import Path
+from datetime import datetime
 from dotenv import load_dotenv
 
 from gen_rpt.review.groq_reviewer import run_groq_review_file
@@ -9,7 +10,7 @@ from gen_rpt.review.groq_reviewer import run_groq_review_file
 def parse_args():
     parser = argparse.ArgumentParser(description="Run Groq AI Review on an existing text or markdown report.")
     parser.add_argument("--file", required=True, help="Path to the file you want to review (e.g., report.md)")
-    parser.add_argument("--out-dir", default="review_output", help="Output directory for the review artifacts (default: review_output)")
+    parser.add_argument("--out-dir", default="review_output", help="Base output directory for the review artifacts (default: review_output)")
     return parser.parse_args()
 
 
@@ -19,7 +20,7 @@ def main():
     
     args = parse_args()
     file_path = Path(args.file)
-    output_dir = Path(args.out_dir)
+    base_out_dir = Path(args.out_dir)
     
     if not file_path.exists():
         print(f"Error: The file {file_path} does not exist.")
@@ -29,6 +30,11 @@ def main():
         print(f"Error: {file_path} is not a valid file.")
         sys.exit(1)
         
+    # Create a unique folder for this review
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    folder_name = f"{file_path.stem}_review_{timestamp}"
+    output_dir = base_out_dir / folder_name
+    
     print(f"Starting review for: {file_path}")
     print(f"Output will be saved to: {output_dir}")
     
