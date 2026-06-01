@@ -1,22 +1,38 @@
 [
   {
     "claim_id": 1,
-    "claim": "The EV market is expanding rapidly, with a projected 25% annual growth rate."
+    "claim": "Nuclear fusion is transitioning from a long-term scientific aspiration to a tangible commercial goal."
   },
   {
     "claim_id": 2,
-    "claim": "Battery costs have decreased by 15% year-over-year."
+    "claim": "Private investment and advances in high-temperature superconductors, AI-driven plasma control, and additive manufacturing are driving nuclear fusion commercialization."
   },
   {
     "claim_id": 3,
-    "claim": "Government subsidies are expected to be phased out by 2030."
+    "claim": "Well-funded private ventures, including Commonwealth Fusion Systems, TAE Technologies, and Helion Energy, are targeting net-energy gain and pilot plants within the next decade."
   },
   {
     "claim_id": 4,
-    "claim": "Increase investment in solid-state battery research."
+    "claim": "Fusion could achieve cost parity with renewables by the late 2030s under optimistic scenarios."
   },
   {
     "claim_id": 5,
-    "claim": "Expand charging network in rural areas to capture emerging markets."
+    "claim": "Nuclear fusion faces critical hurdles in tritium breeding, materials resilience, and licensing."
+  },
+  {
+    "claim_id": 6,
+    "claim": "Fusion promises near-limitless, carbon-free baseload power that could reshape energy geopolitics, reduce dependence on fossil fuel regions, and create new investment opportunities."
+  },
+  {
+    "claim_id": 7,
+    "claim": "The path to nuclear fusion commercialization is fraught with technical, timeline, and market risks."
+  },
+  {
+    "claim_id": 8,
+    "claim": "Decision-makers should monitor specific milestones, such as SPARC's net-energy demonstration and the first private pilot plant."
+  },
+  {
+    "claim_id": 9,
+    "claim": "Nuclear fusion may initially complement renewables and later compete with fission and natural gas."
   }
 ]
