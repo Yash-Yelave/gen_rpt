@@ -1,0 +1,137 @@
+{
+  "timestamp": "2026-06-01T11:59:51.393125",
+  "scores": {
+    "overall_score": 85.5,
+    "grade": "Silver",
+    "components": {
+      "research_quality": 85.0,
+      "strategic_insight": 88.0,
+      "source_quality": 80.0,
+      "writing_quality": 90.0,
+      "design_quality": 85.0,
+      "executive_readiness": 85.0
+    }
+  },
+  "recommendations": {
+    "strengths": [],
+    "weaknesses": [],
+    "priority_improvements": [],
+    "executive_readiness": {}
+  },
+  "claims": [
+    {
+      "claim_id": 1,
+      "claim": "China's controlled nuclear fusion program is advancing rapidly, with key milestones expected by 2026."
+    },
+    {
+      "claim_id": 2,
+      "claim": "Government funding for China's fusion program exceeds $1.5 billion annually."
+    },
+    {
+      "claim_id": 3,
+      "claim": "China is expected to complete the design of the China Fusion Engineering Test Reactor (CFETR) by 2026."
+    },
+    {
+      "claim_id": 4,
+      "claim": "The Experimental Advanced Superconducting Tokamak (EAST) achieved sustained plasma temperatures over 100 million degrees Celsius for more than 100 seconds in 2023."
+    },
+    {
+      "claim_id": 5,
+      "claim": "China's fusion program aims to achieve long-pulse operation exceeding 1,000 seconds by 2026."
+    },
+    {
+      "claim_id": 6,
+      "claim": "The China Fusion Engineering Test Reactor (CFETR) is designed to bridge the gap between ITER and a demonstration power plant."
+    },
+    {
+      "claim_id": 7,
+      "claim": "CFETR aims for a fusion power gain (Q) of 5-10 and will test tritium breeding and long-pulse operation."
+    },
+    {
+      "claim_id": 8,
+      "claim": "China's state-funded approach to fusion research provides stable, long-term support, but may lack the agility of private ventures."
+    },
+    {
+      "claim_id": 9,
+      "claim": "Private fusion companies globally have raised over $5 billion since 2020, with several targeting commercial reactors by 2035."
+    },
+    {
+      "claim_id": 10,
+      "claim": "China's private fusion investment is less than $100 million, indicating a gap that could be addressed through policy incentives."
+    },
+    {
+      "claim_id": 11,
+      "claim": "A Chinese fusion breakthrough could drastically reduce China's dependence on fossil fuel imports, enhancing energy security."
+    },
+    {
+      "claim_id": 12,
+      "claim": "Fusion could complement renewables by providing baseload power, reducing the need for energy storage."
+    },
+    {
+      "claim_id": 13,
+      "claim": "China could become a net exporter of fusion technology and components, similar to its role in solar and wind energy."
+    },
+    {
+      "claim_id": 14,
+      "claim": "China's fusion program is expected to achieve several key milestones by 2026, including the completion of CFETR's engineering design."
+    },
+    {
+      "claim_id": 15,
+      "claim": "China's annual fusion funding of over $1.5 billion is comparable to the US Department of Energy's fusion budget."
+    },
+    {
+      "claim_id": 16,
+      "claim": "China has filed over 1,000 fusion-related patents since 2010, particularly in plasma control, magnet design, and tritium handling."
+    },
+    {
+      "claim_id": 17,
+      "claim": "A Chinese fusion breakthrough could reshape global energy geopolitics and give China significant leverage over energy-poor countries."
+    },
+    {
+      "claim_id": 18,
+      "claim": "The US and EU are taking steps to counter the risk of Chinese dominance in fusion energy, including investing in their own fusion research programs."
+    }
+  ],
+  "raw_dimensions": {
+    "research_quality": {
+      "score": 85,
+      "rationale": "The report demonstrates a thorough understanding of China's controlled nuclear fusion program, including its technical milestones, government funding, and international collaborations. However, the analysis could benefit from more in-depth comparisons with other global fusion programs."
+    },
+    "strategic_insight": {
+      "score": 88,
+      "rationale": "The report provides valuable strategic insights into China's fusion program, including its implications for global energy markets, geopolitical risks, and potential opportunities for international cooperation. The analysis highlights the program's potential to enhance China's energy security and influence in the global energy landscape."
+    },
+    "executive_readability": {
+      "score": 90,
+      "rationale": "The report is well-structured and written in a clear, concise manner, making it easily accessible to executive readers. The use of headings, bullet points, and summaries enhances the report's readability and facilitates quick comprehension of key points."
+    },
+    "source_quality": {
+      "score": 80,
+      "rationale": "The report cites a range of sources, including ITER, the Chinese Academy of Sciences, and other reputable organizations. However, the analysis could benefit from more diverse and up-to-date sources, as well as explicit evaluation of source credibility."
+    },
+    "evidence_strength": {
+      "score": 75,
+      "rationale": "The report presents a range of evidence, including technical data, funding figures, and policy documents. However, the analysis could be strengthened by more systematic and transparent evaluation of the evidence, as well as consideration of alternative perspectives and potential biases."
+    },
+    "recommendation_quality": {
+      "score": 82,
+      "rationale": "The report provides actionable recommendations for stakeholders, including the need to monitor China's fusion timeline, engage in international cooperation, and address potential geopolitical risks. However, the recommendations could be more specific and tailored to the needs of different stakeholder groups."
+    },
+    "report_structure": {
+      "score": 90,
+      "rationale": "The report is well-organized and easy to follow, with a clear introduction, body, and conclusion. The use of headings, subheadings, and bullet points facilitates navigation and comprehension of the report's key points."
+    },
+    "design_quality": {
+      "score": 85,
+      "rationale": "The report's design is clear and concise, with effective use of headings, bullet points, and white space. However, the report could benefit from more visual elements, such as diagrams, charts, and infographics, to enhance comprehension and engagement."
+    },
+    "decision_making_usefulness": {
+      "score": 88,
+      "rationale": "The report provides valuable insights and analysis that can inform decision-making by stakeholders, including policymakers, business leaders, and researchers. The report's recommendations and implications are clearly stated and actionable."
+    },
+    "executive_readiness": {
+      "score": 85,
+      "rationale": "The report is well-suited for executive readers, providing a concise and informative overview of China's controlled nuclear fusion program and its implications for global energy markets. The report's key points and recommendations are easily accessible and actionable."
+    }
+  }
+}

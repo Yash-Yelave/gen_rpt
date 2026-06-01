@@ -21,17 +21,28 @@ class GroqClient:
             "Content-Type": "application/json"
         }
         
-    def chat_json(self, messages: List[Dict[str, str]], temperature: float = 0.2) -> Dict[str, Any]:
+    def chat_json(self, messages: List[Dict[str, str]], temperature: float = 0.2, max_retries: int = 5) -> Dict[str, Any]:
+        import time
         payload = {
             "model": self.model,
             "messages": messages,
             "temperature": temperature,
             "response_format": {"type": "json_object"}
         }
-        response = requests.post(self.url, headers=self.headers, json=payload, timeout=60)
-        response.raise_for_status()
-        content = response.json()["choices"][0]["message"]["content"]
-        return json.loads(content)
+        
+        for attempt in range(max_retries):
+            try:
+                response = requests.post(self.url, headers=self.headers, json=payload, timeout=60)
+                response.raise_for_status()
+                content = response.json()["choices"][0]["message"]["content"]
+                return json.loads(content)
+            except requests.exceptions.HTTPError as e:
+                if response.status_code == 429 and attempt < max_retries - 1:
+                    wait_time = 10 * (2 ** attempt)  # 10s, 20s, 40s...
+                    print(f"[REVIEW] Rate limit hit (429). Retrying in {wait_time}s...")
+                    time.sleep(wait_time)
+                else:
+                    raise
 
 
 def run_groq_review(output_dir: Path) -> Dict[str, Any]:

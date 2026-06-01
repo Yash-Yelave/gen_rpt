@@ -1,0 +1,145 @@
+{
+  "timestamp": "2026-06-01T12:03:34.837602",
+  "scores": {
+    "overall_score": 85.5,
+    "grade": "Silver",
+    "components": {
+      "research_quality": 85.0,
+      "strategic_insight": 88.0,
+      "source_quality": 80.0,
+      "writing_quality": 90.0,
+      "design_quality": 85.0,
+      "executive_readiness": 85.0
+    }
+  },
+  "recommendations": {
+    "strengths": [],
+    "weaknesses": [],
+    "priority_improvements": [],
+    "executive_readiness": {}
+  },
+  "claims": [
+    {
+      "claim_id": 1,
+      "claim": "China's controlled nuclear fusion program is advancing rapidly, with key milestones expected by 2026."
+    },
+    {
+      "claim_id": 2,
+      "claim": "Government funding for China's fusion program exceeds $1.5 billion annually."
+    },
+    {
+      "claim_id": 3,
+      "claim": "China is expected to complete the design of the China Fusion Engineering Test Reactor (CFETR) by 2026."
+    },
+    {
+      "claim_id": 4,
+      "claim": "The Experimental Advanced Superconducting Tokamak (EAST) achieved sustained plasma temperatures over 100 million degrees Celsius for more than 100 seconds in 2023."
+    },
+    {
+      "claim_id": 5,
+      "claim": "China's fusion program aims to demonstrate long-pulse operation exceeding 1,000 seconds by 2026."
+    },
+    {
+      "claim_id": 6,
+      "claim": "The China Fusion Engineering Test Reactor (CFETR) is designed to bridge the gap between ITER and a demonstration power plant."
+    },
+    {
+      "claim_id": 7,
+      "claim": "CFETR aims for a fusion power gain (Q) of 5-10 and will test tritium breeding and long-pulse operation."
+    },
+    {
+      "claim_id": 8,
+      "claim": "China's state-funded approach to fusion research provides stable, long-term support, but may lack the agility of private ventures."
+    },
+    {
+      "claim_id": 9,
+      "claim": "Private fusion companies globally have raised over $5 billion since 2020, with several targeting commercial reactors by 2035."
+    },
+    {
+      "claim_id": 10,
+      "claim": "China's fusion program is backed by substantial government investment, with a clear national roadmap outlining three phases: basic research, engineering validation, and commercial deployment."
+    },
+    {
+      "claim_id": 11,
+      "claim": "China's national fusion roadmap provides stability and attracts talent, with Chinese universities now offering specialized fusion engineering programs."
+    },
+    {
+      "claim_id": 12,
+      "claim": "State-owned enterprises play a key role in China's fusion development, ensuring coordination but potentially limiting innovation from private sector entrants."
+    },
+    {
+      "claim_id": 13,
+      "claim": "China is a major contributor to ITER, providing 9% of the construction cost and key components such as the first wall panels and toroidal field conductors."
+    },
+    {
+      "claim_id": 14,
+      "claim": "China's participation in ITER gives Chinese scientists access to cutting-edge fusion technology and operational experience."
+    },
+    {
+      "claim_id": 15,
+      "claim": "China has filed numerous fusion-related patents, particularly in plasma control and magnet technology, signaling a strategy to build a strong IP portfolio."
+    },
+    {
+      "claim_id": 16,
+      "claim": "A Chinese fusion breakthrough could drastically reduce China's dependence on fossil fuel imports, enhancing energy security."
+    },
+    {
+      "claim_id": 17,
+      "claim": "Fusion could complement renewables by providing baseload power, reducing the need for energy storage."
+    },
+    {
+      "claim_id": 18,
+      "claim": "China's fusion program is expected to achieve several key milestones by 2026, including the completion of CFETR's engineering design and the demonstration of 1,000-second plasma pulses by EAST."
+    },
+    {
+      "claim_id": 19,
+      "claim": "China's annual fusion funding of over $1.5 billion is comparable to the US Department of Energy's fusion budget and exceeds the EU's EUR 1 billion."
+    },
+    {
+      "claim_id": 20,
+      "claim": "China's funding model supports a large workforce, with over 5,000 researchers and engineers directly involved in fusion, compared to about 3,000 in the US and 4,000 in the EU."
+    }
+  ],
+  "raw_dimensions": {
+    "research_quality": {
+      "score": 85,
+      "rationale": "The report demonstrates a high level of research quality, with in-depth analysis of China's controlled nuclear fusion program, its implications, and the global energy market. However, the report could benefit from more diverse and critically evaluated sources."
+    },
+    "strategic_insight": {
+      "score": 88,
+      "rationale": "The report provides valuable strategic insights into China's fusion program, its potential impact on global energy markets, and the geopolitical implications. The analysis of China's fusion timeline, funding, and IP strategy is particularly noteworthy."
+    },
+    "executive_readability": {
+      "score": 90,
+      "rationale": "The report is well-structured, easy to follow, and written in a clear, concise manner, making it accessible to executive readers. The use of headings, bullet points, and summaries enhances readability."
+    },
+    "source_quality": {
+      "score": 80,
+      "rationale": "The report cites reputable sources, including ITER, CAS, and COM, but the source list is not exhaustive, and some sources are not explicitly referenced in the text. Additionally, the report relies heavily on publicly available data."
+    },
+    "evidence_strength": {
+      "score": 75,
+      "rationale": "The report presents a range of evidence, including technical data, funding figures, and policy announcements. However, some claims, such as the potential for China to achieve commercial fusion by 2050, are based on uncertain assumptions and could be strengthened with more robust evidence."
+    },
+    "recommendation_quality": {
+      "score": 82,
+      "rationale": "The report provides actionable recommendations for stakeholders, including the need to monitor China's fusion timeline, engage in international cooperation, and address IP and regulatory challenges. However, some recommendations could be more specific and detailed."
+    },
+    "report_structure": {
+      "score": 90,
+      "rationale": "The report is well-organized, with a logical flow of sections, clear headings, and effective use of summaries and key highlights. The structure makes it easy to navigate and understand the report's key findings and recommendations."
+    },
+    "design_quality": {
+      "score": 85,
+      "rationale": "The report's design is clean, professional, and easy to read, with effective use of formatting, headings, and white space. However, the report could benefit from more visual elements, such as charts, graphs, or infographics, to enhance the presentation of complex data."
+    },
+    "decision_making_usefulness": {
+      "score": 88,
+      "rationale": "The report provides valuable insights and analysis that can inform decision-making by stakeholders, including policymakers, investors, and industry leaders. The report's focus on strategic implications, risks, and opportunities makes it a useful resource for decision-makers."
+    },
+    "executive_readiness": {
+      "score": 85,
+      "rationale": "The report is generally ready for executive consumption, with a clear and concise writing style, effective use of summaries, and a focus on key findings and recommendations. However, some technical sections may require additional context or explanation for non-expert readers."
+    }
+  }
+}
