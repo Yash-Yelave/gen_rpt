@@ -32,16 +32,16 @@ def generate_review_artifacts(output_dir: Path, report_payload: Dict, review_dat
     md_content = f"""# Groq AI Review Report
 
 ## Executive Review
-**Overall Score**: {review_data.get('scores', {{}}).get('overall_score')} / 100
-**Grade**: {review_data.get('scores', {{}}).get('grade')}
+**Overall Score**: {review_data.get('scores', {}).get('overall_score')} / 100
+**Grade**: {review_data.get('scores', {}).get('grade')}
 
 ## Category Scores
-- Research Quality: {review_data.get('scores', {{}}).get('components', {{}}).get('research_quality')}
-- Strategic Insight: {review_data.get('scores', {{}}).get('components', {{}}).get('strategic_insight')}
-- Source Quality: {review_data.get('scores', {{}}).get('components', {{}}).get('source_quality')}
-- Writing Quality: {review_data.get('scores', {{}}).get('components', {{}}).get('writing_quality')}
-- Design Quality: {review_data.get('scores', {{}}).get('components', {{}}).get('design_quality')}
-- Executive Readiness: {review_data.get('scores', {{}}).get('components', {{}}).get('executive_readiness')}
+- Research Quality: {review_data.get('scores', {}).get('components', {}).get('research_quality')}
+- Strategic Insight: {review_data.get('scores', {}).get('components', {}).get('strategic_insight')}
+- Source Quality: {review_data.get('scores', {}).get('components', {}).get('source_quality')}
+- Writing Quality: {review_data.get('scores', {}).get('components', {}).get('writing_quality')}
+- Design Quality: {review_data.get('scores', {}).get('components', {}).get('design_quality')}
+- Executive Readiness: {review_data.get('scores', {}).get('components', {}).get('executive_readiness')}
 
 ## Strengths
 {chr(10).join(f"- {s}" for s in recs.get('strengths', []))}
@@ -76,8 +76,8 @@ def generate_review_artifacts(output_dir: Path, report_payload: Dict, review_dat
     # 4. review_summary.txt
     txt_content = f"""GROQ AI REVIEW SUMMARY
 ----------------------
-Grade: {review_data.get('scores', {{}}).get('grade')}
-Score: {review_data.get('scores', {{}}).get('overall_score')}/100
+Grade: {review_data.get('scores', {}).get('grade')}
+Score: {review_data.get('scores', {}).get('overall_score')}/100
 
 Top Strengths:
 {chr(10).join(f"- {s}" for s in recs.get('strengths', [])[:3])}
@@ -108,16 +108,16 @@ def generate_review_artifacts_text(output_dir: Path, text: str, review_data: Dic
     md_content = f"""# Groq AI Review Report
 
 ## Executive Review
-**Overall Score**: {review_data.get('scores', {{}}).get('overall_score')} / 100
-**Grade**: {review_data.get('scores', {{}}).get('grade')}
+**Overall Score**: {review_data.get('scores', {}).get('overall_score')} / 100
+**Grade**: {review_data.get('scores', {}).get('grade')}
 
 ## Category Scores
-- Research Quality: {review_data.get('scores', {{}}).get('components', {{}}).get('research_quality')}
-- Strategic Insight: {review_data.get('scores', {{}}).get('components', {{}}).get('strategic_insight')}
-- Source Quality: {review_data.get('scores', {{}}).get('components', {{}}).get('source_quality')}
-- Writing Quality: {review_data.get('scores', {{}}).get('components', {{}}).get('writing_quality')}
-- Design Quality: {review_data.get('scores', {{}}).get('components', {{}}).get('design_quality')}
-- Executive Readiness: {review_data.get('scores', {{}}).get('components', {{}}).get('executive_readiness')}
+- Research Quality: {review_data.get('scores', {}).get('components', {}).get('research_quality')}
+- Strategic Insight: {review_data.get('scores', {}).get('components', {}).get('strategic_insight')}
+- Source Quality: {review_data.get('scores', {}).get('components', {}).get('source_quality')}
+- Writing Quality: {review_data.get('scores', {}).get('components', {}).get('writing_quality')}
+- Design Quality: {review_data.get('scores', {}).get('components', {}).get('design_quality')}
+- Executive Readiness: {review_data.get('scores', {}).get('components', {}).get('executive_readiness')}
 
 ## Strengths
 {chr(10).join(f"- {s}" for s in recs.get('strengths', []))}
@@ -152,8 +152,8 @@ def generate_review_artifacts_text(output_dir: Path, text: str, review_data: Dic
     # 3. review_summary.txt
     txt_content = f"""GROQ AI REVIEW SUMMARY
 ----------------------
-Grade: {review_data.get('scores', {{}}).get('grade')}
-Score: {review_data.get('scores', {{}}).get('overall_score')}/100
+Grade: {review_data.get('scores', {}).get('grade')}
+Score: {review_data.get('scores', {}).get('overall_score')}/100
 
 Top Strengths:
 {chr(10).join(f"- {s}" for s in recs.get('strengths', [])[:3])}

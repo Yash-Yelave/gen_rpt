@@ -1,0 +1,22 @@
+[
+  {
+    "claim_id": 1,
+    "claim": "The EV market is expanding rapidly, with a projected 25% annual growth rate."
+  },
+  {
+    "claim_id": 2,
+    "claim": "Battery costs have decreased by 15% year-over-year."
+  },
+  {
+    "claim_id": 3,
+    "claim": "Government subsidies are expected to be phased out by 2030."
+  },
+  {
+    "claim_id": 4,
+    "claim": "Increase investment in solid-state battery research."
+  },
+  {
+    "claim_id": 5,
+    "claim": "Expand charging network in rural areas to capture emerging markets."
+  }
+]
