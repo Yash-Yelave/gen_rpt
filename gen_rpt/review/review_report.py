@@ -14,13 +14,34 @@ def _generate_markdown_content(review_data: Dict[str, Any], recs: Dict[str, Any]
     section_scores = review_data.get('scores', {}).get('components', [])
     if isinstance(section_scores, list):
         for sec in section_scores:
-            md_content += f"""### {sec.get('section_name', 'Section')}
-- Research Score: {sec.get('research_score', 'N/A')}
-- Evidence Score: {sec.get('evidence_score', 'N/A')}
-- Writing Score: {sec.get('writing_score', 'N/A')}
-- Strategic Score: {sec.get('strategic_score', 'N/A')}
-- Evidence Strength: {sec.get('evidence_strength', 'N/A')}
-"""
+            md_content += f"### {sec.get('section_name', 'Section')}\n"
+            md_content += f"- **Evidence Strength**: {sec.get('evidence_strength', 'N/A')}\n\n"
+            for ev_key, label in [("research_evaluation", "Research Score"), ("evidence_evaluation", "Evidence Score"), ("writing_evaluation", "Writing Score"), ("strategic_evaluation", "Strategic Score")]:
+                ev = sec.get(ev_key, {})
+                if not isinstance(ev, dict):
+                    continue
+                score = ev.get('score', 'N/A')
+                conf = ev.get('confidence', 'N/A')
+                md_content += f"#### {label}: {score} (Confidence: {conf})\n"
+                
+                pos = ev.get('positive_factors', [])
+                if pos:
+                    md_content += "**Positive Factors**:\n"
+                    for p in pos:
+                        md_content += f"- {p}\n"
+                        
+                neg = ev.get('negative_factors', [])
+                if neg:
+                    md_content += "**Negative Factors**:\n"
+                    for n in neg:
+                        md_content += f"- {n}\n"
+                        
+                brk = ev.get('score_breakdown', {})
+                if brk:
+                    md_content += "**Score Breakdown**:\n"
+                    for k, v in brk.items():
+                        md_content += f"- {k}: {v}\n"
+                md_content += "\n"
     
     claims_data = review_data.get('claims', {})
     if isinstance(claims_data, dict):
