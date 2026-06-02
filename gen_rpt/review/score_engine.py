@@ -16,13 +16,17 @@ def evaluate_dimensions(client: 'GroqClient', report_payload_path: Path, sources
 
     system = "You are a Due Diligence Auditor. Return strict JSON only."
     user = f"""
-Evaluate the provided report section-by-section.
-For every major section, provide:
-1. Research Score (0-100)
-2. Evidence Score (0-100)
-3. Writing Score (0-100)
-4. Strategic Score (0-100)
-5. Evidence Strength (Classify as: "Strong", "Moderate", "Weak", or "Missing")
+Evaluate the provided report section-by-section. Every score generated MUST be auditable.
+For every major section, provide detailed evaluations for Research, Evidence, Writing, and Strategic metrics.
+
+For EACH evaluation (research_evaluation, evidence_evaluation, writing_evaluation, strategic_evaluation), you MUST provide:
+1. "score" (integer 0-100)
+2. "confidence" (High/Medium/Low)
+3. "positive_factors" (list of strings)
+4. "negative_factors" (list of strings)
+5. "score_breakdown" (a dictionary of sub-metrics with integer values)
+
+Also provide the overall "evidence_strength" (Strong/Moderate/Weak/Missing) for the section.
 
 Report Data:
 {json.dumps(report, ensure_ascii=False)}
@@ -30,15 +34,39 @@ Report Data:
 Sources Data:
 {json.dumps(sources, ensure_ascii=False)}
 
-Return JSON format:
+Return JSON format exactly like this:
 {{
   "section_scores": [
     {{
       "section_name": "Executive Summary",
-      "research_score": 80,
-      "evidence_score": 75,
-      "writing_score": 90,
-      "strategic_score": 85,
+      "research_evaluation": {{
+        "score": 88,
+        "confidence": "High",
+        "positive_factors": ["Comprehensive coverage"],
+        "negative_factors": ["Missing commercialization metrics"],
+        "score_breakdown": {{"Coverage": 24, "Depth": 21, "Breadth": 22, "Comparative Analysis": 11, "Scenario Analysis": 10}}
+      }},
+      "evidence_evaluation": {{
+        "score": 80,
+        "confidence": "Medium",
+        "positive_factors": ["..."],
+        "negative_factors": ["..."],
+        "score_breakdown": {{}}
+      }},
+      "writing_evaluation": {{
+        "score": 90,
+        "confidence": "High",
+        "positive_factors": ["..."],
+        "negative_factors": ["..."],
+        "score_breakdown": {{}}
+      }},
+      "strategic_evaluation": {{
+        "score": 85,
+        "confidence": "High",
+        "positive_factors": ["..."],
+        "negative_factors": ["..."],
+        "score_breakdown": {{}}
+      }},
       "evidence_strength": "Moderate"
     }}
   ]
@@ -54,26 +82,54 @@ Return JSON format:
 def evaluate_dimensions_text(client: 'GroqClient', text: str) -> Dict[str, Any]:
     system = "You are a Due Diligence Auditor. Return strict JSON only."
     user = f"""
-Evaluate the provided report text section-by-section.
-For every major section, provide:
-1. Research Score (0-100)
-2. Evidence Score (0-100)
-3. Writing Score (0-100)
-4. Strategic Score (0-100)
-5. Evidence Strength (Classify as: "Strong", "Moderate", "Weak", or "Missing")
+Evaluate the provided report text section-by-section. Every score generated MUST be auditable.
+For every major section, provide detailed evaluations for Research, Evidence, Writing, and Strategic metrics.
+
+For EACH evaluation (research_evaluation, evidence_evaluation, writing_evaluation, strategic_evaluation), you MUST provide:
+1. "score" (integer 0-100)
+2. "confidence" (High/Medium/Low)
+3. "positive_factors" (list of strings)
+4. "negative_factors" (list of strings)
+5. "score_breakdown" (a dictionary of sub-metrics with integer values)
+
+Also provide the overall "evidence_strength" (Strong/Moderate/Weak/Missing) for the section.
 
 Report Text:
 {text}
 
-Return JSON format:
+Return JSON format exactly like this:
 {{
   "section_scores": [
     {{
       "section_name": "Executive Summary",
-      "research_score": 80,
-      "evidence_score": 75,
-      "writing_score": 90,
-      "strategic_score": 85,
+      "research_evaluation": {{
+        "score": 88,
+        "confidence": "High",
+        "positive_factors": ["Comprehensive coverage"],
+        "negative_factors": ["Missing commercialization metrics"],
+        "score_breakdown": {{"Coverage": 24, "Depth": 21, "Breadth": 22, "Comparative Analysis": 11, "Scenario Analysis": 10}}
+      }},
+      "evidence_evaluation": {{
+        "score": 80,
+        "confidence": "Medium",
+        "positive_factors": ["..."],
+        "negative_factors": ["..."],
+        "score_breakdown": {{}}
+      }},
+      "writing_evaluation": {{
+        "score": 90,
+        "confidence": "High",
+        "positive_factors": ["..."],
+        "negative_factors": ["..."],
+        "score_breakdown": {{}}
+      }},
+      "strategic_evaluation": {{
+        "score": 85,
+        "confidence": "High",
+        "positive_factors": ["..."],
+        "negative_factors": ["..."],
+        "score_breakdown": {{}}
+      }},
       "evidence_strength": "Moderate"
     }}
   ]
@@ -94,8 +150,9 @@ def calculate_final_score(dimensions: Dict[str, Any]) -> Dict[str, Any]:
         total = 0
         count = 0
         for sec in section_scores:
-            for key in ["research_score", "evidence_score", "writing_score", "strategic_score"]:
-                val = sec.get(key, 0)
+            for key in ["research_evaluation", "evidence_evaluation", "writing_evaluation", "strategic_evaluation"]:
+                evaluation = sec.get(key, {})
+                val = evaluation.get("score", 70) if isinstance(evaluation, dict) else 70
                 total += float(val) if isinstance(val, (int, float, str)) and str(val).replace('.','',1).isdigit() else 70.0
                 count += 1
         overall_score = round(total / count, 1) if count > 0 else 70.0
