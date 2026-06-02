@@ -1,0 +1,145 @@
+{
+  "claims": [
+    {
+      "claim": "China's quantum computing sector is on track to achieve operational quantum advantage in specific domains by 2026",
+      "section": "Key Highlights",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": false,
+      "classification": "Weak"
+    },
+    {
+      "claim": "Government funding under the 14th Five-Year Plan exceeds $15 billion",
+      "section": "Key Highlights",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": false,
+      "quantified": true,
+      "confidence_justified": true,
+      "classification": "Supported"
+    },
+    {
+      "claim": "China trails the US in quantum software ecosystem and talent depth",
+      "section": "Key Highlights",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": false,
+      "classification": "Weak"
+    },
+    {
+      "claim": "Superconducting qubit platforms lead in qubit count",
+      "section": "Superconducting Qubit Platforms Dominate but Photonic and Topological Approaches Gain Traction",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": false,
+      "quantified": true,
+      "confidence_justified": true,
+      "classification": "Supported"
+    },
+    {
+      "claim": "Photonic quantum computing has achieved quantum computational advantage",
+      "section": "Superconducting Qubit Platforms Dominate but Photonic and Topological Approaches Gain Traction",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": false,
+      "classification": "Weak"
+    },
+    {
+      "claim": "Quantum error correction is a critical bottleneck",
+      "section": "Superconducting Qubit Platforms Dominate but Photonic and Topological Approaches Gain Traction",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": false,
+      "classification": "Weak"
+    },
+    {
+      "claim": "China's central government has allocated over $15 billion to quantum technology under the 14th Five-Year Plan",
+      "section": "Government Funding Exceeds $15 Billion Under the 14th Five-Year Plan with Military Focus",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": false,
+      "quantified": true,
+      "confidence_justified": true,
+      "classification": "Supported"
+    },
+    {
+      "claim": "The National Quantum Information Science Pilot Project coordinates research across 10+ institutes",
+      "section": "Government Funding Exceeds $15 Billion Under the 14th Five-Year Plan with Military Focus",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": false,
+      "classification": "Weak"
+    },
+    {
+      "claim": "China has filed over 3,000 quantum technology patents since 2020",
+      "section": "China Leads in Quantum Communication Patents but Trails US in Quantum Computing Software",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": false,
+      "quantified": true,
+      "confidence_justified": true,
+      "classification": "Supported"
+    },
+    {
+      "claim": "The US leads in quantum computing software patents",
+      "section": "China Leads in Quantum Communication Patents but Trails US in Quantum Computing Software",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": false,
+      "classification": "Weak"
+    },
+    {
+      "claim": "China's quantum communication infrastructure is the most advanced globally",
+      "section": "Global Competitive Position: China Leads in Communication, Lags in Computing",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": false,
+      "classification": "Weak"
+    },
+    {
+      "claim": "China is roughly 2-3 years behind the US in terms of qubit count and gate fidelity",
+      "section": "Global Competitive Position: China Leads in Communication, Lags in Computing",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": false,
+      "classification": "Weak"
+    },
+    {
+      "claim": "The heavy reliance on government funding creates a risk of misallocation and inefficiency",
+      "section": "Strategic Risks: Over-Reliance on State Funding and Error Correction Bottlenecks",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": false,
+      "classification": "Weak"
+    },
+    {
+      "claim": "Error correction remains the most significant technical bottleneck",
+      "section": "Strategic Risks: Over-Reliance on State Funding and Error Correction Bottlenecks",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": false,
+      "classification": "Weak"
+    }
+  ],
+  "quantification_ratio": 60
+}
