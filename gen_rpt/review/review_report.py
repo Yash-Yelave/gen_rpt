@@ -36,38 +36,28 @@ def generate_review_artifacts(output_dir: Path, report_payload: Dict, review_dat
 **Grade**: {review_data.get('scores', {}).get('grade')}
 
 ## Category Scores
-- Research Quality: {review_data.get('scores', {}).get('components', {}).get('research_quality')}
-- Strategic Insight: {review_data.get('scores', {}).get('components', {}).get('strategic_insight')}
-- Source Quality: {review_data.get('scores', {}).get('components', {}).get('source_quality')}
-- Writing Quality: {review_data.get('scores', {}).get('components', {}).get('writing_quality')}
-- Design Quality: {review_data.get('scores', {}).get('components', {}).get('design_quality')}
-- Executive Readiness: {review_data.get('scores', {}).get('components', {}).get('executive_readiness')}
+- Research Coverage: {review_data.get('scores', {}).get('components', {}).get('research_coverage')}
+- Evidence Quality: {review_data.get('scores', {}).get('components', {}).get('evidence_quality')}
+- Citation Strength: {review_data.get('scores', {}).get('components', {}).get('citation_strength')}
+- Structure: {review_data.get('scores', {}).get('components', {}).get('structure')}
+- Readability: {review_data.get('scores', {}).get('components', {}).get('readability')}
+- Strategic Clarity: {review_data.get('scores', {}).get('components', {}).get('strategic_clarity')}
+- Recommendation Quality: {review_data.get('scores', {}).get('components', {}).get('recommendation_quality')}
+- Visual Presentation: {review_data.get('scores', {}).get('components', {}).get('visual_presentation')}
 
 ## Strengths
-{chr(10).join(f"- {s}" for s in recs.get('strengths', []))}
-
-## Weaknesses
-{chr(10).join(f"- {s}" for s in recs.get('weaknesses', []))}
-
-## Priority Improvements
 """
-    for imp in recs.get('priority_improvements', []):
-        md_content += f"""
-### [{imp.get('priority_level', 'Medium')}] {imp.get('issue', 'Issue')}
-- **Impact**: {imp.get('impact', '')}
-- **Suggested Fix**: {imp.get('suggested_fix', '')}
-"""
-        
-    md_content += f"""
-## Executive Readiness Assessment
-- Board Members: {'Yes' if exec_readiness.get('board_members') else 'No'}
-- Ministers: {'Yes' if exec_readiness.get('ministers') else 'No'}
-- CEOs: {'Yes' if exec_readiness.get('ceos') else 'No'}
-- Sovereign Wealth Funds: {'Yes' if exec_readiness.get('sovereign_wealth_funds') else 'No'}
-- Senior Executives: {'Yes' if exec_readiness.get('senior_executives') else 'No'}
+    for s in recs.get('strengths', []):
+        md_content += f"- **{s.get('section', 'General')}**: {s.get('strength', '')}\n  - *Evidence*: {s.get('evidence', '')}\n"
 
-**Justification**: {exec_readiness.get('justification', '')}
-"""
+    md_content += "\n## Weaknesses\n"
+    for w in recs.get('weaknesses', []):
+        md_content += f"- **{w.get('section', 'General')}**: {w.get('weakness', '')}\n  - *Evidence*: {w.get('evidence', '')}\n"
+
+    md_content += "\n## Recommendations\n"
+    for r in recs.get('recommendations', []):
+        md_content += f"- **Target Section**: {r.get('affected_section', 'General')}\n  - *Recommendation*: {r.get('recommendation', '')}\n  - *Reason*: {r.get('reason', '')}\n"
+
 
     md_path = output_dir / "review_report.md"
     with open(md_path, 'w', encoding='utf-8') as f:
@@ -80,13 +70,10 @@ Grade: {review_data.get('scores', {}).get('grade')}
 Score: {review_data.get('scores', {}).get('overall_score')}/100
 
 Top Strengths:
-{chr(10).join(f"- {s}" for s in recs.get('strengths', [])[:3])}
+{chr(10).join(f"- {s.get('strength', '')}" for s in recs.get('strengths', [])[:3])}
 
 Top Weaknesses:
-{chr(10).join(f"- {s}" for s in recs.get('weaknesses', [])[:3])}
-
-Executive Readiness Justification:
-{exec_readiness.get('justification', '')}
+{chr(10).join(f"- {w.get('weakness', '')}" for w in recs.get('weaknesses', [])[:3])}
 """
     txt_path = output_dir / "review_summary.txt"
     with open(txt_path, 'w', encoding='utf-8') as f:
@@ -112,38 +99,28 @@ def generate_review_artifacts_text(output_dir: Path, text: str, review_data: Dic
 **Grade**: {review_data.get('scores', {}).get('grade')}
 
 ## Category Scores
-- Research Quality: {review_data.get('scores', {}).get('components', {}).get('research_quality')}
-- Strategic Insight: {review_data.get('scores', {}).get('components', {}).get('strategic_insight')}
-- Source Quality: {review_data.get('scores', {}).get('components', {}).get('source_quality')}
-- Writing Quality: {review_data.get('scores', {}).get('components', {}).get('writing_quality')}
-- Design Quality: {review_data.get('scores', {}).get('components', {}).get('design_quality')}
-- Executive Readiness: {review_data.get('scores', {}).get('components', {}).get('executive_readiness')}
+- Research Coverage: {review_data.get('scores', {}).get('components', {}).get('research_coverage')}
+- Evidence Quality: {review_data.get('scores', {}).get('components', {}).get('evidence_quality')}
+- Citation Strength: {review_data.get('scores', {}).get('components', {}).get('citation_strength')}
+- Structure: {review_data.get('scores', {}).get('components', {}).get('structure')}
+- Readability: {review_data.get('scores', {}).get('components', {}).get('readability')}
+- Strategic Clarity: {review_data.get('scores', {}).get('components', {}).get('strategic_clarity')}
+- Recommendation Quality: {review_data.get('scores', {}).get('components', {}).get('recommendation_quality')}
+- Visual Presentation: {review_data.get('scores', {}).get('components', {}).get('visual_presentation')}
 
 ## Strengths
-{chr(10).join(f"- {s}" for s in recs.get('strengths', []))}
-
-## Weaknesses
-{chr(10).join(f"- {s}" for s in recs.get('weaknesses', []))}
-
-## Priority Improvements
 """
-    for imp in recs.get('priority_improvements', []):
-        md_content += f"""
-### [{imp.get('priority_level', 'Medium')}] {imp.get('issue', 'Issue')}
-- **Impact**: {imp.get('impact', '')}
-- **Suggested Fix**: {imp.get('suggested_fix', '')}
-"""
-        
-    md_content += f"""
-## Executive Readiness Assessment
-- Board Members: {'Yes' if exec_readiness.get('board_members') else 'No'}
-- Ministers: {'Yes' if exec_readiness.get('ministers') else 'No'}
-- CEOs: {'Yes' if exec_readiness.get('ceos') else 'No'}
-- Sovereign Wealth Funds: {'Yes' if exec_readiness.get('sovereign_wealth_funds') else 'No'}
-- Senior Executives: {'Yes' if exec_readiness.get('senior_executives') else 'No'}
+    for s in recs.get('strengths', []):
+        md_content += f"- **{s.get('section', 'General')}**: {s.get('strength', '')}\n  - *Evidence*: {s.get('evidence', '')}\n"
 
-**Justification**: {exec_readiness.get('justification', '')}
-"""
+    md_content += "\n## Weaknesses\n"
+    for w in recs.get('weaknesses', []):
+        md_content += f"- **{w.get('section', 'General')}**: {w.get('weakness', '')}\n  - *Evidence*: {w.get('evidence', '')}\n"
+
+    md_content += "\n## Recommendations\n"
+    for r in recs.get('recommendations', []):
+        md_content += f"- **Target Section**: {r.get('affected_section', 'General')}\n  - *Recommendation*: {r.get('recommendation', '')}\n  - *Reason*: {r.get('reason', '')}\n"
+
 
     md_path = output_dir / "review_report.md"
     with open(md_path, 'w', encoding='utf-8') as f:
@@ -156,13 +133,10 @@ Grade: {review_data.get('scores', {}).get('grade')}
 Score: {review_data.get('scores', {}).get('overall_score')}/100
 
 Top Strengths:
-{chr(10).join(f"- {s}" for s in recs.get('strengths', [])[:3])}
+{chr(10).join(f"- {s.get('strength', '')}" for s in recs.get('strengths', [])[:3])}
 
 Top Weaknesses:
-{chr(10).join(f"- {s}" for s in recs.get('weaknesses', [])[:3])}
-
-Executive Readiness Justification:
-{exec_readiness.get('justification', '')}
+{chr(10).join(f"- {w.get('weakness', '')}" for w in recs.get('weaknesses', [])[:3])}
 """
     txt_path = output_dir / "review_summary.txt"
     with open(txt_path, 'w', encoding='utf-8') as f:

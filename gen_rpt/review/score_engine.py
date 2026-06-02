@@ -16,38 +16,34 @@ def evaluate_dimensions(client: 'GroqClient', report_payload_path: Path, sources
 
     system = "You are an elite Strategy Consultant and Report Auditor. Return strict JSON only."
     user = f"""
-Evaluate the provided report based on the following 10 dimensions:
-1. Research Quality
-2. Strategic Insight Quality
-3. Executive Readability (Writing Quality)
-4. Source Quality
-5. Evidence Strength
-6. Recommendation Quality
-7. Report Structure
-8. Design Quality (based on metadata and structure)
-9. Decision-Making Usefulness
-10. Overall Executive Readiness
+Evaluate the provided report based on the following 8 dimensions:
+1. Research Coverage
+2. Evidence Quality
+3. Citation Strength
+4. Structure
+5. Readability
+6. Strategic Clarity
+7. Recommendation Quality
+8. Visual Presentation
 
-Provide a score (0-100) and a brief rationale for each.
+Provide a score (0-100) and a brief rationale for each. Evaluate ONLY based on the document's content, not external knowledge.
 
-Report Data Snippet:
-{json.dumps(report, ensure_ascii=False)[:20000]}
+Report Data:
+{json.dumps(report, ensure_ascii=False)}
 
-Sources Snippet:
-{json.dumps(sources, ensure_ascii=False)[:10000]}
+Sources Data:
+{json.dumps(sources, ensure_ascii=False)}
 
 Return JSON format:
 {{
-  "research_quality": {{"score": 85, "rationale": "..."}},
-  "strategic_insight": {{"score": 88, "rationale": "..."}},
-  "executive_readability": {{"score": 90, "rationale": "..."}},
-  "source_quality": {{"score": 80, "rationale": "..."}},
-  "evidence_strength": {{"score": 75, "rationale": "..."}},
-  "recommendation_quality": {{"score": 82, "rationale": "..."}},
-  "report_structure": {{"score": 90, "rationale": "..."}},
-  "design_quality": {{"score": 85, "rationale": "..."}},
-  "decision_making_usefulness": {{"score": 88, "rationale": "..."}},
-  "executive_readiness": {{"score": 85, "rationale": "..."}}
+  "research_coverage": {{"score": 85, "rationale": "..."}},
+  "evidence_quality": {{"score": 88, "rationale": "..."}},
+  "citation_strength": {{"score": 90, "rationale": "..."}},
+  "structure": {{"score": 80, "rationale": "..."}},
+  "readability": {{"score": 75, "rationale": "..."}},
+  "strategic_clarity": {{"score": 82, "rationale": "..."}},
+  "recommendation_quality": {{"score": 90, "rationale": "..."}},
+  "visual_presentation": {{"score": 85, "rationale": "..."}}
 }}
 """
     try:
@@ -60,35 +56,31 @@ Return JSON format:
 def evaluate_dimensions_text(client: 'GroqClient', text: str) -> Dict[str, Any]:
     system = "You are an elite Strategy Consultant and Report Auditor. Return strict JSON only."
     user = f"""
-Evaluate the provided report text based on the following 10 dimensions:
-1. Research Quality
-2. Strategic Insight Quality
-3. Executive Readability (Writing Quality)
-4. Source Quality
-5. Evidence Strength
-6. Recommendation Quality
-7. Report Structure
-8. Design Quality (based on metadata and structure)
-9. Decision-Making Usefulness
-10. Overall Executive Readiness
+Evaluate the provided report text based on the following 8 dimensions:
+1. Research Coverage
+2. Evidence Quality
+3. Citation Strength
+4. Structure
+5. Readability
+6. Strategic Clarity
+7. Recommendation Quality
+8. Visual Presentation
 
-Provide a score (0-100) and a brief rationale for each.
+Provide a score (0-100) and a brief rationale for each. Evaluate ONLY based on the document's content, not external knowledge.
 
-Report Text Snippet:
-{text[:30000]}
+Report Text:
+{text}
 
 Return JSON format:
 {{
-  "research_quality": {{"score": 85, "rationale": "..."}},
-  "strategic_insight": {{"score": 88, "rationale": "..."}},
-  "executive_readability": {{"score": 90, "rationale": "..."}},
-  "source_quality": {{"score": 80, "rationale": "..."}},
-  "evidence_strength": {{"score": 75, "rationale": "..."}},
-  "recommendation_quality": {{"score": 82, "rationale": "..."}},
-  "report_structure": {{"score": 90, "rationale": "..."}},
-  "design_quality": {{"score": 85, "rationale": "..."}},
-  "decision_making_usefulness": {{"score": 88, "rationale": "..."}},
-  "executive_readiness": {{"score": 85, "rationale": "..."}}
+  "research_coverage": {{"score": 85, "rationale": "..."}},
+  "evidence_quality": {{"score": 88, "rationale": "..."}},
+  "citation_strength": {{"score": 90, "rationale": "..."}},
+  "structure": {{"score": 80, "rationale": "..."}},
+  "readability": {{"score": 75, "rationale": "..."}},
+  "strategic_clarity": {{"score": 82, "rationale": "..."}},
+  "recommendation_quality": {{"score": 90, "rationale": "..."}},
+  "visual_presentation": {{"score": 85, "rationale": "..."}}
 }}
 """
     try:
@@ -103,16 +95,18 @@ def calculate_final_score(dimensions: Dict[str, Any]) -> Dict[str, Any]:
         val = dimensions.get(key, {}).get("score", 0)
         return float(val) if isinstance(val, (int, float, str)) and str(val).replace('.','',1).isdigit() else 70.0
 
-    research_quality = get_score("research_quality")
-    strategic_insight = get_score("strategic_insight")
-    source_quality = get_score("source_quality")
-    writing_quality = get_score("executive_readability")
-    design_quality = get_score("design_quality")
-    executive_readiness = get_score("executive_readiness")
+    research_coverage = get_score("research_coverage")
+    evidence_quality = get_score("evidence_quality")
+    citation_strength = get_score("citation_strength")
+    structure = get_score("structure")
+    readability = get_score("readability")
+    strategic_clarity = get_score("strategic_clarity")
+    recommendation_quality = get_score("recommendation_quality")
+    visual_presentation = get_score("visual_presentation")
     
     # Calculate Overall Score
     overall_score = round(
-        (research_quality + strategic_insight + source_quality + writing_quality + design_quality + executive_readiness) / 6.0, 1
+        (research_coverage + evidence_quality + citation_strength + structure + readability + strategic_clarity + recommendation_quality + visual_presentation) / 8.0, 1
     )
     
     if overall_score >= 95: grade = "Platinum"
@@ -125,11 +119,13 @@ def calculate_final_score(dimensions: Dict[str, Any]) -> Dict[str, Any]:
         "overall_score": overall_score,
         "grade": grade,
         "components": {
-            "research_quality": research_quality,
-            "strategic_insight": strategic_insight,
-            "source_quality": source_quality,
-            "writing_quality": writing_quality,
-            "design_quality": design_quality,
-            "executive_readiness": executive_readiness
+            "research_coverage": research_coverage,
+            "evidence_quality": evidence_quality,
+            "citation_strength": citation_strength,
+            "structure": structure,
+            "readability": readability,
+            "strategic_clarity": strategic_clarity,
+            "recommendation_quality": recommendation_quality,
+            "visual_presentation": visual_presentation
         }
     }

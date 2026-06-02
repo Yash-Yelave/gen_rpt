@@ -18,19 +18,20 @@ def extract_claims(client: 'GroqClient', report_payload_path: Path, output_path:
         
     system = "You are an expert financial and strategic analyst. Return strict JSON only."
     user = f"""
-Extract the major factual claims, statistics, and strategic assertions from the provided report data.
-Focus on: Executive Summary, Key Findings, Strategic Recommendations, Charts, and Insights.
+Extract the findings, claims, recommendations, strategic insights, forecasts, and statistics from the provided report data. Create an evidence map.
+Every entry must refer to specific content in the report.
 
 Report Data:
-{json.dumps(report, ensure_ascii=False)[:30000]}
+{json.dumps(report, ensure_ascii=False)}
 
-Return a JSON list of objects, each with 'claim_id' (integer) and 'claim' (string).
+Return a JSON list of objects under the key 'claims', each with 'claim' (string), 'section' (string), and 'location' (string).
 Example:
 {{
   "claims": [
     {{
-      "claim_id": 1,
-      "claim": "China's EV exports are expected to grow 25% annually."
+      "claim": "Government funding exceeds $15 billion",
+      "section": "Government Funding Exceeds $15 Billion",
+      "location": "page 6"
     }}
   ]
 }}
@@ -56,19 +57,20 @@ def extract_claims_text(client: 'GroqClient', text: str, output_path: Path) -> l
     
     system = "You are an expert financial and strategic analyst. Return strict JSON only."
     user = f"""
-Extract the major factual claims, statistics, and strategic assertions from the provided report text.
-Focus on: Executive Summary, Key Findings, Strategic Recommendations, Charts, and Insights.
+Extract the findings, claims, recommendations, strategic insights, forecasts, and statistics from the provided report text. Create an evidence map.
+Every entry must refer to specific content in the report.
 
 Report Text:
-{text[:30000]}
+{text}
 
-Return a JSON list of objects, each with 'claim_id' (integer) and 'claim' (string).
+Return a JSON list of objects under the key 'claims', each with 'claim' (string), 'section' (string), and 'location' (string).
 Example:
 {{
   "claims": [
     {{
-      "claim_id": 1,
-      "claim": "China's EV exports are expected to grow 25% annually."
+      "claim": "Government funding exceeds $15 billion",
+      "section": "Government Funding Exceeds $15 Billion",
+      "location": "page 6"
     }}
   ]
 }}
