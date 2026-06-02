@@ -16,24 +16,37 @@ def extract_claims(client: 'GroqClient', report_payload_path: Path, output_path:
         print(f"[REVIEW] Failed to load report payload: {e}")
         return []
         
-    system = "You are an expert financial and strategic analyst. Return strict JSON only."
+    system = "You are a Due Diligence Auditor. Return strict JSON only."
     user = f"""
-Extract the findings, claims, recommendations, strategic insights, forecasts, and statistics from the provided report data. Create an evidence map.
-Every entry must refer to specific content in the report.
+Extract all major claims, findings, forecasts, and statistics from the provided report data.
+For every major claim, evaluate:
+- Is evidence provided? (true/false)
+- Is data provided? (true/false)
+- Is a source referenced? (true/false)
+- Is the claim quantified? (true/false)
+- Is confidence justified? (true/false)
+
+Classify each claim as exactly one of: "Supported", "Weak", "Unsupported", "High-Risk".
+Calculate the 'quantification_ratio' as the percentage (0-100) of statements that are quantified vs non-quantified.
 
 Report Data:
 {json.dumps(report, ensure_ascii=False)}
 
-Return a JSON list of objects under the key 'claims', each with 'claim' (string), 'section' (string), and 'location' (string).
-Example:
+Return JSON format exactly like this:
 {{
   "claims": [
     {{
       "claim": "Government funding exceeds $15 billion",
-      "section": "Government Funding Exceeds $15 Billion",
-      "location": "page 6"
+      "section": "Government Funding",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": true,
+      "quantified": true,
+      "confidence_justified": true,
+      "classification": "Supported"
     }}
-  ]
+  ],
+  "quantification_ratio": 45
 }}
 """
     try:
@@ -41,38 +54,50 @@ Example:
             {"role": "system", "content": system},
             {"role": "user", "content": user}
         ], temperature=0.2)
-        claims = res.get('claims', [])
     except Exception as e:
         print(f"[REVIEW] Failed to extract claims: {e}")
-        claims = []
+        res = {"claims": [], "quantification_ratio": 0}
         
     with open(output_path, 'w', encoding='utf-8') as f:
-        json.dump(claims, f, ensure_ascii=False, indent=2)
+        json.dump(res, f, ensure_ascii=False, indent=2)
         
-    return claims
+    return res
 
 
 def extract_claims_text(client: 'GroqClient', text: str, output_path: Path) -> list:
     print("[REVIEW] Extracting claims from text")
     
-    system = "You are an expert financial and strategic analyst. Return strict JSON only."
+    system = "You are a Due Diligence Auditor. Return strict JSON only."
     user = f"""
-Extract the findings, claims, recommendations, strategic insights, forecasts, and statistics from the provided report text. Create an evidence map.
-Every entry must refer to specific content in the report.
+Extract all major claims, findings, forecasts, and statistics from the provided report text.
+For every major claim, evaluate:
+- Is evidence provided? (true/false)
+- Is data provided? (true/false)
+- Is a source referenced? (true/false)
+- Is the claim quantified? (true/false)
+- Is confidence justified? (true/false)
+
+Classify each claim as exactly one of: "Supported", "Weak", "Unsupported", "High-Risk".
+Calculate the 'quantification_ratio' as the percentage (0-100) of statements that are quantified vs non-quantified.
 
 Report Text:
 {text}
 
-Return a JSON list of objects under the key 'claims', each with 'claim' (string), 'section' (string), and 'location' (string).
-Example:
+Return JSON format exactly like this:
 {{
   "claims": [
     {{
       "claim": "Government funding exceeds $15 billion",
-      "section": "Government Funding Exceeds $15 Billion",
-      "location": "page 6"
+      "section": "Government Funding",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": true,
+      "quantified": true,
+      "confidence_justified": true,
+      "classification": "Supported"
     }}
-  ]
+  ],
+  "quantification_ratio": 45
 }}
 """
     try:
@@ -80,12 +105,11 @@ Example:
             {"role": "system", "content": system},
             {"role": "user", "content": user}
         ], temperature=0.2)
-        claims = res.get('claims', [])
     except Exception as e:
         print(f"[REVIEW] Failed to extract claims from text: {e}")
-        claims = []
+        res = {"claims": [], "quantification_ratio": 0}
         
     with open(output_path, 'w', encoding='utf-8') as f:
-        json.dump(claims, f, ensure_ascii=False, indent=2)
+        json.dump(res, f, ensure_ascii=False, indent=2)
         
-    return claims
+    return res
