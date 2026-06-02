@@ -12,16 +12,9 @@ def generate_recommendations(client: 'GroqClient', report_payload_path: Path, di
     except:
         report = {}
         
-    system = "You are a Senior Editorial Auditor. Return strict JSON only."
+    system = "You are an Institutional Research Auditor and Due Diligence Expert. Return strict JSON only."
     user = f"""
-Based on the following AI Review dimension scores and the FULL report, generate an evidence-based strength/weakness analysis and document improvement recommendations.
-
-PRIMARY RULE:
-Everything in the review output must be traceable to content found inside the report.
-If evidence cannot be found inside the report: DO NOT mention it, assume it, infer it, or generate it.
-Recommendations must only improve the report (e.g., "Add quantitative market sizing to the startup section"), NOT industry, investment, or policy actions.
-
-Before returning output: Validate every strength, weakness, and recommendation. Can this be directly linked to report content? If NO: discard it.
+Based on the AI Review dimension scores and the FULL report, perform a deep institutional audit. Identify factual, evidence, writing, strategic, executive communication, narrative, analytical, and structural weaknesses using ACTUAL REPORT CONTENT ONLY. No generic observations.
 
 Dimension Scores:
 {json.dumps(dimensions, ensure_ascii=False)}
@@ -32,24 +25,45 @@ Report Content:
 Generate JSON format exactly like this:
 {{
   "strengths": [
-    {{
-      "strength": "The report provides a dedicated funding section...",
-      "evidence": "Mention of the 14th Five-Year Plan and three investment pillars.",
-      "section": "Government Funding Exceeds $15 Billion"
-    }}
+    {{"strength": "...", "evidence": "...", "section": "..."}}
   ],
   "weaknesses": [
-    {{
-      "weakness": "The report discusses cryogenic equipment dependence but does not quantify exposure levels...",
-      "evidence": "Lack of quantitative exposure data for cryogenic suppliers.",
-      "section": "Supply Chain Risks"
-    }}
+    {{"weakness": "...", "evidence": "...", "section": "..."}}
   ],
-  "recommendations": [
+  "data_gaps": [
+    {{"section": "...", "claim": "...", "missing_data": ["market size", "benchmark"], "severity": "High"}}
+  ],
+  "weak_assumptions": [
+    {{"forecast": "...", "missing_evidence": "...", "severity": "High"}}
+  ],
+  "writing_flaws": [
+    {{"type": "vague statements", "example": "...", "section": "...", "severity": "Low"}}
+  ],
+  "executive_communication": {{
+    "minister_ready": false,
+    "board_ready": true,
+    "swf_ready": false,
+    "flagged_sections": [ {{"section": "...", "issue": "too technical"}} ]
+  }},
+  "narrative_gaps": [
+    {{"issue": "Missing link between problem and analysis", "severity": "Medium"}}
+  ],
+  "strategic_gaps": [
+    {{"missing_question": "...", "explanation": "...", "severity": "High"}}
+  ],
+  "gcc_relevance_gaps": [
+    {{"section": "...", "issue": "Does not explain why this matters to GCC stakeholders."}}
+  ],
+  "recommendation_issues": [
+    {{"recommendation": "...", "issue": "Generic recommendation", "severity": "Medium"}}
+  ],
+  "improvement_tasks": [
     {{
-      "recommendation": "Add quantitative market sizing to the startup section.",
-      "reason": "Improves decision-making usefulness by grounding claims in data.",
-      "affected_section": "Startups"
+      "section": "...",
+      "issue": "...",
+      "severity": "Critical",
+      "recommended_fix": "...",
+      "expected_impact": "..."
     }}
   ]
 }}
@@ -67,16 +81,9 @@ Generate JSON format exactly like this:
 
 
 def generate_recommendations_text(client: 'GroqClient', text: str, dimensions: Dict[str, Any]) -> Dict[str, Any]:
-    system = "You are a Senior Editorial Auditor. Return strict JSON only."
+    system = "You are an Institutional Research Auditor and Due Diligence Expert. Return strict JSON only."
     user = f"""
-Based on the following AI Review dimension scores and the FULL report text, generate an evidence-based strength/weakness analysis and document improvement recommendations.
-
-PRIMARY RULE:
-Everything in the review output must be traceable to content found inside the report.
-If evidence cannot be found inside the report: DO NOT mention it, assume it, infer it, or generate it.
-Recommendations must only improve the report (e.g., "Add quantitative market sizing to the startup section"), NOT industry, investment, or policy actions.
-
-Before returning output: Validate every strength, weakness, and recommendation. Can this be directly linked to report content? If NO: discard it.
+Based on the AI Review dimension scores and the FULL report text, perform a deep institutional audit. Identify factual, evidence, writing, strategic, executive communication, narrative, analytical, and structural weaknesses using ACTUAL REPORT CONTENT ONLY. No generic observations.
 
 Dimension Scores:
 {json.dumps(dimensions, ensure_ascii=False)}
@@ -87,24 +94,45 @@ Report Text:
 Generate JSON format exactly like this:
 {{
   "strengths": [
-    {{
-      "strength": "The report provides a dedicated funding section...",
-      "evidence": "Mention of the 14th Five-Year Plan and three investment pillars.",
-      "section": "Government Funding Exceeds $15 Billion"
-    }}
+    {{"strength": "...", "evidence": "...", "section": "..."}}
   ],
   "weaknesses": [
-    {{
-      "weakness": "The report discusses cryogenic equipment dependence but does not quantify exposure levels...",
-      "evidence": "Lack of quantitative exposure data for cryogenic suppliers.",
-      "section": "Supply Chain Risks"
-    }}
+    {{"weakness": "...", "evidence": "...", "section": "..."}}
   ],
-  "recommendations": [
+  "data_gaps": [
+    {{"section": "...", "claim": "...", "missing_data": ["market size", "benchmark"], "severity": "High"}}
+  ],
+  "weak_assumptions": [
+    {{"forecast": "...", "missing_evidence": "...", "severity": "High"}}
+  ],
+  "writing_flaws": [
+    {{"type": "vague statements", "example": "...", "section": "...", "severity": "Low"}}
+  ],
+  "executive_communication": {{
+    "minister_ready": false,
+    "board_ready": true,
+    "swf_ready": false,
+    "flagged_sections": [ {{"section": "...", "issue": "too technical"}} ]
+  }},
+  "narrative_gaps": [
+    {{"issue": "Missing link between problem and analysis", "severity": "Medium"}}
+  ],
+  "strategic_gaps": [
+    {{"missing_question": "...", "explanation": "...", "severity": "High"}}
+  ],
+  "gcc_relevance_gaps": [
+    {{"section": "...", "issue": "Does not explain why this matters to GCC stakeholders."}}
+  ],
+  "recommendation_issues": [
+    {{"recommendation": "...", "issue": "Generic recommendation", "severity": "Medium"}}
+  ],
+  "improvement_tasks": [
     {{
-      "recommendation": "Add quantitative market sizing to the startup section.",
-      "reason": "Improves decision-making usefulness by grounding claims in data.",
-      "affected_section": "Startups"
+      "section": "...",
+      "issue": "...",
+      "severity": "Critical",
+      "recommended_fix": "...",
+      "expected_impact": "..."
     }}
   ]
 }}
