@@ -1,0 +1,82 @@
+[
+  {
+    "claim_id": 1,
+    "claim": "China's quantum computing sector is on track to achieve operational quantum advantage in specific domains by 2026."
+  },
+  {
+    "claim_id": 2,
+    "claim": "Government funding under the 14th Five-Year Plan exceeds $15 billion, with a focus on quantum communication and sensing for military applications."
+  },
+  {
+    "claim_id": 3,
+    "claim": "China trails the US in quantum software ecosystem and talent depth but leads in quantum communication infrastructure and patent filings."
+  },
+  {
+    "claim_id": 4,
+    "claim": "The most promising near-term applications are in financial modeling, drug discovery, and logistics optimization, with pilot projects already underway."
+  },
+  {
+    "claim_id": 5,
+    "claim": "Strategic risks include over-reliance on state funding, brain drain, and potential technological bottlenecks in error correction."
+  },
+  {
+    "claim_id": 6,
+    "claim": "China's central government has allocated over $15 billion to quantum technology under the 14th Five-Year Plan (2021-2025)."
+  },
+  {
+    "claim_id": 7,
+    "claim": "The National Quantum Information Science Pilot Project, led by the Chinese Academy of Sciences, coordinates research across 10+ institutes."
+  },
+  {
+    "claim_id": 8,
+    "claim": "Quantum communication infrastructure, including the Beijing-Shanghai quantum backbone and the Micius satellite network, has received the largest share of funding."
+  },
+  {
+    "claim_id": 9,
+    "claim": "China aims to deploy a global quantum communication network with satellite-to-ground links, providing unbreakable encryption for diplomatic and defense channels by 2026."
+  },
+  {
+    "claim_id": 10,
+    "claim": "China has filed over 3,000 quantum technology patents since 2020, with a strong focus on quantum communication and cryptography."
+  },
+  {
+    "claim_id": 11,
+    "claim": "The US leads in quantum computing software patents, with IBM, Google, and Microsoft holding key intellectual property on quantum error correction, compilers, and algorithms."
+  },
+  {
+    "claim_id": 12,
+    "claim": "China's quantum communication infrastructure is the most advanced globally, with operational quantum key distribution networks spanning thousands of kilometers and satellite-based links."
+  },
+  {
+    "claim_id": 13,
+    "claim": "In quantum computing hardware, China is roughly 2-3 years behind the US in terms of qubit count and gate fidelity."
+  },
+  {
+    "claim_id": 14,
+    "claim": "The gap in quantum error correction is wider, with US teams achieving logical qubits with lower error rates."
+  },
+  {
+    "claim_id": 15,
+    "claim": "China's advantage in scale of funding and government coordination gives it a unique position, but the lack of a vibrant startup ecosystem and venture capital limits commercialization."
+  },
+  {
+    "claim_id": 16,
+    "claim": "The heavy reliance on government funding creates a risk of misallocation and inefficiency."
+  },
+  {
+    "claim_id": 17,
+    "claim": "Error correction remains the most significant technical bottleneck, with current Chinese quantum processors having physical error rates around 0.1-1%."
+  },
+  {
+    "claim_id": 18,
+    "claim": "The roadmap to 50 logical qubits by 2026 is ambitious and may slip by 1-2 years."
+  },
+  {
+    "claim_id": 19,
+    "claim": "Geopolitical risks are elevated, with US export controls on quantum technology potentially expanding to include software and algorithms."
+  },
+  {
+    "claim_id": 20,
+    "claim": "Talent flight is a chronic risk, with the best Chinese quantum researchers often seeking opportunities abroad."
+  }
+]

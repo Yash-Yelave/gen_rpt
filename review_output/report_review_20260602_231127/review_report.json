@@ -1,0 +1,183 @@
+{
+  "timestamp": "2026-06-02T17:41:45.182786",
+  "scores": {
+    "overall_score": 85.5,
+    "grade": "Silver",
+    "components": {
+      "research_quality": 85.0,
+      "strategic_insight": 88.0,
+      "source_quality": 80.0,
+      "writing_quality": 90.0,
+      "design_quality": 85.0,
+      "executive_readiness": 85.0
+    }
+  },
+  "recommendations": {
+    "strengths": [
+      "High level of research quality with in-depth analysis of China's quantum computing sector",
+      "Valuable strategic insights highlighting key areas of opportunity and risk",
+      "Well-written and easy to understand report making it accessible to a broad audience",
+      "Strong government funding and support for quantum technology",
+      "Leadership in quantum communication infrastructure and patent filings"
+    ],
+    "weaknesses": [
+      "Limited diversity in sources and lack of critical evaluation of methodologies",
+      "Dependence on state funding creating risk of misallocation and inefficiency",
+      "Error correction remains a significant technical bottleneck",
+      "Brain drain of top researchers to the US and EU",
+      "Limited progress in quantum software ecosystem and talent depth"
+    ],
+    "priority_improvements": [
+      {
+        "issue": "Error correction bottleneck",
+        "impact": "Delays practical applications in cryptography and drug discovery",
+        "suggested_fix": "Invest in research and development of quantum error correction techniques",
+        "priority_level": "High"
+      },
+      {
+        "issue": "Brain drain of top researchers",
+        "impact": "Limits the growth of the domestic quantum ecosystem",
+        "suggested_fix": "Implement policies to attract and retain top talent, such as competitive salaries and research funding",
+        "priority_level": "Medium"
+      },
+      {
+        "issue": "Limited progress in quantum software ecosystem",
+        "impact": "Hinders the development of practical applications",
+        "suggested_fix": "Invest in quantum software startups and research initiatives",
+        "priority_level": "Medium"
+      }
+    ],
+    "executive_readiness": {
+      "board_members": true,
+      "ministers": false,
+      "ceos": true,
+      "sovereign_wealth_funds": false,
+      "senior_executives": true,
+      "justification": "The report provides valuable insights and recommendations for investors, policymakers, and industry leaders, making it suitable for senior executives and board members. However, it may not be directly relevant to ministers or sovereign wealth funds at this stage."
+    }
+  },
+  "claims": [
+    {
+      "claim_id": 1,
+      "claim": "China's quantum computing sector is on track to achieve operational quantum advantage in specific domains by 2026."
+    },
+    {
+      "claim_id": 2,
+      "claim": "Government funding under the 14th Five-Year Plan exceeds $15 billion, with a focus on quantum communication and sensing for military applications."
+    },
+    {
+      "claim_id": 3,
+      "claim": "China trails the US in quantum software ecosystem and talent depth but leads in quantum communication infrastructure and patent filings."
+    },
+    {
+      "claim_id": 4,
+      "claim": "The most promising near-term applications are in financial modeling, drug discovery, and logistics optimization, with pilot projects already underway."
+    },
+    {
+      "claim_id": 5,
+      "claim": "Strategic risks include over-reliance on state funding, brain drain, and potential technological bottlenecks in error correction."
+    },
+    {
+      "claim_id": 6,
+      "claim": "China's central government has allocated over $15 billion to quantum technology under the 14th Five-Year Plan (2021-2025)."
+    },
+    {
+      "claim_id": 7,
+      "claim": "The National Quantum Information Science Pilot Project, led by the Chinese Academy of Sciences, coordinates research across 10+ institutes."
+    },
+    {
+      "claim_id": 8,
+      "claim": "Quantum communication infrastructure, including the Beijing-Shanghai quantum backbone and the Micius satellite network, has received the largest share of funding."
+    },
+    {
+      "claim_id": 9,
+      "claim": "China aims to deploy a global quantum communication network with satellite-to-ground links, providing unbreakable encryption for diplomatic and defense channels by 2026."
+    },
+    {
+      "claim_id": 10,
+      "claim": "China has filed over 3,000 quantum technology patents since 2020, with a strong focus on quantum communication and cryptography."
+    },
+    {
+      "claim_id": 11,
+      "claim": "The US leads in quantum computing software patents, with IBM, Google, and Microsoft holding key intellectual property on quantum error correction, compilers, and algorithms."
+    },
+    {
+      "claim_id": 12,
+      "claim": "China's quantum communication infrastructure is the most advanced globally, with operational quantum key distribution networks spanning thousands of kilometers and satellite-based links."
+    },
+    {
+      "claim_id": 13,
+      "claim": "In quantum computing hardware, China is roughly 2-3 years behind the US in terms of qubit count and gate fidelity."
+    },
+    {
+      "claim_id": 14,
+      "claim": "The gap in quantum error correction is wider, with US teams achieving logical qubits with lower error rates."
+    },
+    {
+      "claim_id": 15,
+      "claim": "China's advantage in scale of funding and government coordination gives it a unique position, but the lack of a vibrant startup ecosystem and venture capital limits commercialization."
+    },
+    {
+      "claim_id": 16,
+      "claim": "The heavy reliance on government funding creates a risk of misallocation and inefficiency."
+    },
+    {
+      "claim_id": 17,
+      "claim": "Error correction remains the most significant technical bottleneck, with current Chinese quantum processors having physical error rates around 0.1-1%."
+    },
+    {
+      "claim_id": 18,
+      "claim": "The roadmap to 50 logical qubits by 2026 is ambitious and may slip by 1-2 years."
+    },
+    {
+      "claim_id": 19,
+      "claim": "Geopolitical risks are elevated, with US export controls on quantum technology potentially expanding to include software and algorithms."
+    },
+    {
+      "claim_id": 20,
+      "claim": "Talent flight is a chronic risk, with the best Chinese quantum researchers often seeking opportunities abroad."
+    }
+  ],
+  "raw_dimensions": {
+    "research_quality": {
+      "score": 85,
+      "rationale": "The report demonstrates a high level of research quality, with in-depth analysis of China's quantum computing sector, including its strengths, weaknesses, and future prospects. However, the report could benefit from more diverse sources and a critical evaluation of the methodologies used."
+    },
+    "strategic_insight": {
+      "score": 88,
+      "rationale": "The report provides valuable strategic insights, highlighting key areas of opportunity and risk in China's quantum computing sector. The analysis of the competitive landscape, including the role of government funding and international collaboration, is particularly insightful."
+    },
+    "executive_readability": {
+      "score": 90,
+      "rationale": "The report is well-written and easy to understand, making it accessible to a broad audience, including executives without a technical background. The use of clear headings, concise language, and relevant examples enhances the report's readability."
+    },
+    "source_quality": {
+      "score": 80,
+      "rationale": "The report relies on a range of sources, including academic research, industry reports, and government documents. While the sources are generally credible, the report could benefit from more diverse perspectives and a clearer evaluation of source quality."
+    },
+    "evidence_strength": {
+      "score": 75,
+      "rationale": "The report presents a significant amount of evidence to support its claims, including data on government funding, patent filings, and industry developments. However, the evidence could be more systematically evaluated, and the report could benefit from more rigorous analysis of the data."
+    },
+    "recommendation_quality": {
+      "score": 82,
+      "rationale": "The report provides actionable recommendations for investors, including the potential benefits of investing in Chinese quantum software startups and photonic hardware ventures. However, the recommendations could be more tailored to specific stakeholder groups and more clearly linked to the report's analysis."
+    },
+    "report_structure": {
+      "score": 90,
+      "rationale": "The report is well-organized and easy to follow, with a clear introduction, body, and conclusion. The use of headings, subheadings, and bullet points enhances the report's structure and makes it easier to navigate."
+    },
+    "design_quality": {
+      "score": 85,
+      "rationale": "The report's design is clear and concise, with effective use of headings, bullet points, and white space. However, the report could benefit from more visual elements, such as charts, graphs, and infographics, to enhance its presentation and make the data more engaging."
+    },
+    "decision_making_usefulness": {
+      "score": 88,
+      "rationale": "The report provides valuable insights and recommendations that can inform decision-making in the quantum computing sector. The analysis of key trends, opportunities, and risks is particularly useful for investors, policymakers, and industry leaders."
+    },
+    "executive_readiness": {
+      "score": 85,
+      "rationale": "The report is well-suited for executive audiences, providing a clear and concise overview of the key issues and trends in China's quantum computing sector. However, the report could benefit from more tailored recommendations and a clearer summary of the key findings and implications."
+    }
+  }
+}
