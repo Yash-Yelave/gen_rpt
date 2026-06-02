@@ -76,7 +76,15 @@ Generate JSON format exactly like this:
         return {
             "strengths": [],
             "weaknesses": [],
-            "recommendations": []
+            "data_gaps": [],
+            "weak_assumptions": [],
+            "writing_flaws": [],
+            "executive_communication": {},
+            "narrative_gaps": [],
+            "strategic_gaps": [],
+            "gcc_relevance_gaps": [],
+            "recommendation_issues": [],
+            "improvement_tasks": []
         }
 
 
@@ -145,5 +153,13 @@ Generate JSON format exactly like this:
         return {
             "strengths": [],
             "weaknesses": [],
-            "recommendations": []
+            "data_gaps": [],
+            "weak_assumptions": [],
+            "writing_flaws": [],
+            "executive_communication": {},
+            "narrative_gaps": [],
+            "strategic_gaps": [],
+            "gcc_relevance_gaps": [],
+            "recommendation_issues": [],
+            "improvement_tasks": []
         }
