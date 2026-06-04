@@ -59,7 +59,7 @@ export const AIReviewCard: React.FC<Props> = ({ aiReview }) => {
             <div className="mb-4">
               <div className="text-[11px] font-bold uppercase tracking-wide text-green-700 mb-2">Strengths</div>
               <ul className="flex flex-col gap-1">
-                {aiReview.recommendations.strengths.map((s, i) => (
+                {aiReview.recommendations.strengths.map((s: string, i: number) => (
                   <li key={i} className="review-list-item strength">{s}</li>
                 ))}
               </ul>
@@ -71,7 +71,7 @@ export const AIReviewCard: React.FC<Props> = ({ aiReview }) => {
             <div className="mb-4">
               <div className="text-[11px] font-bold uppercase tracking-wide text-red-700 mb-2">Weaknesses</div>
               <ul className="flex flex-col gap-1">
-                {aiReview.recommendations.weaknesses.map((w, i) => (
+                {aiReview.recommendations.weaknesses.map((w: string, i: number) => (
                   <li key={i} className="review-list-item weakness">{w}</li>
                 ))}
               </ul>
@@ -82,7 +82,7 @@ export const AIReviewCard: React.FC<Props> = ({ aiReview }) => {
           {aiReview.recommendations.priority_improvements.length > 0 && (
             <div className="mb-4">
               <div className="text-[11px] font-bold uppercase tracking-wide text-orange-700 mb-2">Priority Improvements</div>
-              {aiReview.recommendations.priority_improvements.map((imp, i) => (
+              {aiReview.recommendations.priority_improvements.map((imp: any, i: number) => (
                 <div key={i} className="bg-gray-50 border border-gray-200 rounded p-2.5 mb-2">
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs font-semibold text-gray-800">{imp.issue}</span>
