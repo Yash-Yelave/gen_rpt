@@ -26,7 +26,7 @@ export const commentsService = {
     const reports = await reportsService.getAll();
     const report = reports.find((r) => r.id === reportId);
     if (!report) throw new Error(`Report ${reportId} not found`);
-    const comment = report.comments.find((c) => c.id === commentId);
+    const comment = report.comments.find((c: Comment) => c.id === commentId);
     if (comment) comment.status = 'resolved';
     return [...report.comments];
   },
