@@ -1,4 +1,5 @@
 // src/types/report.types.ts
+import type { Comment } from './comment.types';
 
 export enum ReportStatus {
   Generated = 'Generated',
