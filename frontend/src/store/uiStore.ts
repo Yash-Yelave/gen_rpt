@@ -24,7 +24,7 @@ interface UIState {
   setStatusFilter: (s: string) => void;
 }
 
-export const useUIStore = create<UIState>((set, get) => ({
+export const useUIStore = create<UIState>((set) => ({
   sidebarCollapsed: false,
   zoomLevel: 100,
   toasts: [],
