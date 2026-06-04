@@ -1,0 +1,46 @@
+/* === DASHBOARD PAGE === */
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.stat-card {
+  background: var(--surface-white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-4) var(--space-4);
+  transition: box-shadow var(--transition-base);
+}
+
+.stat-card:hover { box-shadow: var(--shadow-sm); }
+
+.stat-card--blue  { border-top: 3px solid var(--blue-600); }
+.stat-card--green { border-top: 3px solid var(--green-600); }
+.stat-card--orange { border-top: 3px solid var(--orange-600); }
+
+.stat-card__label {
+  font-size: var(--font-xs);
+  font-weight: 600;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-2);
+}
+
+.stat-card__value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gray-900);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-card__meta {
+  font-size: var(--font-xs);
+  color: var(--gray-400);
+}

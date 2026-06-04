@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BlueOcean Report Review Dashboard — AI-powered human-in-the-loop review center for institutional research reports." />
+  <title>BlueOcean · Report Review Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/review.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+    <div class="sidebar__brand">
+      <div class="sidebar__logo">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="22" height="22" rx="5" fill="#1A56DB"/>
+          <path d="M5 11C5 7.68629 7.68629 5 11 5C14.3137 5 17 7.68629 17 11" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M8 14C8 12.3431 9.34315 11 11 11C12.6569 11 14 12.3431 14 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="11" cy="17" r="1.5" fill="white"/>
+        </svg>
+        <span class="sidebar__brand-name">BlueOcean</span>
+      </div>
+      <div class="sidebar__brand-tag">Report Review</div>
+    </div>
+
+    <nav class="sidebar__nav">
+      <ul class="sidebar__nav-list">
+        <li>
+          <a href="#" class="sidebar__nav-item active" data-view="dashboard" id="nav-dashboard">
+            <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/></svg>
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar__nav-item" data-view="pending" id="nav-pending">
+            <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+            Pending Review
+            <span class="badge badge--blue" id="badge-pending">3</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar__nav-item" data-view="reviewed" id="nav-reviewed">
+            <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            Reviewed
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar__nav-item" data-view="published" id="nav-published">
+            <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            Published
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar__nav-item" data-view="revisions" id="nav-revisions">
+            <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>
+            Revisions
+            <span class="badge badge--orange" id="badge-revisions">1</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar__section-label">System</div>
+      <ul class="sidebar__nav-list">
+        <li>
+          <a href="#" class="sidebar__nav-item" data-view="settings" id="nav-settings">
+            <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
+            Settings
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar__user">
+      <div class="sidebar__user-avatar">SR</div>
+      <div class="sidebar__user-info">
+        <div class="sidebar__user-name">Senior Reviewer</div>
+        <div class="sidebar__user-role">Editorial Lead</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-content" id="main-content">
+
+    <!-- DASHBOARD VIEW -->
+    <section class="view" id="view-dashboard" role="main">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Dashboard</h1>
+          <p class="page-subtitle">Overview of report review pipeline</p>
+        </div>
+        <div class="page-header__actions">
+          <span class="last-updated" id="dashboard-updated">Updated just now</span>
+        </div>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card" id="stat-total">
+          <div class="stat-card__label">Total Reports</div>
+          <div class="stat-card__value" id="stat-total-value">8</div>
+          <div class="stat-card__meta">This cycle</div>
+        </div>
+        <div class="stat-card stat-card--blue" id="stat-pending">
+          <div class="stat-card__label">Pending Human Review</div>
+          <div class="stat-card__value" id="stat-pending-value">3</div>
+          <div class="stat-card__meta">Awaiting decision</div>
+        </div>
+        <div class="stat-card stat-card--green" id="stat-approved">
+          <div class="stat-card__label">AI Approved</div>
+          <div class="stat-card__value" id="stat-approved-value">5</div>
+          <div class="stat-card__meta">Score ≥ 80</div>
+        </div>
+        <div class="stat-card stat-card--green" id="stat-publish">
+          <div class="stat-card__label">Ready to Publish</div>
+          <div class="stat-card__value" id="stat-publish-value">2</div>
+          <div class="stat-card__meta">Human approved</div>
+        </div>
+        <div class="stat-card stat-card--orange" id="stat-revision">
+          <div class="stat-card__label">Needs Revision</div>
+          <div class="stat-card__value" id="stat-revision-value">1</div>
+          <div class="stat-card__meta">Sent for regen</div>
+        </div>
+      </div>
+
+      <!-- Recent Reports Table -->
+      <div class="section-header">
+        <h2 class="section-title">Recent Reports</h2>
+        <div class="section-header__controls">
+          <input class="input input--search" type="search" id="report-search" placeholder="Search reports…" aria-label="Search reports" />
+          <select class="select" id="filter-status" aria-label="Filter by status">
+            <option value="">All Statuses</option>
+            <option value="Generated">Generated</option>
+            <option value="AI Reviewed">AI Reviewed</option>
+            <option value="Needs Human Review">Needs Human Review</option>
+            <option value="Needs Revision">Needs Revision</option>
+            <option value="Approved">Approved</option>
+            <option value="Ready to Publish">Ready to Publish</option>
+            <option value="Published">Published</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="table" id="reports-table" aria-label="Reports list">
+          <thead>
+            <tr>
+              <th>Report</th>
+              <th>ID</th>
+              <th>AI Score</th>
+              <th>Status</th>
+              <th>Human Review</th>
+              <th>Comments</th>
+              <th>Last Updated</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="reports-tbody">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="empty-state-reports" style="display:none;">
+        <svg class="empty-state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <div class="empty-state__title">No reports found</div>
+        <div class="empty-state__text">No reports match your current filters.</div>
+      </div>
+    </section>
+
+    <!-- REPORT REVIEW VIEW -->
+    <section class="view" id="view-review" style="display:none;" role="main">
+      <!-- Review Top Bar -->
+      <div class="review-topbar" id="review-topbar">
+        <button class="btn btn--ghost btn--icon" id="btn-back-to-list" aria-label="Back to report list">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/></svg>
+          Back
+        </button>
+        <div class="review-topbar__info">
+          <h1 class="review-topbar__title" id="review-report-title">Report Title</h1>
+          <div class="review-topbar__meta">
+            <span class="meta-item" id="review-report-id">ID: —</span>
+            <span class="meta-item" id="review-report-version">v1</span>
+            <span class="status-badge" id="review-status-badge">—</span>
+            <span class="score-chip" id="review-ai-score">AI: —</span>
+          </div>
+        </div>
+        <div class="review-topbar__actions">
+          <button class="btn btn--secondary" id="btn-save-review">Save Review</button>
+          <button class="btn btn--primary" id="btn-send-publish">Send to Publish</button>
+        </div>
+      </div>
+
+      <!-- Review Body: two columns -->
+      <div class="review-body" id="review-body">
+
+        <!-- LEFT: Report Preview -->
+        <div class="report-preview-pane" id="report-preview-pane">
+          <div class="pane-header">
+            <span class="pane-title">Report Preview</span>
+            <div class="pane-header__controls">
+              <button class="btn btn--ghost btn--xs" id="btn-zoom-out" title="Zoom out" aria-label="Zoom out">A−</button>
+              <span class="zoom-level" id="zoom-label">100%</span>
+              <button class="btn btn--ghost btn--xs" id="btn-zoom-in" title="Zoom in" aria-label="Zoom in">A+</button>
+            </div>
+          </div>
+          <div class="report-preview-scroll" id="report-preview-scroll">
+            <div class="report-document" id="report-document">
+              <!-- Populated by JS -->
+              <div class="empty-state" id="empty-state-preview">
+                <svg class="empty-state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <div class="empty-state__title">No report selected</div>
+                <div class="empty-state__text">Select a report from the list to begin review.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Review Panel -->
+        <div class="review-panel" id="review-panel">
+
+          <!-- AI Review Card -->
+          <div class="panel-card" id="ai-review-card">
+            <div class="panel-card__header" role="button" aria-expanded="true" id="ai-review-toggle">
+              <div class="panel-card__title-row">
+                <svg class="panel-card__icon" viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/></svg>
+                <span class="panel-card__title">AI Review</span>
+              </div>
+              <div class="panel-card__title-right">
+                <div class="ai-score-display" id="ai-score-display">
+                  <span class="ai-score-number" id="ai-score-number">—</span>
+                  <span class="ai-grade-badge" id="ai-grade-badge">—</span>
+                </div>
+                <svg class="chevron-icon" id="ai-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+              </div>
+            </div>
+            <div class="panel-card__body" id="ai-review-body">
+              <!-- Empty state if no AI review -->
+              <div class="empty-state empty-state--sm" id="empty-state-ai">
+                <div class="empty-state__title">No AI Review</div>
+                <div class="empty-state__text">AI review has not been generated for this report.</div>
+              </div>
+              <!-- AI Review Content (populated by JS) -->
+              <div id="ai-review-content" style="display:none;">
+                <div class="score-grid" id="score-grid"><!-- populated --></div>
+                <div class="review-subsection" id="ai-strengths-section">
+                  <div class="review-subsection__label review-subsection__label--green">Strengths</div>
+                  <ul class="review-list" id="ai-strengths"></ul>
+                </div>
+                <div class="review-subsection" id="ai-weaknesses-section">
+                  <div class="review-subsection__label review-subsection__label--red">Weaknesses</div>
+                  <ul class="review-list" id="ai-weaknesses"></ul>
+                </div>
+                <div class="review-subsection" id="ai-improvements-section">
+                  <div class="review-subsection__label review-subsection__label--orange">Priority Improvements</div>
+                  <div id="ai-improvements"></div>
+                </div>
+                <div class="review-subsection" id="ai-exec-section">
+                  <div class="review-subsection__label">Executive Readiness</div>
+                  <div class="exec-readiness-grid" id="exec-readiness-grid"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Human Review Card -->
+          <div class="panel-card" id="human-review-card">
+            <div class="panel-card__header" role="button" aria-expanded="true" id="human-review-toggle">
+              <div class="panel-card__title-row">
+                <svg class="panel-card__icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+                <span class="panel-card__title">Human Review</span>
+              </div>
+              <svg class="chevron-icon" id="human-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            </div>
+            <div class="panel-card__body" id="human-review-body">
+              <!-- Decision -->
+              <div class="form-group">
+                <label class="form-label" for="human-decision">Decision</label>
+                <div class="radio-group" role="radiogroup" aria-label="Review decision">
+                  <label class="radio-option" id="decision-approved">
+                    <input type="radio" name="human-decision" value="Approved" id="radio-approved" />
+                    <span class="radio-label">Approved</span>
+                  </label>
+                  <label class="radio-option" id="decision-revision">
+                    <input type="radio" name="human-decision" value="Needs Revision" id="radio-revision" />
+                    <span class="radio-label">Needs Revision</span>
+                  </label>
+                  <label class="radio-option" id="decision-rejected">
+                    <input type="radio" name="human-decision" value="Rejected" id="radio-rejected" />
+                    <span class="radio-label">Rejected</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Comment Form -->
+              <div class="form-group">
+                <label class="form-label" for="comment-section-select">Section</label>
+                <select class="select" id="comment-section-select" aria-label="Select section for comment">
+                  <option value="Any Section">Any Section</option>
+                  <option value="Executive Summary">Executive Summary</option>
+                  <option value="Charts">Charts</option>
+                  <option value="Recommendations">Recommendations</option>
+                  <option value="Key Highlights">Key Highlights</option>
+                  <option value="Methodology">Methodology</option>
+                  <option value="Conclusion">Conclusion</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="comment-priority">Priority</label>
+                <select class="select" id="comment-priority" aria-label="Comment priority">
+                  <option value="Low">Low</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="High">High</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="comment-text">Comment</label>
+                <textarea class="textarea" id="comment-text" rows="4" placeholder="Add your comment or revision note…" aria-label="Comment text"></textarea>
+              </div>
+
+              <button class="btn btn--secondary btn--full" id="btn-submit-comment">
+                <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"/></svg>
+                Submit Comment
+              </button>
+
+              <!-- Action Buttons -->
+              <div class="action-buttons" id="action-buttons">
+                <button class="btn btn--success btn--full" id="btn-mark-done">
+                  <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  Mark as Done
+                </button>
+                <button class="btn btn--danger btn--full" id="btn-request-revision">
+                  <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1z" clip-rule="evenodd"/></svg>
+                  Request Regeneration
+                </button>
+                <button class="btn btn--ghost btn--full btn--danger-ghost" id="btn-reject-report">
+                  Reject Report
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comments Thread -->
+          <div class="panel-card" id="comments-card">
+            <div class="panel-card__header" role="button" aria-expanded="true" id="comments-toggle">
+              <div class="panel-card__title-row">
+                <svg class="panel-card__icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"/></svg>
+                <span class="panel-card__title">Comments</span>
+                <span class="badge badge--blue badge--sm" id="comment-count-badge">0</span>
+              </div>
+              <svg class="chevron-icon" id="comments-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            </div>
+            <div class="panel-card__body" id="comments-body">
+              <div class="empty-state empty-state--sm" id="empty-state-comments">
+                <svg class="empty-state__icon empty-state__icon--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                <div class="empty-state__title">No comments yet</div>
+                <div class="empty-state__text">Add comments above to begin the review thread.</div>
+              </div>
+              <div class="comments-thread" id="comments-thread" style="display:none;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PENDING VIEW -->
+    <section class="view" id="view-pending" style="display:none;" role="main">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Pending Review</h1>
+          <p class="page-subtitle">Reports awaiting human review decision</p>
+        </div>
+      </div>
+      <div class="report-grid" id="pending-grid"></div>
+      <div class="empty-state" id="empty-state-pending" style="display:none;">
+        <svg class="empty-state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div class="empty-state__title">All clear!</div>
+        <div class="empty-state__text">No reports are pending human review.</div>
+      </div>
+    </section>
+
+    <!-- REVIEWED VIEW -->
+    <section class="view" id="view-reviewed" style="display:none;" role="main">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Reviewed</h1>
+          <p class="page-subtitle">Reports that have completed human review</p>
+        </div>
+      </div>
+      <div class="report-grid" id="reviewed-grid"></div>
+      <div class="empty-state" id="empty-state-reviewed" style="display:none;">
+        <svg class="empty-state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        <div class="empty-state__title">No reviewed reports</div>
+        <div class="empty-state__text">Reports will appear here after human review is complete.</div>
+      </div>
+    </section>
+
+    <!-- PUBLISHED VIEW -->
+    <section class="view" id="view-published" style="display:none;" role="main">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Published</h1>
+          <p class="page-subtitle">Reports sent to publish</p>
+        </div>
+      </div>
+      <div class="report-grid" id="published-grid"></div>
+      <div class="empty-state" id="empty-state-published" style="display:none;">
+        <svg class="empty-state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+        <div class="empty-state__title">Nothing published yet</div>
+        <div class="empty-state__text">Approved reports will appear here after publishing.</div>
+      </div>
+    </section>
+
+    <!-- REVISIONS VIEW -->
+    <section class="view" id="view-revisions" style="display:none;" role="main">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Revisions</h1>
+          <p class="page-subtitle">Reports sent back for AI regeneration</p>
+        </div>
+      </div>
+      <div class="report-grid" id="revisions-grid"></div>
+      <div class="empty-state" id="empty-state-revisions" style="display:none;">
+        <svg class="empty-state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+        <div class="empty-state__title">No revisions queued</div>
+        <div class="empty-state__text">Reports sent for regeneration will appear here.</div>
+      </div>
+    </section>
+
+    <!-- SETTINGS VIEW -->
+    <section class="view" id="view-settings" style="display:none;" role="main">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Settings</h1>
+          <p class="page-subtitle">Reviewer preferences and system configuration</p>
+        </div>
+      </div>
+      <div class="settings-panel">
+        <div class="settings-section">
+          <h2 class="settings-section__title">Reviewer Profile</h2>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="setting-name">Reviewer Name</label>
+              <input class="input" type="text" id="setting-name" value="Senior Reviewer" placeholder="Your name" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="setting-role">Role</label>
+              <input class="input" type="text" id="setting-role" value="Editorial Lead" placeholder="Your role" />
+            </div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h2 class="settings-section__title">Review Preferences</h2>
+          <div class="form-group">
+            <label class="form-label" for="setting-threshold">AI Score Threshold for Human Review</label>
+            <input class="input" type="number" id="setting-threshold" value="80" min="0" max="100" />
+            <span class="form-hint">Reports below this score are flagged for mandatory human review.</span>
+          </div>
+        </div>
+        <div class="settings-section">
+          <button class="btn btn--primary" id="btn-save-settings">Save Settings</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/review.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
