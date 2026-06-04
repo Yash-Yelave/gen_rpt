@@ -15,8 +15,8 @@ export const ReportReview: React.FC = () => {
   const { reportId } = useParams<{ reportId: string }>();
   const navigate = useNavigate();
   const { data: report, isLoading } = useReport(reportId ?? '');
-  const resetForm = useReviewStore((s) => s.reset);
-  const setDecision = useReviewStore((s) => s.setDecision);
+  const resetForm = useReviewStore((s: any) => s.reset);
+  const setDecision = useReviewStore((s: any) => s.setDecision);
 
   // Sync form with report's current humanStatus if it matches a valid decision
   useEffect(() => {
