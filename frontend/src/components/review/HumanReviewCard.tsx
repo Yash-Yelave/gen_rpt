@@ -123,7 +123,7 @@ export const HumanReviewCard: React.FC<Props> = ({ report }) => {
           onChange={(e) => setCommentSection(e.target.value)}
           className="w-full px-3 py-1.5 border border-gray-200 rounded text-sm text-gray-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 bg-white cursor-pointer"
         >
-          {REPORT_SECTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
+          {REPORT_SECTIONS.map((s: string) => <option key={s} value={s}>{s}</option>)}
         </select>
       </div>
 
@@ -138,7 +138,7 @@ export const HumanReviewCard: React.FC<Props> = ({ report }) => {
           onChange={(e) => setCommentPriority(e.target.value)}
           className="w-full px-3 py-1.5 border border-gray-200 rounded text-sm text-gray-800 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 bg-white cursor-pointer"
         >
-          {COMMENT_PRIORITIES.map((p) => <option key={p} value={p}>{p}</option>)}
+          {COMMENT_PRIORITIES.map((p: string) => <option key={p} value={p}>{p}</option>)}
         </select>
       </div>
 
