@@ -1,8 +1,8 @@
 // src/components/report/ReportPreview.tsx
-import React, { useMemo } from 'react';
+import React from 'react';
 import type { Report, ReportSection } from '@/types';
 import { useUIStore } from '@/store/uiStore';
-import { ZoomIn, ZoomOut } from 'lucide-react';
+
 
 interface Props {
   report: Report;
