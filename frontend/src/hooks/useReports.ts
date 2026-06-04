@@ -26,18 +26,18 @@ export function useDashboardMetrics() {
   const { data: reports = [] } = useReports();
   return {
     total: reports.length,
-    pendingHuman: reports.filter((r) =>
+    pendingHuman: reports.filter((r: Report) =>
       [ReportStatus.NeedsHumanReview, ReportStatus.AIReviewed].includes(r.status as ReportStatus)
     ).length,
-    aiApproved: reports.filter((r) => r.aiScore >= 80 && r.aiReview !== null).length,
-    readyToPublish: reports.filter((r) => r.publishReady).length,
-    needsRevision: reports.filter((r) => r.status === ReportStatus.NeedsRevision).length,
+    aiApproved: reports.filter((r: Report) => r.aiScore >= 80 && r.aiReview !== null).length,
+    readyToPublish: reports.filter((r: Report) => r.publishReady).length,
+    needsRevision: reports.filter((r: Report) => r.status === ReportStatus.NeedsRevision).length,
   };
 }
 
 export function useFilteredReports(statuses: string[]) {
   const { data: reports = [] } = useReports();
-  return reports.filter((r) => statuses.includes(r.status));
+  return reports.filter((r: Report) => statuses.includes(r.status));
 }
 
 export function useUpdateReportStatus() {
