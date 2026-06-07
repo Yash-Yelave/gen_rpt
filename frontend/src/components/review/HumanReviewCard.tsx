@@ -22,10 +22,14 @@ const decisionSelectedClass: Record<string, string> = {
 };
 
 export const HumanReviewCard: React.FC<Props> = ({ report }) => {
-  const {
-    decision, commentText, commentSection, commentPriority,
-    setDecision, setCommentText, setCommentSection, setCommentPriority,
-  } = useReviewStore();
+  const decision = useReviewStore((s) => s.decision);
+  const commentText = useReviewStore((s) => s.commentText);
+  const commentSection = useReviewStore((s) => s.commentSection);
+  const commentPriority = useReviewStore((s) => s.commentPriority);
+  const setDecision = useReviewStore((s) => s.setDecision);
+  const setCommentText = useReviewStore((s) => s.setCommentText);
+  const setCommentSection = useReviewStore((s) => s.setCommentSection);
+  const setCommentPriority = useReviewStore((s) => s.setCommentPriority);
 
   const { reviewerName } = useAuthStore();
   const { showToast } = useUIStore();
@@ -94,7 +98,7 @@ export const HumanReviewCard: React.FC<Props> = ({ report }) => {
           {DECISIONS.map((d) => (
             <label
               key={d}
-              className={`flex items-center gap-1.5 px-3 py-1.5 border rounded cursor-pointer transition-colors text-sm text-gray-600 hover:bg-gray-50 ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 border rounded cursor-pointer transition-colors text-sm text-gray-600 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-blue-500/50 ${
                 decision === d ? decisionSelectedClass[d] : 'border-gray-200'
               }`}
             >
@@ -160,7 +164,7 @@ export const HumanReviewCard: React.FC<Props> = ({ report }) => {
       <button
         onClick={handleSubmitComment}
         disabled={actions.submitComment.isPending}
-        className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded hover:bg-gray-50 hover:border-gray-300 transition-colors disabled:opacity-50 mb-3"
+        className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded hover:bg-gray-50 hover:border-gray-300 transition-colors disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 mb-3"
       >
         + Submit Comment
       </button>
@@ -170,35 +174,35 @@ export const HumanReviewCard: React.FC<Props> = ({ report }) => {
         <button
           onClick={handleSaveReview}
           disabled={actions.saveReview.isPending}
-          className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded hover:bg-gray-50 transition-colors disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded hover:bg-gray-50 transition-colors disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50"
         >
           Save Review
         </button>
         <button
           onClick={handleMarkDone}
           disabled={actions.markDone.isPending}
-          className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-700 transition-colors disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-700 transition-colors disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500/50"
         >
           ✓ Mark as Done
         </button>
         <button
           onClick={handleSendToPublish}
           disabled={actions.sendToPublish.isPending}
-          className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-blue-700 text-white text-sm font-medium rounded hover:bg-blue-800 transition-colors disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-blue-700 text-white text-sm font-medium rounded hover:bg-blue-800 transition-colors disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50"
         >
           Send to Publish
         </button>
         <button
           onClick={handleRequestRegeneration}
           disabled={actions.requestRegeneration.isPending}
-          className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700 transition-colors disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700 transition-colors disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500/50"
         >
           ↻ Request Regeneration
         </button>
         <button
           onClick={handleReject}
           disabled={actions.rejectReport.isPending}
-          className="w-full px-3 py-2 bg-transparent border border-red-100 text-red-600 text-sm font-medium rounded hover:bg-red-50 transition-colors disabled:opacity-50"
+          className="w-full px-3 py-2 bg-transparent border border-red-100 text-red-600 text-sm font-medium rounded hover:bg-red-50 transition-colors disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500/50"
         >
           Reject Report
         </button>
