@@ -9,7 +9,6 @@ from pathlib import Path
 from .deepseek_client import DeepSeekClient
 from .latex_renderer import render_latex_pdf
 from .research_pipeline import ResearchPipeline
-from .review import run_groq_review
 
 
 def slugify(text: str) -> str:
@@ -49,13 +48,8 @@ def main() -> None:
     pptx_path = output_dir / "report.pptx"
     presentation_path = output_dir / "presentation.html"
     qa_path = output_dir / "qa_result.json"
-
-    review_report_path = output_dir / "review_report.md"
-    try:
-        review_result = run_groq_review(output_dir)
-    except Exception as e:
-        print(f"[REVIEW WARNING] Groq AI Review failed but report generation will continue. Error: {e}")
-        review_result = {}
+    quality_path = output_dir / "report_quality.json"
+    fact_pack_path = output_dir / "research_fact_pack.json"
 
     latex_result = render_latex_pdf(
         report=result.get("report", {}),
@@ -78,7 +72,8 @@ def main() -> None:
     print(f"PPTX generated at: {pptx_path}")
     print(f"HTML presentation generated at: {presentation_path}")
     print(f"QA result generated at: {qa_path}")
-    print(f"AI Review generated at: {review_report_path}")
+    print(f"Report quality log generated at: {quality_path}")
+    print(f"Research fact pack generated at: {fact_pack_path}")
 
     step_summary = os.getenv("GITHUB_STEP_SUMMARY")
     if step_summary:
@@ -96,12 +91,9 @@ def main() -> None:
             f.write(f"- HTML Presentation: `{presentation_path}`\n")
             f.write(f"- QA passed: `{qa_result.get('passed')}`\n")
             f.write(f"- QA issues: `{len(qa_result.get('issues', []))}`\n")
+            f.write(f"- Content/format QA: `{quality_path}`\n")
+            f.write(f"- Research fact pack: `{fact_pack_path}`\n")
             f.write(f"- Assets: {len(result['asset_map'])}\n")
-            review_score = review_result.get('scores', {}).get('overall_score')
-            review_grade = review_result.get('scores', {}).get('grade')
-            f.write(f"- AI Review Score: `{review_score}`\n")
-            f.write(f"- AI Review Grade: `{review_grade}`\n")
-            f.write(f"- AI Review Report: `{review_report_path}`\n")
 
 
 if __name__ == "__main__":

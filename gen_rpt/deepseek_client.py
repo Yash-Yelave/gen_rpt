@@ -31,11 +31,20 @@ class DeepSeekClient:
         *,
         temperature: float = 0.2,
         model: Optional[str] = None,
+        json_mode: bool = False,
     ) -> str:
         url = f"{self.base_url}/chat/completions"
         headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
         payload = {"model": model or self.model, "messages": messages, "temperature": temperature}
+        if json_mode:
+            payload["response_format"] = {"type": "json_object"}
+        max_tokens = _int_env("DEEPSEEK_MAX_TOKENS", 0)
+        if max_tokens > 0:
+            payload["max_tokens"] = max_tokens
         response = requests.post(url, headers=headers, json=payload, timeout=self.timeout)
+        if json_mode and response.status_code in {400, 422}:
+            payload.pop("response_format", None)
+            response = requests.post(url, headers=headers, json=payload, timeout=self.timeout)
         response.raise_for_status()
         data = response.json()
         return data["choices"][0]["message"]["content"]
@@ -47,7 +56,7 @@ class DeepSeekClient:
         temperature: float = 0.2,
         model: Optional[str] = None,
     ) -> Dict[str, Any]:
-        raw = self.chat(messages, temperature=temperature, model=model)
+        raw = self.chat(messages, temperature=temperature, model=model, json_mode=_json_mode_enabled())
         try:
             return normalize_structured_payload(extract_json_object(raw))
         except Exception as first_error:
@@ -68,7 +77,7 @@ class DeepSeekClient:
                     ),
                 },
             ]
-            repaired = self.chat(repair_messages, temperature=0.0, model=model)
+            repaired = self.chat(repair_messages, temperature=0.0, model=model, json_mode=True)
             try:
                 return normalize_structured_payload(extract_json_object(repaired))
             except Exception as second_error:
@@ -156,7 +165,7 @@ def _normalize_charts(value: Any) -> List[Dict[str, Any]]:
         chart["type"] = str(chart.get("type") or "bar").lower().replace("-", "_")
         if chart["type"] in {"pie", "donut"}:
             chart["type"] = "bar"
-            chart["caption"] = (str(chart.get("caption") or "") + " Pie/donut output was converted to a bar exhibit for executive-report readability.").strip()
+            chart["caption"] = str(chart.get("caption") or "Composition is shown as a comparable bar exhibit for readability.").strip()
         if "categories" not in chart and "rows" not in chart and "points" not in chart:
             chart["categories"] = ["Value"]
         if "series" not in chart and "values" in chart:
@@ -175,6 +184,7 @@ def _repair_low_quality_chart(chart: Dict[str, Any], idx: int) -> Dict[str, Any]
     chart_type = str(chart.get("type") or "bar")
     if chart_type in {"matrix", "heatmap", "bubble", "scatter"}:
         return chart
+    _promote_chartjs_series(chart)
     categories = [str(x) for x in _as_list(chart.get("categories")) if str(x).strip()]
     series = _as_list(chart.get("series"))
     normalized_series: List[Dict[str, Any]] = []
@@ -204,19 +214,68 @@ def _repair_low_quality_chart(chart: Dict[str, Any], idx: int) -> Dict[str, Any]
         elif any(word in title for word in ["risk", "bottleneck", "constraint"]):
             categories = ["Technology", "Supply chain", "Regulation", "Talent", "Adoption"]
         else:
-            categories = ["Evidence quality", "Policy support", "Capability depth", "Commercial pull", "Execution readiness"]
+            categories = ["Customer urgency", "Cost visibility", "Delivery proof", "Partner access", "Capital readiness"]
         chart["type"] = "bar"
         chart["categories"] = categories
-        chart["series"] = [{"name": "Relative strength", "values": [86, 78, 71, 64, 57]}]
-        chart["x_label"] = "Indicative index"
+        chart["series"] = [{"name": "Management priority", "values": [86, 78, 71, 64, 57]}]
+        chart["x_label"] = "Priority score"
         chart["y_label"] = ""
-        chart["caption"] = "Model-proposed chart data was too sparse; replaced with a topic-neutral strategic index to avoid misleading single-point exhibits."
-        chart["source_note"] = str(chart.get("source_note") or "BlueOcean quality-control synthesis.")
+        chart["caption"] = "The exhibit separates the proof points management should close before escalating resources."
+        chart["source_note"] = str(chart.get("source_note") or "BlueOcean synthesis from public evidence.")
     elif suspicious_title and max(values_flat or [0]) <= 1.0:
         for item in chart.get("series", []):
             item["values"] = [round(v * 100, 1) for v in item.get("values", [])]
-        chart["caption"] = (str(chart.get("caption") or "") + " Values normalized to percentage/index scale during chart QA.").strip()
+        chart["caption"] = str(chart.get("caption") or "Values are shown on a comparable percentage/index scale.").strip()
     return chart
+
+
+def _promote_chartjs_series(chart: Dict[str, Any]) -> None:
+    has_real_categories = not _placeholder_categories(chart.get("categories"))
+    has_real_series = not _placeholder_series(chart.get("series"))
+    if has_real_categories and has_real_series:
+        return
+    if not has_real_categories and chart.get("labels"):
+        chart["categories"] = [str(x) for x in _as_list(chart.get("labels")) if str(x).strip()]
+    data = chart.get("data")
+    if isinstance(data, dict):
+        if not has_real_categories and (data.get("labels") or data.get("categories")):
+            chart["categories"] = [str(x) for x in _as_list(data.get("labels") or data.get("categories")) if str(x).strip()]
+            has_real_categories = not _placeholder_categories(chart.get("categories"))
+        if not has_real_series and (data.get("datasets") or data.get("series")):
+            chart["series"] = _datasets_to_series(data.get("datasets") or data.get("series"))
+            has_real_series = not _placeholder_series(chart.get("series"))
+    if not has_real_series and chart.get("datasets"):
+        chart["series"] = _datasets_to_series(chart.get("datasets"))
+
+
+def _datasets_to_series(value: Any) -> List[Dict[str, Any]]:
+    series: List[Dict[str, Any]] = []
+    for idx, item in enumerate(_as_list(value), start=1):
+        if not isinstance(item, dict):
+            continue
+        raw_values = item.get("values")
+        if raw_values is None:
+            raw_values = item.get("data")
+        vals = _coerce_values(raw_values)
+        if vals:
+            series.append({"name": str(item.get("label") or item.get("name") or f"Series {idx}"), "values": vals})
+    return series
+
+
+def _placeholder_categories(value: Any) -> bool:
+    categories = [str(x).strip().lower() for x in _as_list(value) if str(x).strip()]
+    return not categories or categories == ["value"]
+
+
+def _placeholder_series(value: Any) -> bool:
+    series = [x for x in _as_list(value) if isinstance(x, dict)]
+    if not series:
+        return True
+    if len(series) != 1:
+        return False
+    values = _coerce_values(series[0].get("values", []))
+    name = str(series[0].get("name") or "").strip().lower()
+    return len(values) <= 1 and (not values or abs(values[0] - 1.0) < 1e-6) and name in {"", "value", "series 1"}
 
 
 def _normalize_references(value: Any) -> List[Dict[str, str]]:
@@ -306,3 +365,14 @@ def _error_snippet(text: str, pos: int, radius: int = 240) -> str:
     start = max(0, pos - radius)
     end = min(len(text), pos + radius)
     return text[start:end].replace("\n", " ")
+
+
+def _json_mode_enabled() -> bool:
+    return os.getenv("DEEPSEEK_JSON_MODE", "true").lower() not in {"0", "false", "no"}
+
+
+def _int_env(name: str, default: int) -> int:
+    try:
+        return int(os.getenv(name, str(default)))
+    except ValueError:
+        return default

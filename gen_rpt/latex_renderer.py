@@ -1,45 +1,65 @@
 from __future__ import annotations
 
 import re
+import os
 import shutil
 import subprocess
 import unicodedata
+from datetime import date
 from pathlib import Path
 from typing import Any, Dict, List
 
+PROCESS_LANGUAGE_PATTERNS = (
+    r"\bthis\s+(?:chapter|section)\s+(?:therefore\s+)?(?:concludes|finds|shows|argues|frames|explains|demonstrates|sets\s+out|assesses|analyzes|translates)\s+that\b",
+    r"\bthis\s+(?:chapter|section)\s+(?:therefore\s+)?(?:frames|sets\s+out|assesses|analyzes|explains|translates)\s+the\s+(?:topic|issue|question)\b",
+    r"\bthe\s+(?:chapter|section)\s+(?:therefore\s+)?(?:concludes|finds|shows|argues|frames|explains|demonstrates|sets\s+out|assesses|analyzes|translates)\s+that\b",
+    r"\bthis\s+(?:chapter|section)\s+is\s+about\b",
+    r"\bthis\s+(?:chapter|section)\s+will\b",
+)
+
 HEADER = r'''
 \documentclass[10pt,a4paper]{article}
-\usepackage[a4paper,margin=14mm,top=13mm,bottom=14mm]{geometry}
+\usepackage[a4paper,margin=14mm,top=18mm,bottom=20mm,headheight=12pt,headsep=5mm,footskip=9mm]{geometry}
 \usepackage{fontspec}
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{tikz}
+\usepackage{eso-pic}
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{fancyhdr}
 \usepackage{needspace}
+\usepackage{multicol}
+\usepackage{enumitem}
 \defaultfontfeatures{Ligatures=NoCommon}
 \IfFontExistsTF{Noto Sans CJK SC}{\setmainfont{Noto Sans CJK SC}\setsansfont{Noto Sans CJK SC}}{\setmainfont{DejaVu Sans}\setsansfont{DejaVu Sans}}
-\definecolor{BOBlue}{HTML}{0055A4}
-\definecolor{BOBright}{HTML}{3273F6}
-\definecolor{BONavy}{HTML}{051C2C}
-\definecolor{BOMuted}{HTML}{6F7F8F}
-\definecolor{BOLine}{HTML}{DCE3EA}
-\definecolor{BOLight}{HTML}{F4F8FC}
+\IfFontExistsTF{DejaVu Sans}{\newfontfamily\BOQuoteFont{DejaVu Sans}}{\newfontfamily\BOQuoteFont{Latin Modern Sans}}
+\newcommand{\BOApos}{{\BOQuoteFont\char"0027}}
+\definecolor{BOBlue}{HTML}{0E6B72}
+\definecolor{BOBright}{HTML}{20A66A}
+\definecolor{BOGreen}{HTML}{00A651}
+\definecolor{BONavy}{HTML}{1B2A34}
+\definecolor{BOText}{HTML}{24323A}
+\definecolor{BOMuted}{HTML}{7C878E}
+\definecolor{BOLine}{HTML}{D9E1E6}
+\definecolor{BOLight}{HTML}{F2F6F4}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{4.2pt}
+\setlength{\parskip}{3.2pt}
 \setlength{\tabcolsep}{5pt}
-\renewcommand{\arraystretch}{1.16}
-\hyphenpenalty=9000
-\exhyphenpenalty=9000
-\emergencystretch=2em
+\setlist[itemize]{leftmargin=12pt,itemsep=1.5pt,topsep=2pt,parsep=0pt}
+\renewcommand{\arraystretch}{1.12}
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\emergencystretch=4em
 \sloppy
 \pagestyle{fancy}
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
-\fancyhead[L]{\scriptsize\color{BOMuted} BLUEOCEAN | CONFIDENTIAL}
-\fancyfoot[L]{\scriptsize\color{BOMuted} BlueOcean | Confidential}
+\fancyhead[L]{}
+\fancyhead[R]{}
+\fancyfoot[L]{\scriptsize\color{BOMuted} BlueOcean}
+\fancyfoot[C]{\scriptsize\color{BOMuted} Deep Research Report}
 \fancyfoot[R]{\scriptsize\color{BOMuted} \thepage}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 '''
@@ -50,13 +70,16 @@ def render_latex_pdf(report: Dict[str, Any], assets: Dict[str, str], output_dir:
     tex_path = output_dir / 'report_latex.tex'
     pdf_path = output_dir / 'report_latex.pdf'
     tex_path.write_text(_build_tex(report, assets, topic), encoding='utf-8')
+    if os.getenv('GEN_RPT_SKIP_LATEX_COMPILE', '').lower() in {'1', 'true', 'yes'}:
+        (output_dir / 'latex_error.txt').write_text('LaTeX compile skipped by GEN_RPT_SKIP_LATEX_COMPILE.\n', encoding='utf-8')
+        return {'tex_path': str(tex_path), 'pdf_path': ''}
     xelatex = shutil.which('xelatex')
     if not xelatex:
         (output_dir / 'latex_error.txt').write_text('xelatex not found.\n', encoding='utf-8')
         return {'tex_path': str(tex_path), 'pdf_path': ''}
     try:
         log = ''
-        for _ in range(2):
+        for _ in range(1):
             run = subprocess.run([xelatex, '-interaction=nonstopmode', '-halt-on-error', tex_path.name], cwd=str(output_dir), check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, timeout=180)
             log += run.stdout[-4000:]
         (output_dir / 'latex_build.log').write_text(log, encoding='utf-8')
@@ -71,73 +94,354 @@ def render_latex_pdf(report: Dict[str, Any], assets: Dict[str, str], output_dir:
 
 def _build_tex(report: Dict[str, Any], assets: Dict[str, str], topic: str) -> str:
     title_text = str(report.get('report_title') or topic)
-    title = _tex(title_text)
     summary = _summary_items(report.get('executive_summary', []))
     sections = _repair_sections(report, _safe_sections(report.get('sections', [])), topic, summary)
+    charts = _safe_charts(report.get('charts', []))
     refs = report.get('reference_institutions', []) or []
     parts = [HEADER, '\\begin{document}', '\\raggedright']
-    parts.append(_cover_page(title, _asset_path(assets.get('cover-background', ''))))
-    parts.append(_agenda_and_contents_page(summary, sections))
+    parts.append(_cover_page(title_text, _asset_path(assets.get('cover-background', '')), topic))
+    parts.append(_agenda_and_contents_page(summary, sections, charts))
+    parts.append(_opening_page(report, summary, sections, assets, topic))
+    parts.append(_evidence_opening_page(report, summary, sections, assets, topic))
+    chart_groups = _chart_groups(charts)
+    front_group_count = min(2, len(chart_groups))
+    chart_index = 0
+    for group in chart_groups[:front_group_count]:
+        parts.append(_exhibit_page(group, assets, chart_index + 1))
+        chart_index += len(group)
+    remaining_groups = chart_groups[front_group_count:]
+    remaining_group_index = 0
     for idx, section in enumerate(sections, start=1):
         parts.append(_chapter_block(section, assets, idx))
+        if idx in {1, 2, 4, 6, 8, 10} and remaining_group_index < len(remaining_groups):
+            group = remaining_groups[remaining_group_index]
+            parts.append(_exhibit_page(group, assets, chart_index + 1))
+            remaining_group_index += 1
+            chart_index += len(group)
+    while remaining_group_index < len(remaining_groups):
+        group = remaining_groups[remaining_group_index]
+        parts.append(_exhibit_page(group, assets, chart_index + 1))
+        remaining_group_index += 1
+        chart_index += len(group)
     parts.append(_disclaimer_page(refs))
+    parts.append(_about_blueocean_page(report, refs))
+    parts.append(_back_cover_page(_asset_path(assets.get('cover-background', ''))))
     parts.append('\\end{document}\n')
     return '\n'.join(parts)
 
 
-def _cover_page(title: str, cover: str) -> str:
-    if cover:
-        bg = '\\node[anchor=south west,inner sep=0] at (current page.south west) {\\includegraphics[width=\\paperwidth,height=\\paperheight]{' + cover + '}};\n\\fill[BONavy,opacity=.18] (current page.south west) rectangle (current page.north east);'
-    else:
-        bg = '\\fill[BONavy] (current page.south west) rectangle (current page.north east);'
-    return r'''
-\thispagestyle{empty}
-\begin{tikzpicture}[remember picture,overlay]
-''' + bg + r'''
-\fill[white,opacity=.96] ([xshift=17mm,yshift=-28mm]current page.north west) rectangle ++(150mm,-62mm);
-\fill[BOBright] ([xshift=17mm,yshift=-28mm]current page.north west) rectangle ++(150mm,-2.1mm);
-\node[anchor=north west,text width=132mm] at ([xshift=25mm,yshift=-37mm]current page.north west) {\sffamily\scriptsize\bfseries\color{BOBlue} BLUEOCEAN\\DEEP RESEARCH REPORT};
-\node[anchor=north west,text width=132mm] at ([xshift=25mm,yshift=-53mm]current page.north west) {\parbox{132mm}{\raggedright\sffamily\fontsize{22}{25}\selectfont\color{BONavy} ''' + title + r'''}};
-\end{tikzpicture}
+def _cover_page(title: str, cover: str, topic: str) -> str:
+    prepared = _tex(date.today().isoformat())
+    topic_line = _tex(_shorten(topic, 180))
+    title_lines = _cover_title_lines(title)
+    title_tex = r'\\[1.3mm]'.join(_tex(line) for line in title_lines)
+    return (
+        '\n\\clearpage\n\\thispagestyle{empty}\n'
+        + _page_background(cover)
+        + r'''
+\vspace*{7mm}
+\noindent\hspace*{2mm}{\setlength{\fboxsep}{8mm}\fcolorbox{white}{white}{\begin{minipage}{132mm}
+\raggedright
+{\sffamily\scriptsize\bfseries\color{BOMuted} BLUEOCEAN RESEARCH}\par\vspace{5pt}
+{\textcolor{BOGreen}{\rule{132mm}{1.5pt}}}\par\vspace{8pt}
+{\sffamily\fontsize{21}{26}\selectfont\color{BONavy} ''' + title_tex + r'''}\par\vspace{10pt}
+{\sffamily\scriptsize\bfseries\color{BOText} ''' + topic_line + r'''}\par\vspace{3pt}
+{\sffamily\scriptsize\color{BOMuted} ''' + prepared + r'''}
+\end{minipage}}}
+\vfill
+\begin{flushright}
+{\sffamily\bfseries\Large\color{white} BlueOcean}\hspace*{3mm}
+\end{flushright}
+\vspace*{7mm}
 \clearpage
 '''
+    )
 
 
-def _agenda_and_contents_page(summary: List[str], sections: List[Dict[str, Any]]) -> str:
-    heading = _agenda_heading(summary, sections)
-    summary_rows = []
-    for idx, item in enumerate(summary[:5], start=1):
-        summary_rows.append('\\textcolor{BOBlue}{\\bfseries ' + f'{idx:02d}' + '} & {\\footnotesize ' + _tex(_shorten(item, 245)) + '} \\\\[4pt]\n')
-    if not summary_rows:
-        summary_rows.append('\\textcolor{BOBlue}{\\bfseries 01} & {\\footnotesize Leadership should align resources to the few facts that change strategic choices.} \\\\[4pt]\n')
+def _cover_title_lines(title: str, *, max_chars: int = 34, max_lines: int = 4) -> List[str]:
+    words = _normalize_punctuation(title).split()
+    if not words:
+        return ['Untitled report']
+    lines: List[str] = []
+    current: List[str] = []
+    for word in words:
+        candidate = ' '.join(current + [word])
+        if current and len(candidate) > max_chars:
+            lines.append(' '.join(current))
+            current = [word]
+        else:
+            current.append(word)
+    if current:
+        lines.append(' '.join(current))
+    if len(lines) > max_lines:
+        merged_tail = ' '.join(lines[max_lines - 1:])
+        lines = lines[:max_lines - 1] + [_shorten(merged_tail, max_chars + 8)]
+    return lines
 
-    content_rows = []
+
+def _page_background(path: str) -> str:
+    if path:
+        return '\\AddToShipoutPictureBG*{\\AtPageLowerLeft{\\includegraphics[width=\\paperwidth,height=\\paperheight]{' + path + '}}}\n'
+    return '\\AddToShipoutPictureBG*{\\AtPageLowerLeft{\\color{BONavy}\\rule{\\paperwidth}{\\paperheight}}}\n'
+
+
+def _agenda_and_contents_page(summary: List[str], sections: List[Dict[str, Any]], charts: List[Dict[str, Any]]) -> str:
+    rows = []
+    for page_no, title_raw, hints in _content_page_rows(summary, sections, charts):
+        title = _tex(_shorten(title_raw, 150))
+        rows.append('\\textcolor{BOGreen}{\\bfseries ' + page_no + '} & {\\footnotesize ' + title + '} \\\\[4pt]\n')
+        for sub in hints[:1]:
+            rows.append(' & {\\scriptsize\\color{BOMuted} ' + _tex(_display_bullet(sub, 118)) + '} \\\\[1pt]\n')
+    return (
+        '\\clearpage\n'
+        + _green_rule('42mm')
+        + '{\\sffamily\\fontsize{26}{31}\\selectfont\\color{BONavy} Contents}\\par\\vspace{10pt}\n'
+        + '\\begin{minipage}[t]{0.95\\linewidth}\n'
+        + '\\begin{tabularx}{\\linewidth}{p{12mm}Y}\n'
+        + ''.join(rows)
+        + '\\end{tabularx}\n'
+        + '\\end{minipage}\n'
+        + '\\clearpage\n'
+    )
+
+
+def _content_page_rows(summary: List[str], sections: List[Dict[str, Any]], charts: List[Dict[str, Any]]) -> List[tuple[str, str, List[str]]]:
+    chart_groups = _chart_groups(charts)
+    front_group_count = min(2, len(chart_groups))
+    rows: List[tuple[str, str, List[str]]] = [('03', _agenda_heading(summary, sections), [])]
+    rows.append(('04', _exhibit_contents_title(charts[:2], 'Commercialization milestones and constraints'), []))
+    if chart_groups:
+        rows.append(('05', _exhibit_contents_title(charts[2:4] or charts[:2], 'Capital, cost and first-market economics'), []))
+    page_no = 5 + front_group_count
+    chart_pages_needed = (len(charts) + 1) // 2
+    chart_pages = front_group_count
     for idx, section in enumerate(sections, start=1):
-        title = _tex(_strip_number_prefix(section.get('title', 'Section')))
-        content_rows.append('\\textcolor{BOBlue}{\\bfseries ' + str(idx) + '} & ' + title + ' & {\\color{BOMuted}pp.~\\pageref{chap:' + str(idx) + '}--\\pageref{chap:' + str(idx) + ':end}} \\\\[3pt]\n')
+        rows.append((f'{page_no:02d}', _strip_number_prefix(section.get('title', 'Section')), []))
+        page_no += 1
+        if idx in {1, 2, 4, 6, 8, 10} and chart_pages < chart_pages_needed:
+            page_no += 1
+            chart_pages += 1
+    while chart_pages < chart_pages_needed:
+        page_no += 1
+        chart_pages += 1
+    rows.append((f'{page_no:02d}', 'About the research', []))
+    return rows
 
-    return _kicker('Executive conclusions and contents') + _heading(heading) + _rule() + '\\begin{tabularx}{\\linewidth}{p{12mm}Y}\n' + ''.join(summary_rows) + '\\end{tabularx}\n\\vspace{6pt}\n{\\textcolor{BOBlue}{\\scriptsize\\bfseries CONTENTS}}\\par\\vspace{2pt}\n\\begin{tabularx}{\\linewidth}{p{8mm}Yp{29mm}}\n' + ''.join(content_rows) + '\\end{tabularx}\n\\clearpage\n'
+
+def _exhibit_contents_title(charts: List[Dict[str, Any]], fallback: str) -> str:
+    titles = []
+    for chart in charts:
+        title = _reader_clean(str(chart.get('title') or '').strip())
+        if title:
+            titles.append(_chart_title(title, 86))
+    if titles:
+        return '; '.join(titles[:2])
+    return fallback
+
+
+def _chart_groups(charts: List[Dict[str, Any]]) -> List[List[Dict[str, Any]]]:
+    return [charts[idx:idx + 2] for idx in range(0, len(charts), 2)]
+
+
+def _opening_page(report: Dict[str, Any], summary: List[str], sections: List[Dict[str, Any]], assets: Dict[str, str], topic: str) -> str:
+    heading_raw = _agenda_heading(summary, sections)
+    title = _tex(_shorten(heading_raw, 135))
+    narrative = _normalize_punctuation(str(report.get('executive_summary_text') or '').strip())
+    if not narrative:
+        narrative = ' '.join(summary[:3])
+    narrative = _strip_redundant_opening(heading_raw, narrative)
+    narrative = _tex(_shorten(narrative, 1200))
+    visual = _asset_path(assets.get('image-1', '')) or _asset_path(assets.get('cover-background', ''))
+    image = _image_strip(visual, '58mm') if visual else ''
+    left = narrative
+    right_bits: List[str] = []
+    for section in sections[:2]:
+        right_bits.extend(str(x).strip() for x in _as_list(section.get('paragraphs'))[:1] if str(x).strip())
+        if right_bits:
+            break
+    right_source = ' '.join(right_bits) or ' '.join(_strip_number_prefix(x.get('lead') or x.get('title') or '') for x in sections[:3])
+    right_source = _strip_redundant_opening(heading_raw, right_source)
+    right = _tex(_shorten(right_source, 760))
+    return (
+        '\\clearpage\n'
+        + (image + '\\vspace{0pt}\n' if image else '')
+        + _green_rule('88mm')
+        + '{\\sffamily\\fontsize{24}{30}\\selectfont\\color{BONavy} ' + title + '}\\par\\vspace{11pt}\n'
+        + '\\begin{minipage}[t]{0.44\\linewidth}\n'
+        + '{\\small\\color{BOText} ' + left + '}\\par\n'
+        + '\\end{minipage}\\hfill\\begin{minipage}[t]{0.45\\linewidth}\n'
+        + '{\\small\\color{BOText} ' + right + '}\\par\n'
+        + '\\end{minipage}\n'
+    )
+
+
+def _strip_redundant_opening(title: str, text: str) -> str:
+    cleaned = _normalize_punctuation(text)
+    if not cleaned:
+        return ''
+    sentences = [s.strip() for s in re.split(r'(?<=[.!?])\s+', cleaned) if s.strip()]
+    if not sentences:
+        return cleaned
+    title_key = _comparison_key(title)
+    first_key = _comparison_key(sentences[0])
+    if title_key and first_key and (first_key.startswith(title_key[:70]) or title_key.startswith(first_key[:70])):
+        return ' '.join(sentences[1:]).strip() or cleaned
+    return cleaned
+
+
+def _evidence_opening_page(report: Dict[str, Any], summary: List[str], sections: List[Dict[str, Any]], assets: Dict[str, str], topic: str) -> str:
+    visual = _asset_path(assets.get('image-2', '')) or _asset_path(assets.get('cover-background', ''))
+    image = _image_strip(visual, '62mm') if visual else ''
+    findings = [item for item in _as_list(report.get('key_findings')) if isinstance(item, dict)]
+    section = sections[0] if sections else {}
+    title = _tex(_shorten(_strip_number_prefix(section.get('title') or _agenda_heading(summary, sections)), 135))
+    lead = _tex(_shorten(section.get('lead') or (summary[0] if summary else ''), 360))
+    left_bits: List[str] = []
+    right_bits: List[str] = []
+    for item in findings[:4]:
+        finding = _field(item, 'finding')
+        evidence = _field(item, 'evidence')
+        implication = _field(item, 'management_implication')
+        sentence = _join_sentence_fragments([finding, evidence, implication])
+        if sentence:
+            if len(left_bits) <= len(right_bits):
+                left_bits.append(sentence)
+            else:
+                right_bits.append(sentence)
+    if not left_bits and not right_bits:
+        paras = [_normalize_punctuation(str(x)) for x in _as_list(section.get('paragraphs')) if str(x).strip()]
+        left_bits = paras[:2]
+        right_bits = paras[2:4]
+    left = ''.join(_para(_tex(_shorten(item, 520))) for item in left_bits[:3])
+    right = ''.join(_para(_tex(_shorten(item, 520))) for item in right_bits[:3])
+    return (
+        '\\clearpage\n'
+        + (image + '\\vspace{0pt}\n' if image else '')
+        + _green_rule('82mm')
+        + '{\\sffamily\\fontsize{23}{29}\\selectfont\\color{BONavy} ' + title + '}\\par\\vspace{8pt}\n'
+        + ('{\\sffamily\\fontsize{16}{21}\\selectfont\\color{BOGreen} ' + lead + '}\\par\\vspace{9pt}\n' if lead else '')
+        + '\\begin{minipage}[t]{0.46\\linewidth}\n'
+        + (left or _para(_tex(_shorten(_agenda_heading(summary, sections), 520))))
+        + '\\end{minipage}\\hfill\\begin{minipage}[t]{0.46\\linewidth}\n'
+        + (right or _para(_tex(_shorten('The commercial question is how fast the evidence can support capital, customer and partner decisions.', 520))))
+        + '\\end{minipage}\n'
+    )
+
+
+def _executive_summary_page(report: Dict[str, Any], summary: List[str]) -> str:
+    narrative = str(report.get('executive_summary_text') or '').strip()
+    if not narrative and not summary:
+        return ''
+    body = '\\clearpage\n' + _kicker('Executive summary') + _heading('What the CEO should take away before reading the body') + _rule()
+    if narrative:
+        body += '{\\normalsize\\color{BONavy} ' + _tex(_shorten(narrative, 1400)) + '}\\par\\vspace{6pt}\n'
+    rows = []
+    for idx, item in enumerate(summary[:6], start=1):
+        rows.append('\\textcolor{BOBlue}{\\bfseries ' + f'{idx:02d}' + '} & {\\footnotesize ' + _tex(_shorten(item, 260)) + '} \\\\[5pt]\n')
+    if rows:
+        body += '\\begin{tabularx}{\\linewidth}{p{12mm}Y}\n' + ''.join(rows) + '\\end{tabularx}\n'
+    return body
+
+
+def _key_findings_page(report: Dict[str, Any]) -> str:
+    findings = _as_list(report.get('key_findings'))[:6]
+    if not findings:
+        return ''
+    body = '\\clearpage\n' + _kicker('Key findings') + _heading('The evidence points to a small set of management implications') + _rule()
+    body += '\\begin{tabularx}{\\linewidth}{p{9mm}Y}\n'
+    for idx, item in enumerate(findings, start=1):
+        finding = _tex(_shorten(_field(item, 'finding'), 220))
+        evidence = _tex(_shorten(_field(item, 'evidence'), 230))
+        implication = _tex(_shorten(_field(item, 'management_implication'), 230))
+        body += '\\textcolor{BOBlue}{\\bfseries ' + f'{idx:02d}' + '} & {\\small\\bfseries ' + finding + '}\\par{\\scriptsize\\color{BOMuted} Evidence: ' + evidence + '}\\par{\\scriptsize\\color{BOMuted} Management implication: ' + implication + '} \\\\[6pt]\n'
+    return body + '\\end{tabularx}\n'
+
+
+def _action_plan_page(report: Dict[str, Any]) -> str:
+    actions = _as_list(report.get('action_plan'))[:5]
+    if not actions:
+        return ''
+    body = '\\clearpage\n' + _kicker('Management action plan') + _heading('Management action plan') + '{\\small\\color{BOMuted} Actions should be sequenced by evidence gates, not by market excitement.}\\par\\vspace{4pt}\n' + _rule()
+    body += '\\begin{tabularx}{\\linewidth}{p{24mm}Yp{25mm}Y}\n{\\scriptsize\\bfseries\\color{BOBlue} HORIZON} & {\\scriptsize\\bfseries\\color{BOBlue} ACTION} & {\\scriptsize\\bfseries\\color{BOBlue} OWNER} & {\\scriptsize\\bfseries\\color{BOBlue} DECISION GATE} \\\\[3pt]\n'
+    for item in actions:
+        body += (
+            '{\\scriptsize ' + _tex(_shorten(_field(item, 'horizon'), 80)) + '} & '
+            '{\\scriptsize ' + _tex(_shorten(_field(item, 'action'), 240)) + '\\par\\textcolor{BOMuted}{' + _tex(_shorten(_field(item, 'success_metric'), 150)) + '}} & '
+            '{\\scriptsize ' + _tex(_shorten(_field(item, 'owner'), 80)) + '} & '
+            '{\\scriptsize ' + _tex(_shorten(_field(item, 'decision_gate'), 180)) + '} \\\\[6pt]\n'
+        )
+    return body + '\\end{tabularx}\n'
+
+
+def _risk_register_page(report: Dict[str, Any]) -> str:
+    risks = _as_list(report.get('risk_register'))[:6]
+    if not risks:
+        return ''
+    body = '\\clearpage\n' + _kicker('Risk register') + _heading('Risk register') + '{\\small\\color{BOMuted} The board should track the assumptions that can break the case.}\\par\\vspace{4pt}\n' + _rule()
+    body += '\\begin{tabularx}{\\linewidth}{p{32mm}Y Y}\n{\\scriptsize\\bfseries\\color{BOBlue} RISK} & {\\scriptsize\\bfseries\\color{BOBlue} TRIGGER} & {\\scriptsize\\bfseries\\color{BOBlue} MANAGEMENT ACTION} \\\\[3pt]\n'
+    for item in risks:
+        body += (
+            '{\\scriptsize ' + _tex(_shorten(_field(item, 'risk'), 150)) + '} & '
+            '{\\scriptsize ' + _tex(_shorten(_field(item, 'trigger'), 170)) + '} & '
+            '{\\scriptsize ' + _tex(_shorten(_field(item, 'management_action'), 190)) + '\\par\\textcolor{BOMuted}{' + _tex(_shorten(_field(item, 'evidence_boundary'), 160)) + '}} \\\\[6pt]\n'
+        )
+    return body + '\\end{tabularx}\n'
+
+
+def _scenario_page(report: Dict[str, Any]) -> str:
+    scenarios = _as_list(report.get('scenario_vignettes'))[:2]
+    if not scenarios:
+        return ''
+    body = '\\clearpage\n' + _kicker('CEO decision scenario') + _heading('The analysis must land in a concrete executive decision') + _rule()
+    for item in scenarios:
+        body += (
+            '{\\color{BOBlue}\\sffamily\\bfseries ' + _tex(_shorten(_field(item, 'title'), 120)) + '}\\par\\vspace{2pt}\n'
+            + _para(_tex(_shorten(_field(item, 'situation'), 420)))
+            + '{\\small\\textbf{CEO question:} ' + _tex(_shorten(_field(item, 'ceo_question'), 240)) + '}\\par\n'
+            + '{\\small\\textbf{Recommended move:} ' + _tex(_shorten(_field(item, 'recommended_move'), 280)) + '}\\par\n'
+            + '{\\scriptsize\\color{BOMuted} ' + _tex(_shorten(_field(item, 'watchouts'), 260)) + '}\\par\\vspace{8pt}\n'
+        )
+    return body
+
+
+def _methodology_page(report: Dict[str, Any], refs: List[Any]) -> str:
+    note = str(report.get('methodology_note') or '').strip()
+    authors = _as_list(report.get('author_credentials'))[:4]
+    if not note and not authors and not refs:
+        return ''
+    body = '\\clearpage\n' + _kicker('Method and team') + _heading('Method and team') + '{\\small\\color{BOMuted} Source boundary, validation approach and team credentials.}\\par\\vspace{4pt}\n' + _rule()
+    if note:
+        body += _para(_tex(_shorten(note, 1100)))
+    if authors:
+        body += '\\vspace{4pt}\\begin{tabularx}{\\linewidth}{p{35mm}Y}\n'
+        for item in authors:
+            body += '{\\small\\bfseries ' + _tex(_shorten(_field(item, 'name'), 80)) + '}\\par{\\scriptsize\\color{BOMuted} ' + _tex(_shorten(_field(item, 'role'), 110)) + '} & {\\scriptsize ' + _tex(_shorten(_field(item, 'credentials'), 260)) + '} \\\\[6pt]\n'
+        body += '\\end{tabularx}\n'
+    if refs:
+        body += '\\vspace{5pt}{\\scriptsize\\color{BOMuted} This report was informed by public research and data from: ' + _tex(', '.join(str(x) for x in refs)) + '. Detailed references are listed separately.}\\par\n'
+    return body
 
 
 def _chapter_block(section: Dict[str, Any], assets: Dict[str, str], idx: int) -> str:
     title_raw = _strip_number_prefix(section.get('title', f'Section {idx}'))
     title = _tex(title_raw)
     lead_raw = str(section.get('lead', '') or '').strip()
-    lead = _tex(_shorten(lead_raw, 320))
+    lead = _tex(_shorten(lead_raw, 360))
     paras = _paras(section)
-    visual = _image_block(_resolve_image(section, assets, idx), '64mm', '45mm')
-    chart_path = _resolve_chart(assets, idx)
-    chart = _center_image(chart_path, '0.88\\linewidth', '62mm') if chart_path else ''
+    visual_path = _resolve_image(section, assets, idx)
 
-    chapter = '\\clearpage\n\\label{chap:' + str(idx) + '}\n' + _kicker('Chapter ' + str(idx)) + _heading(title)
+    chapter = '\\clearpage\n\\label{chap:' + str(idx) + '}\n'
+    if visual_path:
+        chapter += _image_strip(visual_path, '54mm') + '\\vspace{0pt}\n'
+    chapter += _green_rule('96mm')
+    chapter += _heading(title)
     if lead and _normalize_punctuation(lead_raw).lower() != _normalize_punctuation(title_raw).lower():
-        chapter += '{\\textcolor{BOBlue}{\\normalsize ' + lead + '}}\\par\\vspace{3pt}\n'
-    chapter += '\\begin{minipage}[t]{0.58\\linewidth}\n' + _para(paras[0]) + _para(paras[1]) + _para(paras[2]) + '\\end{minipage}\\hfill\\begin{minipage}[t]{0.36\\linewidth}\n\\vspace{0pt}\n' + visual + '\n\\end{minipage}\\par\\vspace{5pt}\n'
-    for paragraph in paras[3:6]:
-        chapter += _para(paragraph)
-    if chart:
-        chapter += '\\vspace{5pt}\n' + chart + '\\vspace{4pt}\n'
-    chapter += _subsection_blocks(section, paras[6:])
+        chapter += '{\\sffamily\\fontsize{15}{20}\\selectfont\\color{BOGreen} ' + lead + '}\\par\\vspace{9pt}\n'
+    chapter_paras = paras[:6]
+    if len(chapter_paras) >= 2:
+        chapter += '\\begin{multicols}{2}\n' + _paragraph_group(chapter_paras) + '\\end{multicols}\n'
+    else:
+        chapter += _paragraph_group(chapter_paras)
     chapter += '\\label{chap:' + str(idx) + ':end}\n'
     return chapter
 
@@ -168,19 +472,762 @@ def _subhead(text: str) -> str:
     return '\\vspace{4pt}{\\color{BOBlue}\\sffamily\\bfseries\\small ' + _tex(text) + '}\\par\\vspace{1pt}\n'
 
 
-def _disclaimer_page(refs: List[Any]) -> str:
-    reference_note = ''
-    if refs:
-        reference_note = 'This report was informed by public research and data from: ' + _tex(', '.join(str(x) for x in refs)) + '. The detailed source backup is retained in the backup folder rather than reproduced in the client-facing document. '
-    body = (
-        'This document has been prepared by BlueOcean for strategy discussion, industry analysis and executive decision support. It is not intended to constitute investment advice, securities research, legal advice, tax advice, audit assurance, fairness opinion, valuation opinion, or a recommendation to buy or sell any security, financial instrument, company, project or asset. '
-        'The analysis relies on public sources, model-assisted synthesis and management-consulting judgment. Market estimates, forecasts and scenarios are directional and should be independently validated before they are used for investment, financing, transaction, regulatory or operational decisions. '
-        'Any forward-looking views are inherently uncertain and may change as technology, policy, financing, regulation, competition, supply chains and macro conditions evolve. BlueOcean does not guarantee the completeness, accuracy or timeliness of third-party information and accepts no responsibility for decisions made solely on the basis of this document. '
-        + reference_note +
-        'Recipients should perform their own diligence, consult professional advisers where appropriate, and treat this report as one input into a broader decision process rather than as a definitive factual record.'
+def _full_width_image(path: str, width: str, height: str) -> str:
+    if not path:
+        return ''
+    return '\\includegraphics[width=' + width + ',height=' + height + ',keepaspectratio]{' + path + '}'
+
+
+def _image_strip(path: str, height: str) -> str:
+    if not path:
+        return ''
+    return (
+        '\\noindent\\begin{tikzpicture}\n'
+        '\\path[use as bounding box] (0,0) rectangle (\\linewidth,' + height + ');\n'
+        '\\clip (0,0) rectangle (\\linewidth,' + height + ');\n'
+        '\\node[anchor=north west,inner sep=0] at (0,' + height + ') {\\includegraphics[width=\\linewidth]{' + path + '}};\n'
+        '\\end{tikzpicture}\n'
     )
-    filler = body + ' ' + body
-    return '\\clearpage\n{\\textcolor{BOBlue}{\\scriptsize\\bfseries DISCLAIMER}}\\par\\vspace{3pt}\n{\\Large\\sffamily\\bfseries\\color{BONavy} Disclaimer}\\par\\vspace{4pt}\n' + _rule() + '{\\footnotesize\\color{BOMuted} ' + filler + '}\n'
+
+
+def _green_rule(width: str = '82mm') -> str:
+    return (
+        '\\noindent\\begin{tikzpicture}\n'
+        '\\fill[BOGreen] (0,0) rectangle (' + width + ',1.2pt);\n'
+        '\\end{tikzpicture}\\par\\vspace{8pt}\n'
+    )
+
+
+def _paragraph_group(paragraphs: List[str]) -> str:
+    return ''.join(_para(p) for p in paragraphs if str(p).strip())
+
+
+def _section_takeaway_grid(section: Dict[str, Any]) -> str:
+    items = []
+    for item in _as_list(section.get('key_takeaways')):
+        text = _clean_sentence_fragment(_normalize_punctuation(str(item or '').strip()))
+        if text and not _looks_like_internal_label(text):
+            items.append(text)
+        if len(items) >= 3:
+            break
+    if len(items) < 2:
+        return ''
+    cells = []
+    for idx, item in enumerate(items[:3], start=1):
+        cells.append(
+            '{\\textcolor{BOGreen}{\\bfseries ' + f'{idx:02d}' + '}}\\par'
+            '{\\scriptsize\\color{BOText} ' + _tex(_shorten(item, 155)) + '}'
+        )
+    while len(cells) < 3:
+        cells.append('')
+    return (
+        '\\vspace{5pt}\\noindent\\begin{tabularx}{\\linewidth}{Y Y Y}\n'
+        + ' & '.join(cells)
+        + ' \\\\\n\\end{tabularx}\\par\\vspace{2pt}\n'
+    )
+
+
+def _inline_watchouts(items: List[str]) -> str:
+    bullets = ''.join('\\item ' + _tex(_shorten(item, 180)) + '\n' for item in items if str(item).strip())
+    if not bullets:
+        return ''
+    return (
+        '\\vspace{4pt}\\noindent\\begin{minipage}{\\linewidth}\n'
+        '{\\textcolor{BOGreen}{\\scriptsize\\bfseries DATA NOTE}}\\par\\vspace{2pt}\n'
+        '{\\footnotesize\\begin{itemize}\n' + bullets + '\\end{itemize}}\n'
+        '\\end{minipage}\n'
+    )
+
+
+def _callout_box(items: List[str]) -> str:
+    bullets = ''.join('\\item ' + _tex(_shorten(item, 130)) + '\n' for item in items if str(item).strip())
+    if not bullets:
+        bullets = '\\item Focus on the few facts that change the management decision.\n'
+    return (
+        '\\fcolorbox{BOLine}{BOLight}{\\begin{minipage}[t][44mm][t]{0.95\\linewidth}'
+        '\\vspace{4pt}{\\textcolor{BOGreen}{\\scriptsize\\bfseries DATA NOTE}}\\par'
+        '\\vspace{2pt}{\\footnotesize\\begin{itemize}\n' + bullets + '\\end{itemize}}'
+        '\\end{minipage}}'
+    )
+
+
+def _exhibit_page(charts: List[Dict[str, Any]], assets: Dict[str, str], start_idx: int) -> str:
+    blocks: List[str] = ['\\clearpage\n']
+    for offset, chart in enumerate(charts):
+        idx = start_idx + offset
+        blocks.append(_exhibit_block(chart, assets, idx, compact=len(charts) > 1))
+        if offset < len(charts) - 1:
+            blocks.append('\\vspace{9pt}\\textcolor{BOLine}{\\rule{\\linewidth}{0.3pt}}\\vspace{8pt}\n')
+    return ''.join(blocks)
+
+
+def _exhibit_block(chart: Dict[str, Any], assets: Dict[str, str], idx: int, *, compact: bool = False) -> str:
+    title = _tex(_chart_title(chart.get('title') or f'Exhibit {idx}', 130))
+    subtitle_raw = _normalize_punctuation(str(chart.get('subtitle') or chart.get('caption') or ''))
+    caption_raw = _normalize_punctuation(str(chart.get('caption') or ''))
+    if caption_raw.lower() == subtitle_raw.lower():
+        caption_raw = ''
+    subtitle = _tex(_shorten(subtitle_raw, 220))
+    caption = _tex(_shorten(caption_raw, 280))
+    source = _tex(_shorten(chart.get('source_note') or 'Sources: public references listed with the report.', 190))
+    visual = _native_chart(chart, compact=compact)
+    if not visual:
+        path = _asset_path(assets.get(str(chart.get('id') or f'chart-{idx}'), '')) or _resolve_chart(assets, idx)
+        visual = _center_image(path, '0.96\\linewidth', '84mm' if compact else '132mm') if path else _callout_box([caption or subtitle])
+    detail = _exhibit_detail_block(chart, caption_raw, subtitle_raw, compact=compact)
+    return (
+        '{\\textcolor{BOGreen}{\\scriptsize\\bfseries EXHIBIT ' + str(idx) + '}}\\par\\vspace{4pt}\n'
+        + '{\\sffamily\\fontsize{17}{21}\\selectfont\\color{BONavy} ' + title + '}\\par\n'
+        + ('{\\small\\color{BOText} ' + subtitle + '}\\par\\vspace{6pt}\n' if subtitle else '\\vspace{6pt}\n')
+        + visual
+        + detail
+        + ('\\vspace{4pt}{\\footnotesize\\color{BOText} ' + caption + '}\\par\n' if caption else '')
+        + '{\\scriptsize\\color{BOMuted} ' + source + '}\\par\n'
+    )
+
+
+def _exhibit_detail_block(chart: Dict[str, Any], caption: str, subtitle: str, *, compact: bool) -> str:
+    return ''
+
+
+def _exhibit_notes(chart: Dict[str, Any], caption: str, subtitle: str) -> List[str]:
+    notes: List[str] = []
+    for text in (caption, subtitle):
+        cleaned = _reader_clean(_normalize_punctuation(str(text or '').strip()))
+        if cleaned:
+            notes.append(cleaned)
+            break
+    chart_type = str(chart.get('type') or '').lower()
+    categories = _chart_categories(chart, 8)
+    series = _series_payload(chart)
+    if chart_type in {'bar', 'stacked_bar', 'line'} and categories and series:
+        totals = []
+        for ci, _category in enumerate(categories):
+            totals.append(sum(abs(item['values'][ci] if ci < len(item['values']) else 0.0) for item in series))
+        if totals:
+            high_idx = max(range(len(totals)), key=lambda idx: totals[idx])
+            low_idx = min(range(len(totals)), key=lambda idx: totals[idx])
+            notes.append(f"{categories[high_idx]} is the highest visible point at {_format_value_label(totals[high_idx])}, while {categories[low_idx]} sets the lower bound at {_format_value_label(totals[low_idx])}.")
+        if len(series) > 1:
+            names = ', '.join(_shorten(item.get('name') or 'Series', 22) for item in series[:3])
+            notes.append(f"The exhibit should be read as both a level comparison and a mix comparison across {names}.")
+    elif chart_type == 'bubble':
+        points = _bubble_points(chart)
+        if points:
+            top = max(points, key=lambda point: _num(point.get('y'), 0) + _num(point.get('x'), 0))
+            notes.append(f"{top.get('label') or 'The upper-right option'} carries the strongest combined access and risk signal in the exhibit.")
+    elif chart_type == 'matrix':
+        rows = [str(x) for x in _as_list(chart.get('rows')) if str(x).strip()]
+        cols = [str(x) for x in _as_list(chart.get('columns')) if str(x).strip()]
+        if rows and cols:
+            notes.append(f"The matrix compares {len(rows)} options across {', '.join(cols[:3])}, which keeps the page focused on relative choices rather than a single score.")
+    return _dedupe(notes)[:3]
+
+
+def _exhibit_value_table(chart: Dict[str, Any]) -> str:
+    chart_type = str(chart.get('type') or '').lower()
+    if chart_type in {'bar', 'stacked_bar', 'line'}:
+        categories = _chart_categories(chart, 5)
+        series = _series_payload(chart)
+        if not categories or not series:
+            return ''
+        rows = []
+        for ci, category in enumerate(categories[:5]):
+            total = sum(abs(item['values'][ci] if ci < len(item['values']) else 0.0) for item in series)
+            rows.append((_shorten(category, 24), _format_value_label(total)))
+        return _small_value_table('Visible readout', rows)
+    if chart_type == 'bubble':
+        rows = []
+        for point in _bubble_points(chart)[:5]:
+            label = _shorten(point.get('label') or 'Point', 22)
+            value = f"{_format_value_label(point.get('x', 0))} / {_format_value_label(point.get('y', 0))}"
+            rows.append((label, value))
+        return _small_value_table('Position', rows)
+    if chart_type == 'matrix':
+        rows = [str(x) for x in _as_list(chart.get('rows'))[:4]]
+        cols = [str(x) for x in _as_list(chart.get('columns'))[:2]]
+        values = _as_list(chart.get('values'))
+        out = []
+        for ri, row in enumerate(rows):
+            raw_row = values[ri] if ri < len(values) and isinstance(values[ri], list) else []
+            visible = ' / '.join(_format_value_label(raw_row[ci]) for ci in range(min(len(cols), len(raw_row))))
+            out.append((_shorten(row, 22), visible or '-'))
+        return _small_value_table('Matrix readout', out)
+    return ''
+
+
+def _small_value_table(title: str, rows: List[tuple[str, str]]) -> str:
+    if not rows:
+        return ''
+    body = ['{\\scriptsize\\color{BOText}\\begin{tabular}{p{31mm}>{\\raggedleft\\arraybackslash}p{18mm}}\n']
+    body.append('\\multicolumn{2}{l}{\\textcolor{BOGreen}{\\bfseries ' + _tex(title) + '}}\\\\[2pt]\n')
+    for label, value in rows[:5]:
+        body.append(_tex(label) + ' & \\textbf{' + _tex(value) + '}\\\\[1pt]\n')
+    body.append('\\end{tabular}}\\par\n')
+    return ''.join(body)
+
+
+def _native_chart(chart: Dict[str, Any], *, compact: bool) -> str:
+    chart_type = str(chart.get('type') or '').lower()
+    if chart_type in {'scatter', 'risk_matrix', 'quadrant'}:
+        chart_type = 'bubble'
+    elif chart_type in {'heatmap', 'table', 'scorecard'}:
+        chart_type = 'matrix'
+    elif chart_type in {'pie', 'donut', 'column'}:
+        chart_type = 'bar'
+    if chart_type == 'stacked_bar':
+        return _native_stacked_bar(chart, compact=compact)
+    if chart_type in {'bar', 'column'}:
+        return _native_bar(chart, compact=compact)
+    if chart_type == 'line':
+        return _native_line(chart, compact=compact)
+    if chart_type == 'matrix':
+        return _native_matrix(chart, compact=compact)
+    if chart_type == 'bubble':
+        return _native_bubble(chart, compact=compact)
+    if chart.get('series') and chart.get('categories'):
+        return _native_bar(chart, compact=compact)
+    if chart.get('rows') and chart.get('columns') and chart.get('values'):
+        return _native_matrix(chart, compact=compact)
+    return ''
+
+
+def _native_bar(chart: Dict[str, Any], *, compact: bool) -> str:
+    categories = _chart_categories(chart, 6 if compact else 8)
+    series = _series_payload(chart)[:3]
+    if not categories or not series:
+        return ''
+    if len(series) == 1:
+        return _native_horizontal_bar(chart, categories, series[0], compact=compact)
+    max_value = max([abs(v) for item in series for v in item['values'][:len(categories)]] + [1.0])
+    width, height = (13.2, 4.4) if compact else (16.2, 9.2)
+    chart_h = height - 1.35
+    left = 0.7
+    group_w = (width - left - .35) / max(1, len(categories))
+    bar_w = min(.72 if not compact else .44, group_w / max(1, len(series) + .65))
+    colors = ['BOGreen', 'BOBlue', 'BONavy']
+    body = [_tikz_begin(width, height), f'\\draw[BOLine] ({left:.2f},0.72) -- ({width - .2:.2f},0.72);\n']
+    if not compact:
+        for tick in (0.25, 0.5, 0.75, 1.0):
+            y = 0.72 + tick * chart_h
+            body.append(f'\\draw[BOLine,opacity=.45] ({left:.2f},{y:.2f}) -- ({width - .25:.2f},{y:.2f});\n')
+    for ci, category in enumerate(categories):
+        base_x = left + ci * group_w + group_w * .15
+        for si, item in enumerate(series):
+            value = item['values'][ci] if ci < len(item['values']) else 0.0
+            h = max(.04, abs(value) / max_value * chart_h)
+            x = base_x + si * bar_w
+            body.append(f'\\fill[{colors[si % len(colors)]}] ({x:.2f},0.72) rectangle ({x + bar_w * .78:.2f},{0.72 + h:.2f});\n')
+            if not compact:
+                body.append(f'\\node[anchor=south,align=center] at ({x + bar_w * .39:.2f},{0.78 + h:.2f}) {{\\scriptsize {_tex(_format_value_label(value))}}};\n')
+        body.append(f'\\node[anchor=north,align=center,text width={group_w * .92:.2f}cm] at ({base_x + group_w * .36:.2f},0.55) {{\\scriptsize {_tex(_shorten(category, 22))}}};\n')
+    body.extend(_legend(series, colors, y=height - .22))
+    body.append(_tikz_end())
+    return ''.join(body)
+
+
+def _native_horizontal_bar(chart: Dict[str, Any], categories: List[str], series: Dict[str, Any], *, compact: bool) -> str:
+    max_items = 5 if compact else 7
+    categories = categories[:max_items]
+    values = [_num(x, 0.0) for x in _as_list(series.get('values'))][:len(categories)]
+    if len(values) < len(categories):
+        values.extend([0.0] * (len(categories) - len(values)))
+    max_value = max([abs(v) for v in values] + [1.0])
+    width, height = (13.2, 5.05) if compact else (16.2, 8.3)
+    left, right = (4.15 if compact else 4.75), .85
+    top = height - .62
+    row_h = (height - 1.22) / max(1, len(categories))
+    bar_w = width - left - right
+    body = [_tikz_begin(width, height)]
+    series_name = _tex(_shorten(series.get('name') or 'Value', 26))
+    body.append(f'\\node[anchor=west] at ({left:.2f},{height - .20:.2f}) {{\\scriptsize\\color{{BOMuted}} {series_name}}};\n')
+    for idx, category in enumerate(categories):
+        value = values[idx] if idx < len(values) else 0.0
+        y = top - idx * row_h
+        fill_w = max(.10, abs(value) / max_value * bar_w)
+        body.append(f'\\node[anchor=east,align=right,text width={left - .22:.2f}cm] at ({left - .20:.2f},{y:.2f}) {{\\scriptsize {_tex(_shorten(category, 30 if compact else 36))}}};\n')
+        body.append(f'\\fill[BOLight] ({left:.2f},{y - .12:.2f}) rectangle ({left + bar_w:.2f},{y + .12:.2f});\n')
+        body.append(f'\\fill[BOGreen] ({left:.2f},{y - .12:.2f}) rectangle ({left + fill_w:.2f},{y + .12:.2f});\n')
+        body.append(f'\\node[anchor=west] at ({left + fill_w + .08:.2f},{y:.2f}) {{\\scriptsize {_tex(_format_value_label(value))}}};\n')
+    body.append(_tikz_end())
+    return ''.join(body)
+
+
+def _native_stacked_bar(chart: Dict[str, Any], *, compact: bool) -> str:
+    categories = _chart_categories(chart, 5 if compact else 7)
+    series = _series_payload(chart)[:5]
+    if not categories or not series:
+        return ''
+    totals = [sum(max(0.0, item['values'][ci] if ci < len(item['values']) else 0.0) for item in series) for ci in range(len(categories))]
+    max_value = max(totals + [1.0])
+    width, height = (13.2, 4.4) if compact else (16.2, 9.0)
+    chart_h = height - 1.35
+    left = 0.8
+    group_w = (width - left - .4) / max(1, len(categories))
+    bar_w = min(.78 if not compact else .62, group_w * .55)
+    colors = ['BOGreen', 'BOBlue', 'BONavy', 'BOMuted', 'BOLine']
+    body = [_tikz_begin(width, height), f'\\draw[BOLine] ({left:.2f},0.72) -- ({width - .2:.2f},0.72);\n']
+    for ci, category in enumerate(categories):
+        x = left + ci * group_w + group_w * .26
+        y = .72
+        for si, item in enumerate(series):
+            value = max(0.0, item['values'][ci] if ci < len(item['values']) else 0.0)
+            h = value / max_value * chart_h
+            if h > 0:
+                body.append(f'\\fill[{colors[si % len(colors)]}] ({x:.2f},{y:.2f}) rectangle ({x + bar_w:.2f},{y + h:.2f});\n')
+                y += h
+        if not compact:
+            body.append(f'\\node[anchor=south,align=center] at ({x + bar_w / 2:.2f},{y + .05:.2f}) {{\\scriptsize {_tex(_format_value_label(totals[ci]))}}};\n')
+        body.append(f'\\node[anchor=north,align=center,text width={group_w * .92:.2f}cm] at ({x + bar_w / 2:.2f},0.55) {{\\scriptsize {_tex(_shorten(category, 22))}}};\n')
+    body.extend(_legend(series, colors, y=height - .22))
+    body.append(_tikz_end())
+    return ''.join(body)
+
+
+def _native_line(chart: Dict[str, Any], *, compact: bool) -> str:
+    categories = _chart_categories(chart, 6 if compact else 8)
+    series = _series_payload(chart)[:3]
+    if len(categories) < 2 or not series:
+        return ''
+    max_value = max([abs(v) for item in series for v in item['values'][:len(categories)]] + [1.0])
+    width, height = (13.2, 4.4) if compact else (16.2, 9.0)
+    left, bottom = .8, .78
+    chart_w, chart_h = width - 1.25, height - 1.45
+    colors = ['BOGreen', 'BOBlue', 'BONavy']
+    body = [_tikz_begin(width, height), f'\\draw[BOLine] ({left:.2f},{bottom:.2f}) -- ({left + chart_w:.2f},{bottom:.2f});\n']
+    if not compact:
+        for tick in (0.25, 0.5, 0.75, 1.0):
+            y = bottom + tick * chart_h
+            body.append(f'\\draw[BOLine,opacity=.45] ({left:.2f},{y:.2f}) -- ({left + chart_w:.2f},{y:.2f});\n')
+    for si, item in enumerate(series):
+        pts = []
+        for ci in range(len(categories)):
+            value = item['values'][ci] if ci < len(item['values']) else 0.0
+            x = left + (chart_w * ci / max(1, len(categories) - 1))
+            y = bottom + (abs(value) / max_value * chart_h)
+            pts.append((x, y))
+        body.append('\\draw[' + colors[si % len(colors)] + ',line width=1.1pt] ' + ' -- '.join(f'({x:.2f},{y:.2f})' for x, y in pts) + ';\n')
+        for point_idx, (x, y) in enumerate(pts):
+            body.append(f'\\fill[{colors[si % len(colors)]}] ({x:.2f},{y:.2f}) circle (.045);\n')
+            if not compact and (point_idx == len(pts) - 1 or len(categories) <= 4):
+                value = item['values'][point_idx] if point_idx < len(item['values']) else 0.0
+                body.append(f'\\node[anchor=south,align=center] at ({x:.2f},{y + .08:.2f}) {{\\scriptsize {_tex(_format_value_label(value))}}};\n')
+    for ci, category in enumerate(categories):
+        x = left + (chart_w * ci / max(1, len(categories) - 1))
+        body.append(f'\\node[anchor=north,align=center,text width=1.8cm] at ({x:.2f},{bottom - .12:.2f}) {{\\scriptsize {_tex(_shorten(category, 18))}}};\n')
+    body.extend(_legend(series, colors, y=height - .18))
+    body.append(_tikz_end())
+    return ''.join(body)
+
+
+def _native_bubble(chart: Dict[str, Any], *, compact: bool) -> str:
+    points = _bubble_points(chart)[:6 if compact else 8]
+    if not points:
+        return ''
+    width, height = (13.2, 4.3) if compact else (15.6, 6.6)
+    left, bottom = .85, .65
+    chart_w, chart_h = width - 1.35, height - 1.25
+    body = [_tikz_begin(width, height)]
+    body.append(f'\\draw[BOLine] ({left:.2f},{bottom:.2f}) -- ({left + chart_w:.2f},{bottom:.2f}) -- ({left + chart_w:.2f},{bottom + chart_h:.2f});\n')
+    body.append(f'\\draw[BOLine,dashed] ({left:.2f},{bottom + chart_h / 2:.2f}) -- ({left + chart_w:.2f},{bottom + chart_h / 2:.2f});\n')
+    body.append(f'\\draw[BOLine,dashed] ({left + chart_w / 2:.2f},{bottom:.2f}) -- ({left + chart_w / 2:.2f},{bottom + chart_h:.2f});\n')
+    y_lanes = [-.34, -.16, .03, .21, .39, -.50, .56, -.66]
+    lane_by_index = {
+        original_idx: y_lanes[lane_idx % len(y_lanes)]
+        for lane_idx, (original_idx, _) in enumerate(sorted(enumerate(points), key=lambda item: (_num(item[1].get('y'), 50), _num(item[1].get('x'), 50))))
+    }
+    for point_idx, point in enumerate(points):
+        x = left + _num(point.get('x'), 50) / 100 * chart_w
+        y = bottom + _num(point.get('y'), 50) / 100 * chart_h
+        radius = .08 + min(80, max(10, _num(point.get('size'), 35))) / 500
+        body.append(f'\\fill[BOGreen,opacity=.65] ({x:.2f},{y:.2f}) circle ({radius:.2f});\n')
+        anchor = 'west' if x < left + chart_w * .70 else 'east'
+        align = 'left' if anchor == 'west' else 'right'
+        dx = (.18 + radius) if anchor == 'west' else -(.18 + radius)
+        dy = lane_by_index.get(point_idx, 0.0)
+        text_width = '2.10cm' if compact else '2.55cm'
+        body.append(f'\\node[anchor={anchor},align={align},text width={text_width}] at ({x + dx:.2f},{y + dy:.2f}) {{\\scriptsize {_tex(_shorten(point.get("label", ""), 24))}}};\n')
+    x_label = _tex(_shorten(chart.get('x_label') or 'Likelihood', 24))
+    y_label = _tex(_shorten(chart.get('y_label') or 'Impact', 24))
+    body.append(f'\\node[anchor=north east] at ({left + chart_w:.2f},{bottom - .12:.2f}) {{\\scriptsize {x_label}}};\n')
+    body.append(f'\\node[anchor=center,rotate=90] at ({left - .30:.2f},{bottom + chart_h / 2:.2f}) {{\\scriptsize {y_label}}};\n')
+    body.append(_tikz_end())
+    return ''.join(body)
+
+
+def _bubble_points(chart: Dict[str, Any]) -> List[Dict[str, Any]]:
+    points = [dict(p) for p in _as_list(chart.get('points')) if isinstance(p, dict)]
+    converted: List[Dict[str, Any]] = []
+    for row in _point_rows_from_chart_data({'datasets': chart.get('datasets')} if chart.get('datasets') else None):
+        label = row.get('label') or row.get('risk') or row.get('name') or row.get('category') or row.get('driver') or ''
+        x = row.get('x', row.get('likelihood', row.get('probability', row.get('readiness', row.get('attractiveness', 50)))))
+        y = row.get('y', row.get('impact', row.get('severity', row.get('importance', row.get('return', 50)))))
+        size = row.get('size', row.get('impact', row.get('severity', row.get('importance', 45))))
+        converted.append({'label': label, 'x': _scale_point(x), 'y': _scale_point(y), 'size': _scale_point(size)})
+    for row in _point_rows_from_chart_data(chart.get('data')):
+        label = row.get('label') or row.get('risk') or row.get('name') or row.get('category') or row.get('driver') or ''
+        x = row.get('x', row.get('likelihood', row.get('probability', row.get('readiness', row.get('attractiveness', 50)))))
+        y = row.get('y', row.get('impact', row.get('severity', row.get('importance', row.get('return', 50)))))
+        size = row.get('size', row.get('impact', row.get('severity', row.get('importance', 45))))
+        converted.append({'label': label, 'x': _scale_point(x), 'y': _scale_point(y), 'size': _scale_point(size)})
+    if points and not _weak_bubble_points(points):
+        return points
+    if converted and not _weak_bubble_points(converted):
+        return converted
+    return points or converted
+
+
+def _scale_point(value: Any) -> float:
+    number = _num(value, 50)
+    if number <= 5:
+        return number * 20
+    if number <= 10:
+        return number * 10
+    return max(0, min(100, number))
+
+
+def _native_matrix(chart: Dict[str, Any], *, compact: bool) -> str:
+    rows = [str(x) for x in _as_list(chart.get('rows'))][:5 if compact else 7]
+    cols = [str(x) for x in _as_list(chart.get('columns'))][:4]
+    values = _as_list(chart.get('values'))
+    if not rows or not cols:
+        return ''
+    col_spec = 'p{38mm}' + ''.join('>{\\centering\\arraybackslash}p{21mm}' for _ in cols)
+    lines = ['\\noindent\\fcolorbox{BOLine}{BOLight}{\\begin{minipage}{0.96\\linewidth}\\vspace{4pt}{\\scriptsize\\begin{tabular}{' + col_spec + '}\n']
+    lines.append(' & ' + ' & '.join('{\\bfseries ' + _tex(_shorten(c, 18)) + '}' for c in cols) + ' \\\\\n\\hline\n')
+    for ri, row in enumerate(rows):
+        row_values = values[ri] if ri < len(values) and isinstance(values[ri], list) else []
+        cells = []
+        for ci in range(len(cols)):
+            value = row_values[ci] if ci < len(row_values) else ''
+            cells.append(_matrix_cell(value))
+        lines.append('{\\bfseries ' + _tex(_shorten(row, 32)) + '} & ' + ' & '.join(cells) + ' \\\\\n')
+    lines.append('\\end{tabular}}\\vspace{4pt}\\end{minipage}}\\par\\vspace{2pt}\n')
+    return ''.join(lines)
+
+
+def _tikz_begin(width: float, height: float) -> str:
+    return (
+        '\\noindent\\begin{tikzpicture}[x=1cm,y=1cm]\n'
+        f'\\path[use as bounding box] (0,0) rectangle ({width:.2f},{height:.2f});\n'
+        f'\\fill[BOLight] (0,0) rectangle ({width:.2f},{height:.2f});\n'
+        f'\\draw[BOLine,line width=.35pt] (0,0) rectangle ({width:.2f},{height:.2f});\n'
+    )
+
+
+def _tikz_end() -> str:
+    return '\\end{tikzpicture}\\par\\vspace{2pt}\n'
+
+
+def _legend(series: List[Dict[str, Any]], colors: List[str], *, y: float) -> List[str]:
+    items: List[str] = []
+    x = .8
+    for idx, item in enumerate(series[:4]):
+        name = _tex(_shorten(item.get('name') or f'Series {idx + 1}', 20))
+        color = colors[idx % len(colors)]
+        items.append(f'\\fill[{color}] ({x:.2f},{y:.2f}) rectangle ({x + .16:.2f},{y + .10:.2f});\n')
+        items.append(f'\\node[anchor=west] at ({x + .22:.2f},{y + .05:.2f}) {{\\scriptsize {name}}};\n')
+        x += min(3.2, .85 + len(str(item.get('name') or 'Series')) * .095)
+    return items
+
+
+def _series_payload(chart: Dict[str, Any]) -> List[Dict[str, Any]]:
+    top_payload = _series_from_chart_data({'datasets': chart.get('datasets')} if chart.get('datasets') else None)
+    if top_payload:
+        return top_payload
+    payload: List[Dict[str, Any]] = []
+    for idx, item in enumerate(_as_list(chart.get('series')), start=1):
+        if not isinstance(item, dict):
+            continue
+        values = [_num(x, 0.0) for x in _as_list(item.get('values'))]
+        if not values:
+            continue
+        payload.append({'name': str(item.get('name') or f'Series {idx}'), 'values': values})
+    if not payload:
+        payload = _series_from_chart_data(chart.get('data'))
+    if not payload:
+        values = [_num(x, 0.0) for x in _as_list(chart.get('values'))]
+        if values:
+            payload.append({'name': str(chart.get('name') or 'Value'), 'values': values})
+    return payload
+
+
+def _chart_categories(chart: Dict[str, Any], limit: int) -> List[str]:
+    label_categories = [str(x) for x in _as_list(chart.get('labels')) if str(x).strip()]
+    if label_categories:
+        return label_categories[:limit]
+    categories = [str(x) for x in _as_list(chart.get('categories')) if str(x).strip()]
+    data = chart.get('data')
+    if not categories and isinstance(data, dict):
+        categories = [str(x) for x in _as_list(data.get('labels') or data.get('categories')) if str(x).strip()]
+    return categories[:limit]
+
+
+def _series_from_chart_data(value: Any) -> List[Dict[str, Any]]:
+    if not isinstance(value, dict):
+        return []
+    payload: List[Dict[str, Any]] = []
+    for idx, item in enumerate(_as_list(value.get('datasets') or value.get('series')), start=1):
+        if not isinstance(item, dict):
+            continue
+        raw_values = item.get('values')
+        if raw_values is None:
+            raw_values = item.get('data')
+        values = []
+        for raw in _as_list(raw_values):
+            if isinstance(raw, dict):
+                raw = raw.get('y', raw.get('value', raw.get('amount', raw.get('score'))))
+            if raw is not None:
+                values.append(_num(raw, 0.0))
+        if values:
+            payload.append({'name': str(item.get('label') or item.get('name') or f'Series {idx}'), 'values': values})
+    return payload
+
+
+def _point_rows_from_chart_data(value: Any) -> List[Dict[str, Any]]:
+    rows: List[Dict[str, Any]] = []
+
+    def visit(node: Any, dataset_label: str = '') -> None:
+        if isinstance(node, list):
+            for item in node:
+                visit(item, dataset_label)
+            return
+        if not isinstance(node, dict):
+            return
+        datasets = [x for x in _as_list(node.get('datasets')) if isinstance(x, dict)]
+        if datasets:
+            for dataset in datasets:
+                nested = dataset.get('points')
+                if nested is None:
+                    nested = dataset.get('data')
+                if nested is None:
+                    nested = dataset.get('values')
+                visit(nested, str(dataset.get('label') or dataset.get('name') or dataset_label or '').strip())
+            return
+        nested_points = node.get('points')
+        if isinstance(nested_points, list):
+            visit(nested_points, dataset_label)
+            return
+        nested_data = node.get('data')
+        if isinstance(nested_data, list) and any(isinstance(x, dict) for x in nested_data):
+            visit(nested_data, dataset_label)
+            return
+        if not any(key in node for key in ('x', 'y', 'likelihood', 'probability', 'readiness', 'attractiveness', 'impact', 'severity', 'importance', 'return', 'size')):
+            return
+        row = dict(node)
+        if dataset_label and not any(row.get(key) for key in ('label', 'risk', 'name', 'category', 'driver')):
+            row['label'] = dataset_label
+        rows.append(row)
+
+    visit(value)
+    return rows
+
+
+def _weak_bubble_points(points: List[Dict[str, Any]]) -> bool:
+    if len(points) < 3:
+        return True
+    labels = [str(point.get('label') or '').strip() for point in points]
+    placeholder_count = sum(1 for label in labels if re.fullmatch(r'(point|item)[\s_#-]*\d*', label, flags=re.I))
+    return placeholder_count >= max(2, len(labels) - 1)
+
+
+def _num(value: Any, default: float = 0.0) -> float:
+    try:
+        if isinstance(value, str):
+            cleaned = value.replace('%', '').replace('$', '').replace(',', '').strip()
+            return float(cleaned)
+        return float(value)
+    except Exception:
+        return default
+
+
+def _format_value_label(value: Any) -> str:
+    number = _num(value, 0.0)
+    if abs(number) >= 1000:
+        return f"{number:,.0f}"
+    if abs(number - round(number)) < 0.05:
+        return str(int(round(number)))
+    return f"{number:.1f}"
+
+
+def _matrix_cell(value: Any) -> str:
+    number = _num(value, None)
+    if number is None:
+        return _tex(_shorten(value, 18))
+    if abs(number - round(number)) < 0.01:
+        label = str(int(round(number)))
+    else:
+        label = f'{number:.1f}'
+    color = 'BOGreen' if number >= 4 else ('BOBlue' if number >= 3 else 'BOLight')
+    text_color = 'white' if color in {'BOGreen', 'BOBlue'} else 'BOText'
+    return '\\colorbox{' + color + '}{\\textcolor{' + text_color + '}{\\strut\\hspace{5pt}' + _tex(label) + '\\hspace{5pt}}}'
+
+
+def _decision_story_page(report: Dict[str, Any]) -> str:
+    scenarios = _as_list(report.get('scenario_vignettes'))[:1]
+    if scenarios and isinstance(scenarios[0], dict):
+        item = scenarios[0]
+        title = _field(item, 'title') or 'A boardroom question'
+        situation = _field(item, 'situation')
+        question = _field(item, 'ceo_question')
+        move = _field(item, 'recommended_move')
+        watchouts = _field(item, 'watchouts')
+    else:
+        title = 'A boardroom choice'
+        situation = 'Leadership must decide which moves can be made now and which should wait for stronger evidence.'
+        question = 'What should be done before the next major commitment?'
+        move = 'Keep learning options open while reserving larger commitments for verified proof points.'
+        watchouts = 'Avoid treating market enthusiasm as a substitute for validated economics.'
+    if _looks_like_internal_label(title):
+        title = 'A boardroom choice'
+    return (
+        '\\clearpage\n'
+        + '{\\sffamily\\fontsize{22}{27}\\selectfont\\color{BONavy} ' + _tex(_shorten(title, 100)) + '}\\par\\vspace{10pt}\n'
+        + '\\begin{minipage}[t]{0.43\\linewidth}\n'
+        + '{\\sffamily\\fontsize{17}{22}\\selectfont\\color{BOGreen} ' + _tex(_shorten(question, 300)) + '}\\par\n'
+        + '\\end{minipage}\\hfill\\begin{minipage}[t]{0.50\\linewidth}\n'
+        + _para(_tex(_shorten(situation, 620)))
+        + '{\\small\\bfseries\\color{BOText} ' + _tex(_shorten(move, 360)) + '}\\par\\vspace{5pt}\n'
+        + '{\\footnotesize\\color{BOMuted} ' + _tex(_shorten(watchouts, 320)) + '}\\par'
+        + '\\end{minipage}\n'
+    )
+
+
+def _leadership_agenda_page(report: Dict[str, Any], sections: List[Dict[str, Any]]) -> str:
+    actions = _as_list(report.get('action_plan'))[:4]
+    risks = _as_list(report.get('risk_register'))[:4]
+    action_items = []
+    for item in actions:
+        action_items.append(_field(item, 'action') or _field(item, 'recommended_move') or _item_to_text(item))
+    if not action_items:
+        action_items = [_strip_number_prefix(section.get('lead') or section.get('title') or '') for section in sections[:4]]
+    risk_items = []
+    for item in risks:
+        trigger = _field(item, 'trigger')
+        action = _field(item, 'management_action')
+        risk = _field(item, 'risk')
+        parts = []
+        if risk:
+            parts.append(risk)
+        if trigger:
+            parts.append('Watch for ' + trigger[0].lower() + trigger[1:] if len(trigger) > 1 else trigger.lower())
+        if action:
+            parts.append(action)
+        risk_items.append(_join_sentence_fragments(parts))
+    left = ''.join('\\item ' + _tex(_shorten(x, 230)) + '\n' for x in action_items if str(x).strip())
+    right = ''.join('\\item ' + _tex(_shorten(x, 230)) + '\n' for x in risk_items if str(x).strip())
+    return (
+        '\\clearpage\n'
+        + '{\\sffamily\\fontsize{21}{26}\\selectfont\\color{BONavy} Board implications}\\par\\vspace{7pt}\n'
+        + '\\begin{minipage}[t]{0.47\\linewidth}\n'
+        + '{\\textcolor{BOGreen}{\\scriptsize\\bfseries PRIORITIES}}\\par\\vspace{3pt}\n'
+        + '{\\small\\begin{itemize}\n' + (left or '\\item Convert the report into a short list of decisions, owners and proof points.\n') + '\\end{itemize}}\n'
+        + '\\end{minipage}\\hfill\\begin{minipage}[t]{0.45\\linewidth}\n'
+        + '{\\textcolor{BOGreen}{\\scriptsize\\bfseries EXTERNAL FACTS}}\\par\\vspace{3pt}\n'
+        + '{\\small\\begin{itemize}\n' + (right or '\\item Revisit the thesis when the public evidence base, economics or regulatory path changes.\n') + '\\end{itemize}}\n'
+        + '\\end{minipage}\n'
+    )
+
+
+def _disclaimer_page(refs: List[Any]) -> str:
+    source_rows = []
+    for idx, ref in enumerate([str(x) for x in refs if str(x).strip()][:10], start=1):
+        source_rows.append('\\textcolor{BOGreen}{\\bfseries ' + f'{idx:02d}' + '} & {\\scriptsize ' + _tex(_shorten(ref, 68)) + '} \\\\[4pt]\n')
+    if not source_rows:
+        source_rows = [
+            '\\textcolor{BOGreen}{\\bfseries 01} & {\\scriptsize Public company, policy and market materials} \\\\[4pt]\n',
+            '\\textcolor{BOGreen}{\\bfseries 02} & {\\scriptsize Public research and institutional publications} \\\\[4pt]\n',
+        ]
+    body = (
+        'This report has been prepared for strategy discussion and executive decision support. It is not investment, legal, tax, audit or valuation advice. '
+        'Market estimates, forecasts and scenarios are directional and should be independently validated before they are used for investment, financing, transaction, regulatory or operational decisions. '
+        'Forward-looking views may change as technology, policy, financing, regulation, competition, supply chains and macro conditions evolve. '
+        'Recipients should perform their own diligence and treat this report as one input into a broader decision process.'
+    )
+    principles = [
+        ('Use', 'Use the report to clarify timing, partner selection, capital exposure and the next management decision.'),
+        ('Do not use', 'Do not treat directional market views as a substitute for transaction diligence, technical verification or legal advice.'),
+        ('Update trigger', 'Refresh the view when public milestones, cost curves, regulation, financing or customer commitments materially change.'),
+    ]
+    principle_rows = ''.join(
+        '{\\textcolor{BOGreen}{\\scriptsize\\bfseries ' + _tex(label.upper()) + '}}\\par{\\scriptsize ' + _tex(text) + '}'
+        + (' & ' if idx < len(principles) else ' \\\\\n')
+        for idx, (label, text) in enumerate(principles, start=1)
+    )
+    return (
+        '\\clearpage\n'
+        + _green_rule('46mm')
+        + '{\\sffamily\\fontsize{22}{27}\\selectfont\\color{BONavy} Research basis and limitations}\\par\\vspace{9pt}\n'
+        + '\\begin{minipage}[t]{0.47\\linewidth}\n'
+        + '{\\sffamily\\fontsize{15}{20}\\selectfont\\color{BOGreen} Public materials support a strategic view, not a transaction recommendation.}\\par\\vspace{7pt}\n'
+        + '{\\footnotesize\\color{BOText} ' + _tex(body) + '}\\par\n'
+        + '\\end{minipage}\\hfill\\begin{minipage}[t]{0.46\\linewidth}\n'
+        + '{\\textcolor{BOGreen}{\\scriptsize\\bfseries PUBLIC MATERIALS REFERENCED}}\\par\\vspace{5pt}\n'
+        + '\\begin{tabularx}{\\linewidth}{p{8mm}Y}\n'
+        + ''.join(source_rows)
+        + '\\end{tabularx}\n'
+        + '\\end{minipage}\\par\\vspace{12pt}\n'
+        + '\\fcolorbox{BOLine}{BOLight}{\\begin{minipage}{0.96\\linewidth}\\vspace{5pt}\\begin{tabularx}{\\linewidth}{Y Y Y}\n'
+        + principle_rows
+        + '\\end{tabularx}\\vspace{5pt}\\end{minipage}}\n'
+    )
+
+
+def _about_blueocean_page(report: Dict[str, Any], refs: List[Any]) -> str:
+    authors = _as_list(report.get('author_credentials'))[:4]
+    rows = []
+    if authors:
+        for item in authors:
+            name = _tex(_shorten(_field(item, 'name') or 'BlueOcean Research', 80))
+            role = _tex(_shorten(_field(item, 'role') or 'Research synthesis team', 100))
+            credentials = _tex(_shorten(_field(item, 'credentials') or 'Executive research, evidence synthesis and report QA.', 360))
+            rows.append('{\\small\\bfseries ' + name + '}\\par{\\scriptsize\\color{BOGreen} ' + role + '} & {\\footnotesize ' + credentials + '} \\\\[7pt]\n')
+    if not rows:
+        rows.append('{\\small\\bfseries BlueOcean Research}\\par{\\scriptsize\\color{BOGreen} Research synthesis team} & {\\footnotesize Executive research, evidence synthesis and report QA for senior-management discussion.} \\\\[7pt]\n')
+    institutions = ', '.join(str(x) for x in refs[:8]) if refs else 'public research, company materials, policy sources and market evidence'
+    capability_rows = [
+        ('Strategy research', 'Decision-focused market, technology and competitive research for senior leadership.'),
+        ('Evidence synthesis', 'Structured comparison of public materials, company claims, policy signals and market data.'),
+        ('Executive output', 'Reader-ready reports, exhibits and board materials designed for fast management discussion.'),
+        ('Quality control', 'Source retention, language cleanup and layout checks before publication.'),
+    ]
+    capabilities = ''.join(
+        '\\textcolor{BOGreen}{\\bfseries ' + f'{idx:02d}' + '} & {\\scriptsize\\bfseries ' + _tex(label) + '}\\par{\\scriptsize ' + _tex(text) + '} \\\\[6pt]\n'
+        for idx, (label, text) in enumerate(capability_rows, start=1)
+    )
+    return (
+        '\\clearpage\n'
+        + _green_rule('38mm')
+        + '{\\sffamily\\fontsize{24}{30}\\selectfont\\color{BONavy} About BlueOcean}\\par\\vspace{10pt}\n'
+        + '\\begin{minipage}[t]{0.44\\linewidth}\n'
+        + '{\\sffamily\\fontsize{16}{22}\\selectfont\\color{BOGreen} Research is most useful when it changes a management decision.}\\par\\vspace{8pt}\n'
+        + '{\\footnotesize\\color{BOText} BlueOcean prepares decision-focused research for executives who need to separate credible evidence from market noise, translate technology shifts into commercial implications and stage commitments around proof.}\\par\\vspace{7pt}\n'
+        + '{\\footnotesize\\color{BOMuted} This report draws on ' + _tex(_shorten(institutions, 360)) + '.}\\par\n'
+        + '\\vspace{10pt}\\fcolorbox{BOLine}{BOLight}{\\begin{minipage}{0.90\\linewidth}\\vspace{5pt}{\\scriptsize\\color{BOText} The work is designed for CEOs and leadership teams who need a concise view of what changes now, what waits for stronger proof and which external facts would change the answer.}\\vspace{5pt}\\end{minipage}}\n'
+        + '\\end{minipage}\\hfill\\begin{minipage}[t]{0.48\\linewidth}\n'
+        + '{\\textcolor{BOGreen}{\\scriptsize\\bfseries HOW BLUEOCEAN SUPPORTS EXECUTIVE TEAMS}}\\par\\vspace{5pt}\n'
+        + '\\begin{tabularx}{\\linewidth}{p{8mm}Y}\n'
+        + capabilities
+        + '\\end{tabularx}\\vspace{6pt}\n'
+        + '\\begin{tabularx}{\\linewidth}{p{31mm}Y}\n'
+        + ''.join(rows)
+        + '\\end{tabularx}\n'
+        + '\\end{minipage}\n'
+    )
+
+
+def _back_cover_page(cover: str) -> str:
+    return (
+        '\\clearpage\n\\thispagestyle{empty}\n'
+        + _page_background(cover)
+        + r'''
+\vspace*{\fill}
+\begin{flushright}
+{\sffamily\bfseries\Large\color{white} BlueOcean}\hspace*{3mm}
+\end{flushright}
+\vspace*{8mm}
+'''
+    )
 
 
 def _repair_sections(report: Dict[str, Any], sections: List[Dict[str, Any]], topic: str, summary: List[str]) -> List[Dict[str, Any]]:
@@ -191,22 +1238,19 @@ def _repair_sections(report: Dict[str, Any], sections: List[Dict[str, Any]], top
     for idx, original in enumerate(sections, start=1):
         section = dict(original)
         current_title = _strip_number_prefix(section.get('title', ''))
-        if _is_generic_title(current_title):
+        if _is_generic_title(current_title) or _is_bad_report_title(current_title, report_title):
             current_title = _derive_title(idx, report_title, summary)
             section['title'] = current_title
         lead = str(section.get('lead') or '').strip()
         if not lead or _is_generic_title(lead) or _normalize_punctuation(lead).lower() == _normalize_punctuation(current_title).lower():
             section['lead'] = _derive_lead(idx, current_title, report_title, summary)
-        paragraphs = [str(x).strip() for x in section.get('paragraphs', []) if str(x).strip()]
-        if _paragraphs_are_weak(paragraphs):
-            paragraphs = _generated_paragraphs(idx, current_title, report_title, summary)
-        elif len(paragraphs) < 10:
-            paragraphs = _dedupe(paragraphs + _generated_paragraphs(idx, current_title, report_title, summary))[:10]
-        else:
-            paragraphs = _dedupe(paragraphs)
-        section['paragraphs'] = [_normalize_punctuation(p) for p in paragraphs[:12]]
+        paragraphs = _dedupe([str(x).strip() for x in section.get('paragraphs', []) if str(x).strip()])
+        paragraphs = [p for p in paragraphs if not _is_bad_template_text(p)]
+        if len(paragraphs) < 2:
+            paragraphs = _dedupe(paragraphs + _section_fallback_paragraphs(idx, current_title, report_title, summary))
+        section['paragraphs'] = [_normalize_punctuation(p) for p in paragraphs[:8]]
         repaired.append(section)
-    return _merge_sections(repaired, max_sections=6, report_title=report_title, summary=summary)
+    return repaired[:10]
 
 
 def _merge_sections(sections: List[Dict[str, Any]], max_sections: int, report_title: str, summary: List[str]) -> List[Dict[str, Any]]:
@@ -228,7 +1272,7 @@ def _merge_sections(sections: List[Dict[str, Any]], max_sections: int, report_ti
             paragraphs.extend(item_paras[:5])
             if item_title and not _is_generic_title(item_title):
                 subsections.append({'title': item_title, 'paragraphs': item_paras[:6]})
-        paragraphs = _dedupe(paragraphs + _generated_paragraphs(idx, merged_title, report_title, summary))[:14]
+        paragraphs = _dedupe(paragraphs + _section_fallback_paragraphs(idx, merged_title, report_title, summary))[:10]
         merged.append({'id': primary.get('id', f'section-{idx}'), 'title': merged_title, 'lead': merged_lead, 'paragraphs': paragraphs, 'subsections': subsections[:4], 'visual_hint': primary.get('visual_hint', f'image-{idx}')})
     return merged[:max_sections]
 
@@ -248,12 +1292,20 @@ def _derive_title(idx: int, report_title: str, summary: List[str]) -> str:
     return fallback[(idx - 1) % len(fallback)]
 
 
+def _is_bad_report_title(title: str, report_title: str) -> bool:
+    normalized = re.sub(r'\W+', ' ', _normalize_punctuation(title).lower()).strip()
+    report_key = re.sub(r'\W+', ' ', _normalize_punctuation(report_title).lower()).strip()
+    if report_key and normalized.startswith(report_key[: min(56, len(report_key))]):
+        return any(marker in normalized for marker in (' should be ', ' not a binary bet', ' staged management'))
+    return 'should be managed as a staged strategic option' in normalized
+
+
 def _title_from_sentence(text: str) -> str:
     cleaned = _normalize_punctuation(text).strip()
     cleaned = re.sub(r'^key findings?:\s*', '', cleaned, flags=re.I)
     cleaned = cleaned.split(';')[0].strip()
     if len(cleaned) > 118:
-        cleaned = cleaned[:117].rsplit(' ', 1)[0].strip()
+        cleaned = _compact_headline(cleaned)
     return cleaned or 'The management agenda should be staged around evidence quality'
 
 
@@ -264,22 +1316,39 @@ def _derive_lead(idx: int, title: str, report_title: str, summary: List[str]) ->
 
 
 def _generated_paragraphs(idx: int, title: str, report_title: str, summary: List[str]) -> List[str]:
+    return _section_fallback_paragraphs(idx, title, report_title, summary)
+
+
+def _section_fallback_paragraphs(idx: int, title: str, report_title: str, summary: List[str]) -> List[str]:
     topic = _normalize_punctuation(report_title)
-    thesis = _normalize_punctuation(summary[(idx - 1) % len(summary)]) if summary else title
+    thesis = _normalize_punctuation(summary[(idx - 1) % len(summary)]) if summary else _normalize_punctuation(title)
+    if not thesis:
+        thesis = 'The question for leadership is where the evidence is strong enough to support action.'
     return [
         thesis,
-        'The issue matters because ' + topic + ' is moving from a science-led narrative into a capital-allocation question. Executives need to know which milestones alter decision quality and which milestones merely improve market sentiment.',
-        'The first lens is technology readiness. Progress in laboratories, pilots and private-company demonstrations should be separated from repeatable operating performance, because commercial buyers will ultimately underwrite uptime, maintainability, safety case, supply availability and lifecycle economics rather than headline breakthroughs.',
-        'The second lens is economics. Even when technical performance improves, the commercial case depends on capital intensity, construction duration, financing cost, utilization, regulatory treatment and the availability of credible offtake or procurement pathways. These factors can widen or narrow the gap between promise and adoption.',
-        'The third lens is ecosystem readiness. Suppliers, talent pools, standards bodies, regulators, insurers and customers all need to mature in parallel. A bottleneck in any one of these areas can delay deployment even if the core technology continues to advance.',
-        'The implication is that leadership teams should avoid binary conclusions. A more robust posture is to treat the opportunity as a staged option: participate early enough to learn and secure access, but reserve heavy commitments for moments when the evidence base becomes more bankable.',
-        'Partnerships will be especially important. Collaboration with technology developers, utilities, industrial customers, laboratories and public agencies can reduce learning cost while preserving strategic flexibility. The best partnerships are those that create observable proof points rather than broad memoranda of understanding.',
-        'Capital should therefore be sequenced around milestones. The most useful milestones are not generic announcements; they are measurable changes in cost, performance, reliability, permitting clarity, supply-chain depth and customer willingness to sign binding commercial arrangements.',
-        'For senior executives, the practical agenda is to identify the few assumptions that would change the decision. Those assumptions should be monitored through a dashboard, reviewed quarterly and linked to clear escalation triggers for partnerships, investment or market entry.',
-        'The risk of moving too slowly is losing access to scarce partners and capabilities. The risk of moving too quickly is committing capital before the market has resolved its most material uncertainties. The strategic answer is disciplined optionality rather than passive observation.',
-        'This chapter therefore frames the topic as a management choice, not a technology forecast. The objective is to define where conviction is already sufficient, where more evidence is required, and where a low-cost option should be maintained.',
-        'The conclusion is that management should prioritize evidence quality, milestone discipline and partner access over headline excitement. Those levers are more likely to determine value creation than any single technical announcement.',
+        'For a CEO, the practical test is whether this changes timing, partner selection, capital exposure or the next decision milestone. The answer should be staged around verified operating evidence rather than broad market enthusiasm.',
+        'The stronger posture is to keep learning options open while reserving larger commitments for facts that would change the business case: cost, reliability, supply depth, regulatory clarity and customer willingness to sign binding commitments.',
+        'In the context of ' + topic + ', management should separate moves that create privileged learning from moves that only create headline exposure. That distinction keeps the organization close to the opportunity without forcing premature conviction.',
     ]
+
+
+def _is_bad_template_text(text: str) -> bool:
+    cleaned = _normalize_punctuation(text).lower()
+    bad_markers = [
+        'the issue matters because',
+        'the first lens is technology readiness',
+        'the second lens is economics',
+        'the third lens is ecosystem readiness',
+        'this chapter therefore frames the topic',
+        'this chapter concludes',
+        'this section concludes',
+        'this chapter finds',
+        'this section finds',
+        'this chapter shows',
+        'this section shows',
+        'management should prioritize evidence quality',
+    ]
+    return any(marker in cleaned for marker in bad_markers) or any(re.search(pattern, cleaned, flags=re.I) for pattern in PROCESS_LANGUAGE_PATTERNS)
 
 
 def _paragraphs_are_weak(paragraphs: List[str]) -> bool:
@@ -305,6 +1374,8 @@ def _dedupe(values: List[str]) -> List[str]:
         normalized = _normalize_punctuation(str(value).strip())
         if not normalized:
             continue
+        if _is_bad_template_text(normalized):
+            continue
         key = re.sub(r'\W+', '', normalized.lower())[:180]
         if key in seen:
             continue
@@ -320,21 +1391,87 @@ def _agenda_heading(summary: List[str], sections: List[Dict[str, Any]]) -> str:
             continue
         if cleaned.lower().startswith(('this report', 'the report', 'our analysis')):
             continue
-        return _tex(_shorten(cleaned, 118))
+        return _compact_headline(cleaned)
     if sections:
-        return _tex(_shorten(_strip_number_prefix(sections[0].get('title', 'Management agenda')), 118))
+        return _shorten(_strip_number_prefix(sections[0].get('title', 'Management agenda')), 135)
     return 'Management should focus on the few moves that can change the outcome'
+
+
+def _compact_headline(text: str) -> str:
+    cleaned = _normalize_punctuation(text)
+    cleaned = re.split(r'(?<=[.!?])\s+', cleaned, maxsplit=1)[0].strip()
+    for pattern in [
+        r',\s+driven\s+by\b',
+        r',\s+supported\s+by\b',
+        r',\s+requiring\b',
+        r',\s+creating\b',
+        r',\s+with\b',
+        r',\s+but\b',
+        r',\s+while\b',
+        r';',
+        r'\s+because\s+',
+        r'\s+but\s+',
+        r'\s+while\s+',
+    ]:
+        parts = re.split(pattern, cleaned, maxsplit=1, flags=re.I)
+        if len(parts) > 1 and 35 <= len(parts[0]) <= 145:
+            return _clean_sentence_fragment(parts[0])
+    return _shorten(cleaned, 110)
+
+
+def _clean_sentence_fragment(text: str) -> str:
+    cleaned = _normalize_punctuation(text).strip()
+    cleaned = re.sub(r'\s+', ' ', cleaned)
+    cleaned = cleaned.rstrip('.,;: ')
+    weak_tail = r'\s+(?:a|an|the|not|before|after|with|and|or|of|for|to|in|at|by|from|as|but|while|because|requiring|including|than)$'
+    while re.search(weak_tail, cleaned, flags=re.I):
+        cleaned = re.sub(weak_tail, '', cleaned, flags=re.I).rstrip('.,;: ')
+    return cleaned
+
+
+def _join_sentence_fragments(parts: List[str]) -> str:
+    fragments = [_clean_sentence_fragment(part) for part in parts if _clean_sentence_fragment(part)]
+    if not fragments:
+        return ''
+    return '. '.join(fragments) + '.'
+
+
+def _display_bullet(text: str, max_chars: int) -> str:
+    cleaned = _clean_sentence_fragment(str(text or ''))
+    if len(cleaned) <= max_chars:
+        return cleaned
+    compact = _compact_headline(cleaned)
+    if compact and len(compact) < len(cleaned):
+        cleaned = compact
+    return _shorten(cleaned, max_chars)
+
+
+def _chart_title(value: Any, max_chars: int) -> str:
+    cleaned = _clean_sentence_fragment(str(value or ''))
+    compact = re.sub(
+        r'^(.{8,60}?)\s+for\s+.+?\s+(should|must|will|still|depends|requires|needs|is|are)\s+(.+)$',
+        lambda match: f"{match.group(1)} {match.group(2)} {match.group(3)}",
+        cleaned,
+        flags=re.I,
+    )
+    if compact != cleaned:
+        cleaned = _clean_sentence_fragment(compact)
+    if len(cleaned) <= max_chars:
+        return cleaned
+    return _display_bullet(cleaned, max_chars)
 
 
 def _paras(section: Dict[str, Any]) -> List[str]:
     raw = [str(x) for x in section.get('paragraphs', []) if str(x).strip()]
-    title = _strip_number_prefix(section.get('title', 'the issue'))
-    expansions = _generated_paragraphs(1, title, title, [section.get('lead') or title])
     raw = _dedupe(raw)
-    while len(raw) < 12:
-        raw.append(expansions[(len(raw) - 1) % len(expansions)])
+    if not raw:
+        for subsection in section.get('subsections', []) or []:
+            if isinstance(subsection, dict):
+                raw.extend(str(x) for x in subsection.get('paragraphs', []) if str(x).strip())
         raw = _dedupe(raw)
-    return [_tex(x) for x in raw[:12]]
+    if not raw and section.get('lead'):
+        raw = [str(section.get('lead'))]
+    return [_tex(x) for x in raw[:8]]
 
 
 def _para(text: str) -> str:
@@ -394,11 +1531,77 @@ def _safe_sections(value: Any) -> List[Dict[str, Any]]:
     return [{'title': 'Executive priorities and implications', 'lead': 'The analysis should be translated into a concise management agenda.', 'paragraphs': ['The evidence should be organized around decision quality, execution timing and management implications.'], 'key_takeaways': ['Prioritize actionability.'], 'visual_hint': 'image-1'}]
 
 
+def _safe_charts(value: Any) -> List[Dict[str, Any]]:
+    charts = []
+    for idx, item in enumerate(_as_list(value), start=1):
+        if not isinstance(item, dict):
+            continue
+        chart = dict(item)
+        chart['id'] = str(chart.get('id') or f'chart-{idx}')
+        charts.append(chart)
+    return charts[:14]
+
+
+def _section_content_hints(section: Dict[str, Any]) -> List[str]:
+    hints = []
+    for item in _as_list(section.get('key_takeaways')):
+        text = _normalize_punctuation(str(item or '').strip())
+        if text:
+            hints.append(text)
+    for subsection in _as_list(section.get('subsections')):
+        if isinstance(subsection, dict):
+            text = _strip_number_prefix(subsection.get('title', ''))
+        else:
+            text = str(subsection or '')
+        text = _normalize_punctuation(text)
+        if text and not _is_generic_title(text):
+            hints.append(text)
+        if len(hints) >= 4:
+            break
+    return _dedupe(hints)[:4]
+
+
+def _as_list(value: Any) -> List[Any]:
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return value
+    return [value]
+
+
+def _item_to_text(value: Any) -> str:
+    if isinstance(value, dict):
+        return ' '.join(str(v) for v in value.values() if isinstance(v, (str, int, float)) and str(v).strip())
+    if isinstance(value, list):
+        return ' '.join(_item_to_text(x) for x in value)
+    return str(value or '')
+
+
+def _field(item: Any, key: str, default: str = '') -> str:
+    if isinstance(item, dict):
+        return ' '.join(str(item.get(key) or default).split())
+    return ' '.join(str(item or default).split())
+
+
 def _summary_items(value: Any) -> List[str]:
     raw = [str(x).strip() for x in value if str(x).strip()] if isinstance(value, list) else ([str(value).strip()] if str(value).strip() else [])
     if len(raw) <= 2 and raw and len(' '.join(raw)) > 450:
         raw = [s.strip() for s in re.split(r'(?<=[.!?])\s+', ' '.join(raw)) if len(s.strip()) > 20]
     return [_normalize_punctuation(x) for x in raw[:8]]
+
+
+def _looks_like_internal_label(text: str) -> bool:
+    cleaned = _normalize_punctuation(text).strip().lower()
+    labels = {
+        'executive summary',
+        'key findings',
+        'management action plan',
+        'risk register',
+        'ceo decision scenario',
+        'method and team',
+        'methodology',
+    }
+    return cleaned in labels or cleaned.startswith(('ceo decision', 'management action', 'risk register'))
 
 
 def _strip_number_prefix(text: str) -> str:
@@ -408,7 +1611,15 @@ def _strip_number_prefix(text: str) -> str:
 def _shorten(value: Any, max_chars: int) -> str:
     text = ' '.join(str(value or '').replace('\n', ' ').split())
     text = _normalize_punctuation(text)
-    return text if len(text) <= max_chars else text[: max_chars - 1].rstrip() + '.'
+    if len(text) <= max_chars:
+        return text
+    shortened = text[:max_chars].rsplit(' ', 1)[0].strip()
+    if not shortened:
+        shortened = text[:max_chars].strip()
+    sentence_ends = list(re.finditer(r'[.!?](?=\s|$)', shortened))
+    if sentence_ends and sentence_ends[-1].end() >= max(80, int(max_chars * 0.45)):
+        return shortened[:sentence_ends[-1].end()].strip()
+    return _clean_sentence_fragment(shortened)
 
 
 def _normalize_punctuation(text: str) -> str:
@@ -422,12 +1633,69 @@ def _normalize_punctuation(text: str) -> str:
     text = ''.join(translation.get(ord(ch), ch) for ch in text)
     text = re.sub(r"([A-Za-z])\s+'\s+s\b", r"\1's", text)
     text = re.sub(r"\b([A-Za-z]+n)\s+'\s+t\b", r"\1't", text)
+    text = re.sub(r"(\d)\.\s+(\d)", r"\1.\2", text)
+    text = re.sub(r"([A-Za-z])-(a|an|and|but|while|without|with|not|the)\b", r"\1 - \2", text, flags=re.I)
     text = re.sub(r"\s+", ' ', text).strip()
     return text
 
 
+def _reader_clean(text: str) -> str:
+    text = _normalize_punctuation(text)
+    for pattern in PROCESS_LANGUAGE_PATTERNS:
+        text = re.sub(pattern + r'\s*', '', text, flags=re.I)
+    replacements = [
+        (r'\bCEO decision scenario\b', 'Board choice under uncertainty'),
+        (r'\bManagement action plan\b', 'Near-term management moves'),
+        (r'\bRisk register\b', 'Risk implications'),
+        (r'\bMethod and team\b', 'About the research'),
+        (r'\bKey findings\b', 'Main conclusions'),
+        (r'\bExecutive summary\b', 'Opening view'),
+        (r'\bMain conclusions?:\s*', ''),
+        (r'\bRecommended actions?:\s*', ''),
+        (r'\bRisk implications?(?: highlights?)?:\s*', ''),
+        (r'\bFor CEOs? and boards,\s*', ''),
+        (r'\bFor CEOs? and boards\b', ''),
+        (r'\bEvidence boundary:\s*', 'The public record shows that '),
+        (r'\bEvidence:\s*', ''),
+        (r'\bManagement implication:\s*', ''),
+        (r'\bThe management implication is clear:\s*', ''),
+        (r'\bThe next management move is clear:\s*', ''),
+        (r'\bThis should remain a directional conclusion because\s*', 'The available record supports a directional view because '),
+        (r'\bThis point should be validated further because\s*', 'Leadership should validate whether '),
+        (r'\bThis assumption should stay on the watchlist because\s*', 'This assumption needs continued scrutiny because '),
+        (r'\bThe diligence gap is that\s*', 'The unresolved commercial question is whether '),
+        (r'\bCEO question:\s*', 'Decision question: '),
+        (r'\bRecommended move:\s*', 'Recommended move: '),
+        (r'\bpublic-evidence boundary\b', 'available public record'),
+        (r'\bevidence-boundary\b', 'available public record'),
+        (r'\bevidence boundary\b', 'available public record'),
+        (r'\bsource backup\b', 'public record'),
+        (r'\bsupporting sources\b', 'public record'),
+        (r'\bevidence ledgers?\b', 'public record'),
+        (r'\bfact[-\s]+packs?\b', 'public record'),
+        (r'\bevidence gates\b', 'verified milestones'),
+        (r'\bdecision gates\b', 'decision milestones'),
+        (r'\bvalidation gaps?\b', 'open questions'),
+        (r'\bmodel-assisted synthesis\b', 'research synthesis'),
+        (r'\binternal executive strategy stress test\b', ''),
+        (r'\binternal framework\b', ''),
+        (r'\bstress test\b', 'review'),
+        (r'\bavailable public record:\s*', 'The public record shows that '),
+    ]
+    for pattern, replacement in replacements:
+        text = re.sub(pattern, replacement, text, flags=re.I)
+    text = re.sub(r'\(\d+\)\s*', '', text)
+    text = re.sub(r'([.!?])\s+([a-z])', lambda m: f"{m.group(1)} {m.group(2).upper()}", text)
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text[:1].upper() + text[1:] if text[:1].islower() else text
+
+
+def _comparison_key(text: str) -> str:
+    return re.sub(r'[^a-z0-9]+', ' ', _normalize_punctuation(text).lower()).strip()
+
+
 def _tex(value: Any) -> str:
     text = str(value or '').replace('\u00ad', '').replace('\ufffe', '').replace('\ufeff', '')
-    text = _normalize_punctuation(' '.join(text.replace('\n', ' ').split()))
-    mapping = {'\\': r'\textbackslash{}', '&': r'\&', '%': r'\%', '$': r'\$', '#': r'\#', '_': r'\_', '{': r'\{', '}': r'\}', '~': r'\textasciitilde{}', '^': r'\textasciicircum{}'}
+    text = _reader_clean(' '.join(text.replace('\n', ' ').split()))
+    mapping = {'\\': r'\textbackslash{}', "'": r'\BOApos{}', '&': r'\&', '%': r'\%', '$': r'\$', '#': r'\#', '_': r'\_', '{': r'\{', '}': r'\}', '~': r'\textasciitilde{}', '^': r'\textasciicircum{}'}
     return ''.join(mapping.get(ch, ch) for ch in text)
