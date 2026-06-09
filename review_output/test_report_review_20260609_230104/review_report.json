@@ -1,0 +1,335 @@
+{
+  "timestamp": "2026-06-09T17:31:14.755961",
+  "report_title": "Test Report",
+  "scores": {
+    "overall_score": 42,
+    "grade": "Red",
+    "research_quality": {
+      "score": 10,
+      "max_points": 30,
+      "justification": "The report covers a broad topic, the EV market, but lacks depth in analysis per section. For instance, the Executive Summary mentions a 'projected 25% annual growth rate' without providing further context or analysis. The Key Findings section lists points such as 'Battery costs have decreased by 15% year-over-year' and 'Government subsidies are expected to be phased out by 2030' without exploring their implications thoroughly. The report does not demonstrate the use of multiple viewpoints or scenario/uncertainty analysis.",
+      "positive_factors": [
+        "Broad topic coverage",
+        "Identification of key points such as battery cost decrease and government subsidy phase-out"
+      ],
+      "negative_factors": [
+        "Lack of depth in analysis",
+        "No multiple viewpoints or scenario analysis"
+      ]
+    },
+    "evidence_and_citations": {
+      "score": 5,
+      "max_points": 25,
+      "justification": "The report lacks any named sources, bibliography, or reference section to support its claims. Key statistics like '25% annual growth rate' and '15% year-over-year decrease in battery costs' are not traceable to any source. The Claims Audit Summary indicates that 3 claims are unsupported and 3 are high-risk, with no claims being supported or partially supported, which severely undermines the report's credibility.",
+      "positive_factors": [
+        "None identified."
+      ],
+      "negative_factors": [
+        "No named sources",
+        "No bibliography or reference section",
+        "Unsupported and high-risk claims"
+      ]
+    },
+    "strategic_clarity": {
+      "score": 15,
+      "max_points": 25,
+      "justification": "The report provides some clear recommendations such as 'Increase investment in solid-state battery research' and 'Expand charging network in rural areas,' which imply a 'so-what' for the investment in EV infrastructure. However, it does not explicitly distinguish between risks and opportunities or provide a comprehensive analysis of decision implications. The actionability for the target audience is somewhat clear but could be more detailed.",
+      "positive_factors": [
+        "Clear recommendations for investment and expansion",
+        "Implication of a 'so-what' for investment in EV infrastructure"
+      ],
+      "negative_factors": [
+        "Lack of explicit distinction between risks and opportunities",
+        "Limited analysis of decision implications"
+      ]
+    },
+    "writing_and_structure": {
+      "score": 12,
+      "max_points": 20,
+      "justification": "The report has a logical structure with section titles that match the content. The flow and transitions between sections are clear, and the language is generally free of jargon. However, the report could benefit from more concise language in some sections and the avoidance of filler language. The Claims Audit Summary is clearly presented but feels somewhat disconnected from the rest of the report.",
+      "positive_factors": [
+        "Logical structure",
+        "Clear section titles",
+        "Absence of jargon"
+      ],
+      "negative_factors": [
+        "Potential for more concise language",
+        "Disconnect between Claims Audit Summary and the rest of the report"
+      ]
+    }
+  },
+  "claims_audit": {
+    "claims": [
+      {
+        "claim": "The EV market is expanding rapidly, with a projected 25% annual growth rate.",
+        "section": "Executive Summary",
+        "paragraph": 1,
+        "location_ref": "Location → [Executive Summary] | Para 1 | \"The EV market\" → \"annual growth rate\"",
+        "evidence_provided": false,
+        "data_provided": true,
+        "source_referenced": false,
+        "quantified": true,
+        "confidence_justified": false,
+        "classification": "high_risk"
+      },
+      {
+        "claim": "This presents significant opportunities for investment in charging infrastructure.",
+        "section": "Executive Summary",
+        "paragraph": 1,
+        "location_ref": "Location → [Executive Summary] | Para 1 | \"This presents\" → \"charging infrastructure\"",
+        "evidence_provided": false,
+        "data_provided": false,
+        "source_referenced": false,
+        "quantified": false,
+        "confidence_justified": false,
+        "classification": "unsupported"
+      },
+      {
+        "claim": "Battery costs have decreased by 15% year-over-year.",
+        "section": "Key Findings",
+        "paragraph": 1,
+        "location_ref": "Location → [Key Findings] | Para 1 | \"Battery costs\" → \"year-over-year\"",
+        "evidence_provided": false,
+        "data_provided": true,
+        "source_referenced": false,
+        "quantified": true,
+        "confidence_justified": false,
+        "classification": "high_risk"
+      },
+      {
+        "claim": "Government subsidies are expected to be phased out by 2030.",
+        "section": "Key Findings",
+        "paragraph": 1,
+        "location_ref": "Location → [Key Findings] | Para 1 | \"Government subsidies\" → \"by 2030\"",
+        "evidence_provided": false,
+        "data_provided": true,
+        "source_referenced": false,
+        "quantified": true,
+        "confidence_justified": false,
+        "classification": "high_risk"
+      },
+      {
+        "claim": "Increase investment in solid-state battery research.",
+        "section": "Recommendations",
+        "paragraph": 1,
+        "location_ref": "Location → [Recommendations] | Para 1 | \"Increase investment\" → \"battery research\"",
+        "evidence_provided": false,
+        "data_provided": false,
+        "source_referenced": false,
+        "quantified": false,
+        "confidence_justified": false,
+        "classification": "unsupported"
+      },
+      {
+        "claim": "Expand charging network in rural areas to capture emerging markets.",
+        "section": "Recommendations",
+        "paragraph": 1,
+        "location_ref": "Location → [Recommendations] | Para 1 | \"Expand charging\" → \"emerging markets\"",
+        "evidence_provided": false,
+        "data_provided": false,
+        "source_referenced": false,
+        "quantified": false,
+        "confidence_justified": false,
+        "classification": "unsupported"
+      }
+    ],
+    "quantification_ratio": 50,
+    "total_claims": 6,
+    "supported_count": 0,
+    "partially_supported_count": 0,
+    "unsupported_count": 3,
+    "high_risk_count": 3,
+    "speculative_count": 0
+  },
+  "recommendations": {
+    "strengths": [
+      {
+        "finding": "None identified — The report lacks specific, well-supported claims or analysis that stands out as a particular strength.",
+        "location_ref": "N/A",
+        "severity": "Low"
+      }
+    ],
+    "weaknesses": [
+      {
+        "finding": "Lack of supported claims",
+        "location_ref": "Location → [CLAIMS AUDIT] | Para 1 | \"Total claims: 6\" → \"Quantification ratio: 50%\"",
+        "severity": "High"
+      },
+      {
+        "finding": "High number of high-risk and unsupported claims",
+        "location_ref": "Location → [CLAIMS AUDIT] | Para 1 | \"High-risk and unsupported claims:\" → \"Expand charging network in rural areas to capture emerging markets.\"",
+        "severity": "High"
+      }
+    ],
+    "data_gaps": [
+      {
+        "section": "Executive Summary",
+        "claim": "The EV market is expanding rapidly, with a projected 25% annual growth rate.",
+        "location_ref": "Location → [Executive Summary] | Para 1 | \"The EV market\" → \"annual growth rate\"",
+        "missing_data": [
+          "Historical market growth data",
+          "Methodology for projecting 25% annual growth rate"
+        ],
+        "severity": "High"
+      },
+      {
+        "section": "Key Findings",
+        "claim": "Battery costs have decreased by 15% year-over-year.",
+        "location_ref": "Location → [Key Findings] | Para 1 | \"Battery costs\" → \"year-over-year\"",
+        "missing_data": [
+          "Base year for the cost decrease comparison",
+          "Source of the cost decrease data"
+        ],
+        "severity": "High"
+      }
+    ],
+    "weak_assumptions": [
+      {
+        "forecast_or_claim": "Government subsidies are expected to be phased out by 2030.",
+        "location_ref": "Location → [Key Findings] | Para 1 | \"Government subsidies\" → \"by 2030\"",
+        "missing_evidence": "Policy documents or official statements supporting the phase-out of subsidies by 2030",
+        "severity": "High"
+      },
+      {
+        "forecast_or_claim": "The EV market is expanding rapidly, with a projected 25% annual growth rate.",
+        "location_ref": "Location → [Executive Summary] | Para 1 | \"The EV market\" → \"annual growth rate\"",
+        "missing_evidence": "Historical data and market analysis supporting the 25% annual growth rate projection",
+        "severity": "High"
+      }
+    ],
+    "writing_flaws": [
+      {
+        "flaw_type": "vague statement",
+        "example": "significant opportunities for investment in charging infrastructure",
+        "location_ref": "Location → [Executive Summary] | Para 1 | \"This presents\" → \"charging infrastructure\"",
+        "severity": "Medium"
+      },
+      {
+        "flaw_type": "undefined jargon",
+        "example": "solid-state battery research",
+        "location_ref": "Location → [Recommendations] | Para 1 | \"Increase investment\" → \"battery research\"",
+        "severity": "Medium"
+      }
+    ],
+    "narrative_gaps": [
+      {
+        "finding": "Lack of connection between the growth of the EV market and the recommendation to increase investment in solid-state battery research",
+        "location_ref": "Location → [Executive Summary] | Para 1 | \"The EV market\" → \"annual growth rate\" and Location → [Recommendations] | Para 1 | \"Increase investment\" → \"battery research\"",
+        "severity": "Medium"
+      }
+    ],
+    "strategic_gaps": [
+      {
+        "finding": "Missing 'so-what' implications of the projected 25% annual growth rate of the EV market",
+        "location_ref": "Location → [Executive Summary] | Para 1 | \"The EV market\" → \"annual growth rate\"",
+        "severity": "High"
+      },
+      {
+        "finding": "Lack of decision recommendations based on the key findings",
+        "location_ref": "Location → [Key Findings] | Para 1 | \"Battery costs\" → \"by 2030\"",
+        "severity": "High"
+      }
+    ],
+    "audience_relevance_gaps": [
+      {
+        "finding": "Technical terms like 'solid-state battery research' may be too technical for executive, board, or ministerial readers",
+        "location_ref": "Location → [Recommendations] | Para 1 | \"Increase investment\" → \"battery research\"",
+        "severity": "Medium"
+      }
+    ],
+    "executive_communication": {
+      "minister_ready": false,
+      "board_ready": false,
+      "swf_ready": false,
+      "minister_reason": "The report contains technical terms and lacks clear implications of key findings, making it difficult for a minister to understand and make informed decisions.",
+      "board_reason": "The report's lack of supported claims, high number of high-risk and unsupported claims, and missing data gaps make it unsuitable for board-level decision-making.",
+      "swf_reason": "The report's strategic gaps, including the lack of decision recommendations and unclear implications of key findings, make it inadequate for sovereign wealth fund investment decisions.",
+      "flagged_sections": [
+        {
+          "section": "Executive Summary",
+          "issue": "Lack of clear implications of key findings"
+        },
+        {
+          "section": "Key Findings",
+          "issue": "Unsupported claims and missing data"
+        },
+        {
+          "section": "Recommendations",
+          "issue": "Technical terms and lack of clear decision recommendations"
+        }
+      ]
+    },
+    "improvement_tasks": [
+      {
+        "priority": "Critical",
+        "section": "Executive Summary",
+        "issue": "Lack of historical market growth data and methodology for projecting 25% annual growth rate",
+        "fix": "Add historical market growth data and cite a specific methodology for the growth rate projection, such as a reputable market research report.",
+        "expected_impact": "Improved credibility and reliability of the report's key findings"
+      },
+      {
+        "priority": "Critical",
+        "section": "Key Findings",
+        "issue": "Missing base year for the cost decrease comparison and source of the cost decrease data",
+        "fix": "Specify the base year for the cost decrease comparison and cite a credible source for the cost decrease data, such as a industry report or academic study.",
+        "expected_impact": "Enhanced accuracy and trustworthiness of the report's key findings"
+      },
+      {
+        "priority": "High",
+        "section": "Recommendations",
+        "issue": "Technical terms like 'solid-state battery research' may be too technical for executive, board, or ministerial readers",
+        "fix": "Define technical terms or provide a brief explanation to facilitate understanding, and consider adding a glossary or appendix for further clarification.",
+        "expected_impact": "Improved readability and accessibility of the report for non-technical stakeholders"
+      },
+      {
+        "priority": "High",
+        "section": "Executive Summary",
+        "issue": "Lack of clear implications of the projected 25% annual growth rate of the EV market",
+        "fix": "Clearly outline the implications of the growth rate, such as increased demand for charging infrastructure or potential market opportunities, and provide concrete examples or case studies.",
+        "expected_impact": "Enhanced strategic clarity and decision-making support for stakeholders"
+      },
+      {
+        "priority": "Medium",
+        "section": "Key Findings",
+        "issue": "Vague statement about 'significant opportunities for investment in charging infrastructure'",
+        "fix": "Provide specific examples or data to support the claim, such as citing a market research report or industry analysis, and consider adding visual aids like charts or graphs.",
+        "expected_impact": "Increased credibility and persuasive power of the report's findings"
+      },
+      {
+        "priority": "Medium",
+        "section": "Recommendations",
+        "issue": "Lack of connection between the growth of the EV market and the recommendation to increase investment in solid-state battery research",
+        "fix": "Explicitly explain the link between the market growth and the recommendation, and provide evidence or research to support the connection, such as citing a study on the impact of solid-state batteries on the EV market.",
+        "expected_impact": "Improved coherence and logical flow of the report's recommendations"
+      },
+      {
+        "priority": "Low",
+        "section": "Executive Summary",
+        "issue": "Undefined jargon like 'solid-state battery research'",
+        "fix": "Define the term or provide a brief explanation to facilitate understanding, and consider adding a glossary or appendix for further clarification.",
+        "expected_impact": "Minor improvement in readability and accessibility"
+      },
+      {
+        "priority": "Low",
+        "section": "Key Findings",
+        "issue": "Missing citations for some claims",
+        "fix": "Add citations to credible sources to support the claims, such as academic studies or industry reports, and ensure consistent citation formatting throughout the report.",
+        "expected_impact": "Minor improvement in credibility and trustworthiness"
+      },
+      {
+        "priority": "Low",
+        "section": "Recommendations",
+        "issue": "Lack of visual aids to support the recommendations",
+        "fix": "Consider adding charts, graphs, or infographics to illustrate key points and enhance the report's visual appeal, and ensure that visual aids are clear, concise, and well-labeled.",
+        "expected_impact": "Minor improvement in readability and engagement"
+      },
+      {
+        "priority": "Low",
+        "section": "Executive Summary",
+        "issue": "Lack of clear summary of key findings and recommendations",
+        "fix": "Provide a concise summary of the report's main points, including key findings and recommendations, and ensure that the summary is clear, concise, and well-organized.",
+        "expected_impact": "Minor improvement in readability and accessibility"
+      }
+    ]
+  }
+}

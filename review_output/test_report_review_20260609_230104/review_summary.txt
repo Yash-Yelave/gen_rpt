@@ -1,0 +1,18 @@
+GROQ AI INSTITUTIONAL AUDIT SUMMARY
+========================================
+Report: Test Report
+Grade:  Red
+Score:  42 / 100
+
+Minister Ready: NO  |  Board Ready: NO  |  SWF Ready: NO
+
+Claims Audited: 6 | High-Risk / Unsupported: 6
+Quantification Ratio: 50%
+
+TOP STRENGTHS:
+  - None identified — The report lacks specific, well-supported claims or analysis that stands out as a particular strength.
+
+PRIORITY IMPROVEMENT TASKS:
+  - [Critical] Executive Summary: Lack of historical market growth data and methodology for projecting 25% annual growth rate
+  - [Critical] Key Findings: Missing base year for the cost decrease comparison and source of the cost decrease data
+  - [High] Recommendations: Technical terms like 'solid-state battery research' may be too technical for executive, board, or ministerial readers
