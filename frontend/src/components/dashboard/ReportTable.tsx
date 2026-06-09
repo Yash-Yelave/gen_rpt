@@ -43,12 +43,11 @@ export const ReportTable: React.FC = () => {
     setSearch(e.target.value);
   }, []);
 
-  const getDisplayStatus = (status: string, humanStatus: string): string => {
-    if (
-      status === ReportStatus.NeedsHumanReview ||
-      status === ReportStatus.AIReviewed
-    ) return 'Needs Human Review';
-    return 'In Progress';
+  // humanStatus takes priority: if review has been saved it shows "In Progress"
+  // otherwise the report is still awaiting a first review
+  const getDisplayStatus = (_status: string, humanStatus: string): string => {
+    if (humanStatus === 'In Progress') return 'In Progress';
+    return 'Needs Human Review';
   };
 
   if (isLoading) {
@@ -59,10 +58,7 @@ export const ReportTable: React.FC = () => {
     <>
       {/* Controls */}
       <div className="flex items-center justify-between mb-3 gap-3">
-        <div>
-          <h2 className="text-sm font-semibold text-gray-800">Active Reviews</h2>
-          <p className="text-xs text-gray-400 mt-0.5">Reports awaiting or in human review</p>
-        </div>
+        <h2 className="text-sm font-semibold text-gray-800">Active Reviews</h2>
         <div className="relative">
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" />
           <input
