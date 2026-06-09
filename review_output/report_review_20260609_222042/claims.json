@@ -1,0 +1,105 @@
+{
+  "claims": [
+    {
+      "claim": "Nuclear fusion is approaching technical breakeven",
+      "section": "Nuclear Fusion Is Approaching Technical Breakeven but Commercial Viability Remains a Decade or More Away",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": true,
+      "quantified": false,
+      "confidence_justified": true,
+      "classification": "Supported"
+    },
+    {
+      "claim": "Private ventures have accelerated timelines, targeting first commercial plants in the 2030s to 2040s",
+      "section": "Key highlights",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": false,
+      "quantified": true,
+      "confidence_justified": false,
+      "classification": "Weak"
+    },
+    {
+      "claim": "Fusion's strategic value lies in providing firm, dispatchable clean power and enhancing energy independence",
+      "section": "Fusion's Strategic Value Lies in Baseload Clean Power and Energy Independence, Not Near-Term Market Disruption",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": true,
+      "classification": "Supported"
+    },
+    {
+      "claim": "Geopolitical implications include reduced fossil fuel dependence for import-dependent nations and new proliferation challenges",
+      "section": "Geopolitical Implications Include Reduced Fossil Fuel Dependence and New Proliferation Challenges",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": true,
+      "classification": "Supported"
+    },
+    {
+      "claim": "Investment strategies should prioritize enabling technologies and diversified portfolios over single-reactor bets",
+      "section": "Investment Should Focus on Enabling Technologies and Diversified Portfolios Rather Than Single-Reactor Bets",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": true,
+      "classification": "Supported"
+    },
+    {
+      "claim": "Regulatory frameworks and public acceptance will be critical gating factors for fusion deployment",
+      "section": "Regulatory Frameworks and Public Acceptance Will Be Critical Gating Factors for Fusion Deployment",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": true,
+      "classification": "Supported"
+    },
+    {
+      "claim": "The first fusion plants will likely be built in Asia, where government support and regulatory pathways are most advanced",
+      "section": "The First Fusion Plants Will Likely Be Built in Asia, Where Government Support and Regulatory Pathways Are Most Advanced",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": true,
+      "classification": "Supported"
+    },
+    {
+      "claim": "Fusion vs. renewables: not a zero-sum game, but a complementary relationship that strengthens with carbon pricing",
+      "section": "Fusion vs. Renewables: Not a Zero-Sum Game, but a Complementary Relationship That Strengthens with Carbon Pricing",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": true,
+      "classification": "Supported"
+    },
+    {
+      "claim": "Military interest could accelerate fusion development, but raises dual-use and arms control concerns",
+      "section": "Military Interest Could Accelerate Fusion Development, but Raises Dual-Use and Arms Control Concerns",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": true,
+      "classification": "Supported"
+    },
+    {
+      "claim": "Tritium supply is a critical risk and advocate for parallel investment in tritium production and breeding infrastructure",
+      "section": "Section 10",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": false,
+      "quantified": true,
+      "confidence_justified": true,
+      "classification": "Supported"
+    }
+  ],
+  "quantification_ratio": 20
+}
