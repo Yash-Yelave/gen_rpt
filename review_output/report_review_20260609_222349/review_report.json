@@ -1,0 +1,1711 @@
+{
+  "timestamp": "2026-06-09T16:54:04.978042",
+  "scores": {
+    "overall_score": 88.3,
+    "grade": "Silver",
+    "components": [
+      {
+        "section_name": "Key highlights",
+        "research_evaluation": {
+          "score": 92,
+          "confidence": "High",
+          "positive_factors": [
+            "Recent experiments at NIF and JET",
+            "Private ventures accelerating timelines"
+          ],
+          "negative_factors": [
+            "Significant engineering and economic hurdles"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 12,
+            "Scenario Analysis": 12
+          }
+        },
+        "evidence_evaluation": {
+          "score": 85,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Net energy gain experiments",
+            "Private ventures' targets"
+          ],
+          "negative_factors": [
+            "Lack of detailed data on experiments"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 95,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear and concise language",
+            "Well-structured summary"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Identification of strategic value",
+            "Discussion of geopolitical implications"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 15,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Strong"
+      },
+      {
+        "section_name": "Nuclear Fusion Is Approaching Technical Breakeven but Commercial Viability Remains a Decade or More Away",
+        "research_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of recent experiments",
+            "Analysis of reactor designs"
+          ],
+          "negative_factors": [
+            "Limited discussion of economic hurdles"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 12,
+            "Scenario Analysis": 10
+          }
+        },
+        "evidence_evaluation": {
+          "score": 80,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Experiments at NIF and JET",
+            "Discussion of reactor designs"
+          ],
+          "negative_factors": [
+            "Limited data on experiments"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 92,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 85,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of technical breakeven",
+            "Analysis of commercial viability"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 10,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Moderate"
+      },
+      {
+        "section_name": "Private Fusion Ventures Have Accelerated Timelines but Face Significant Engineering and Economic Hurdles",
+        "research_evaluation": {
+          "score": 88,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of private ventures",
+            "Analysis of engineering and economic hurdles"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 10,
+            "Scenario Analysis": 10
+          }
+        },
+        "evidence_evaluation": {
+          "score": 85,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Private ventures' targets",
+            "Discussion of engineering and economic hurdles"
+          ],
+          "negative_factors": [
+            "Limited data on private ventures"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 85,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of private ventures",
+            "Analysis of engineering and economic hurdles"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 10,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Moderate"
+      },
+      {
+        "section_name": "Fusion's Strategic Value Lies in Baseload Clean Power and Energy Independence, Not Near-Term Market Disruption",
+        "research_evaluation": {
+          "score": 92,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of strategic value",
+            "Analysis of baseload clean power"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 12,
+            "Scenario Analysis": 12
+          }
+        },
+        "evidence_evaluation": {
+          "score": 85,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Discussion of baseload clean power",
+            "Analysis of energy independence"
+          ],
+          "negative_factors": [
+            "Limited data on market disruption"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 95,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of strategic value",
+            "Analysis of baseload clean power"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 15,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Strong"
+      },
+      {
+        "section_name": "Geopolitical Implications Include Reduced Fossil Fuel Dependence and New Proliferation Challenges",
+        "research_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of geopolitical implications",
+            "Analysis of proliferation challenges"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 12,
+            "Scenario Analysis": 10
+          }
+        },
+        "evidence_evaluation": {
+          "score": 80,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Discussion of geopolitical implications",
+            "Analysis of proliferation challenges"
+          ],
+          "negative_factors": [
+            "Limited data on proliferation challenges"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 92,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 85,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of geopolitical implications",
+            "Analysis of proliferation challenges"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 10,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Moderate"
+      },
+      {
+        "section_name": "Investment Should Focus on Enabling Technologies and Diversified Portfolios Rather Than Single-Reactor Bets",
+        "research_evaluation": {
+          "score": 88,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of enabling technologies",
+            "Analysis of diversified portfolios"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 10,
+            "Scenario Analysis": 10
+          }
+        },
+        "evidence_evaluation": {
+          "score": 85,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Discussion of enabling technologies",
+            "Analysis of diversified portfolios"
+          ],
+          "negative_factors": [
+            "Limited data on investment strategies"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 85,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of enabling technologies",
+            "Analysis of diversified portfolios"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 10,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Moderate"
+      },
+      {
+        "section_name": "Regulatory Frameworks and Public Acceptance Will Be Critical Gating Factors for Fusion Deployment",
+        "research_evaluation": {
+          "score": 92,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of regulatory frameworks",
+            "Analysis of public acceptance"
+          ],
+          "negative_factors": [
+            "Limited discussion of investment strategies"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 12,
+            "Scenario Analysis": 12
+          }
+        },
+        "evidence_evaluation": {
+          "score": 85,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Discussion of regulatory frameworks",
+            "Analysis of public acceptance"
+          ],
+          "negative_factors": [
+            "Limited data on regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 95,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of regulatory frameworks",
+            "Analysis of public acceptance"
+          ],
+          "negative_factors": [
+            "Limited discussion of investment strategies"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 15,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Strong"
+      },
+      {
+        "section_name": "The First Fusion Plants Will Likely Be Built in Asia, Where Government Support and Regulatory Pathways Are Most Advanced",
+        "research_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of government support",
+            "Analysis of regulatory pathways"
+          ],
+          "negative_factors": [
+            "Limited discussion of investment strategies"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 12,
+            "Scenario Analysis": 10
+          }
+        },
+        "evidence_evaluation": {
+          "score": 80,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Discussion of government support",
+            "Analysis of regulatory pathways"
+          ],
+          "negative_factors": [
+            "Limited data on government support"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 92,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 85,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of government support",
+            "Analysis of regulatory pathways"
+          ],
+          "negative_factors": [
+            "Limited discussion of investment strategies"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 10,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Moderate"
+      },
+      {
+        "section_name": "Fusion vs. Renewables: Not a Zero-Sum Game, but a Complementary Relationship That Strengthens with Carbon Pricing",
+        "research_evaluation": {
+          "score": 92,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of complementary relationship",
+            "Analysis of carbon pricing"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 12,
+            "Scenario Analysis": 12
+          }
+        },
+        "evidence_evaluation": {
+          "score": 85,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Discussion of complementary relationship",
+            "Analysis of carbon pricing"
+          ],
+          "negative_factors": [
+            "Limited data on carbon pricing"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 95,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of complementary relationship",
+            "Analysis of carbon pricing"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 15,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Strong"
+      },
+      {
+        "section_name": "Military Interest Could Accelerate Fusion Development, but Raises Dual-Use and Arms Control Concerns",
+        "research_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of military interest",
+            "Analysis of dual-use concerns"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 12,
+            "Scenario Analysis": 10
+          }
+        },
+        "evidence_evaluation": {
+          "score": 80,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Discussion of military interest",
+            "Analysis of dual-use concerns"
+          ],
+          "negative_factors": [
+            "Limited data on military interest"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 92,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 85,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of military interest",
+            "Analysis of dual-use concerns"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 10,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Moderate"
+      }
+    ]
+  },
+  "recommendations": {
+    "strengths": [],
+    "weaknesses": [],
+    "data_gaps": [],
+    "weak_assumptions": [],
+    "writing_flaws": [],
+    "executive_communication": {},
+    "narrative_gaps": [],
+    "strategic_gaps": [],
+    "gcc_relevance_gaps": [],
+    "recommendation_issues": [],
+    "improvement_tasks": []
+  },
+  "claims": {
+    "claims": [
+      {
+        "claim": "Nuclear fusion is approaching technical breakeven",
+        "section": "Key highlights",
+        "evidence_provided": true,
+        "data_provided": false,
+        "source_referenced": true,
+        "quantified": false,
+        "confidence_justified": true,
+        "classification": "Supported"
+      },
+      {
+        "claim": "Private ventures have accelerated credible timelines",
+        "section": "Key highlights",
+        "evidence_provided": true,
+        "data_provided": false,
+        "source_referenced": true,
+        "quantified": false,
+        "confidence_justified": true,
+        "classification": "Supported"
+      },
+      {
+        "claim": "First commercial plants in the 2030s to 2040s",
+        "section": "Key highlights",
+        "evidence_provided": true,
+        "data_provided": false,
+        "source_referenced": true,
+        "quantified": false,
+        "confidence_justified": true,
+        "classification": "Supported"
+      },
+      {
+        "claim": "Fusion's strategic value lies in providing firm, dispatchable clean power",
+        "section": "Key highlights",
+        "evidence_provided": true,
+        "data_provided": false,
+        "source_referenced": false,
+        "quantified": false,
+        "confidence_justified": true,
+        "classification": "Supported"
+      },
+      {
+        "claim": "Geopolitical implications include reduced fossil fuel dependence",
+        "section": "Key highlights",
+        "evidence_provided": true,
+        "data_provided": false,
+        "source_referenced": false,
+        "quantified": false,
+        "confidence_justified": true,
+        "classification": "Supported"
+      },
+      {
+        "claim": "Investment strategies should prioritize enabling technologies",
+        "section": "Key highlights",
+        "evidence_provided": true,
+        "data_provided": false,
+        "source_referenced": false,
+        "quantified": false,
+        "confidence_justified": true,
+        "classification": "Supported"
+      },
+      {
+        "claim": "Regulatory frameworks and public acceptance will be critical gating factors",
+        "section": "Key highlights",
+        "evidence_provided": true,
+        "data_provided": false,
+        "source_referenced": false,
+        "quantified": false,
+        "confidence_justified": true,
+        "classification": "Supported"
+      },
+      {
+        "claim": "First fusion plants will likely be built in Asia",
+        "section": "The First Fusion Plants Will Likely Be Built in Asia",
+        "evidence_provided": true,
+        "data_provided": false,
+        "source_referenced": false,
+        "quantified": false,
+        "confidence_justified": true,
+        "classification": "Supported"
+      },
+      {
+        "claim": "Fusion vs. renewables: not a zero-sum game, but a complementary relationship",
+        "section": "Fusion vs. Renewables",
+        "evidence_provided": true,
+        "data_provided": false,
+        "source_referenced": false,
+        "quantified": false,
+        "confidence_justified": true,
+        "classification": "Supported"
+      },
+      {
+        "claim": "Military interest could accelerate fusion development",
+        "section": "Military Interest Could Accelerate Fusion Development",
+        "evidence_provided": true,
+        "data_provided": false,
+        "source_referenced": false,
+        "quantified": false,
+        "confidence_justified": true,
+        "classification": "Supported"
+      },
+      {
+        "claim": "Tritium supply is a critical risk for fusion commercialization",
+        "section": "Section 10",
+        "evidence_provided": true,
+        "data_provided": true,
+        "source_referenced": false,
+        "quantified": true,
+        "confidence_justified": true,
+        "classification": "Supported"
+      },
+      {
+        "claim": "A single 1 GW fusion plant would require about 100 grams of tritium per day",
+        "section": "Section 10",
+        "evidence_provided": true,
+        "data_provided": true,
+        "source_referenced": false,
+        "quantified": true,
+        "confidence_justified": true,
+        "classification": "Supported"
+      },
+      {
+        "claim": "Private fusion companies have raised over $6 billion in venture capital since 2020",
+        "section": "Private Fusion Ventures Have Accelerated Timelines",
+        "evidence_provided": true,
+        "data_provided": true,
+        "source_referenced": false,
+        "quantified": true,
+        "confidence_justified": true,
+        "classification": "Supported"
+      },
+      {
+        "claim": "Commonwealth Fusion Systems has raised over $2 billion",
+        "section": "Private Fusion Ventures Have Accelerated Timelines",
+        "evidence_provided": true,
+        "data_provided": true,
+        "source_referenced": false,
+        "quantified": true,
+        "confidence_justified": true,
+        "classification": "Supported"
+      },
+      {
+        "claim": "Levelized cost of energy (LCOE) projections for fusion range from $50 to $120 per MWh",
+        "section": "Private Fusion Ventures Have Accelerated Timelines",
+        "evidence_provided": true,
+        "data_provided": true,
+        "source_referenced": false,
+        "quantified": true,
+        "confidence_justified": true,
+        "classification": "Supported"
+      },
+      {
+        "claim": "The capital cost of a single fusion plant is estimated at $5–$10 billion",
+        "section": "Private Fusion Ventures Have Accelerated Timelines",
+        "evidence_provided": true,
+        "data_provided": true,
+        "source_referenced": false,
+        "quantified": true,
+        "confidence_justified": true,
+        "classification": "Supported"
+      }
+    ],
+    "quantification_ratio": 32
+  },
+  "raw_dimensions": {
+    "section_scores": [
+      {
+        "section_name": "Key highlights",
+        "research_evaluation": {
+          "score": 92,
+          "confidence": "High",
+          "positive_factors": [
+            "Recent experiments at NIF and JET",
+            "Private ventures accelerating timelines"
+          ],
+          "negative_factors": [
+            "Significant engineering and economic hurdles"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 12,
+            "Scenario Analysis": 12
+          }
+        },
+        "evidence_evaluation": {
+          "score": 85,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Net energy gain experiments",
+            "Private ventures' targets"
+          ],
+          "negative_factors": [
+            "Lack of detailed data on experiments"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 95,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear and concise language",
+            "Well-structured summary"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Identification of strategic value",
+            "Discussion of geopolitical implications"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 15,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Strong"
+      },
+      {
+        "section_name": "Nuclear Fusion Is Approaching Technical Breakeven but Commercial Viability Remains a Decade or More Away",
+        "research_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of recent experiments",
+            "Analysis of reactor designs"
+          ],
+          "negative_factors": [
+            "Limited discussion of economic hurdles"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 12,
+            "Scenario Analysis": 10
+          }
+        },
+        "evidence_evaluation": {
+          "score": 80,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Experiments at NIF and JET",
+            "Discussion of reactor designs"
+          ],
+          "negative_factors": [
+            "Limited data on experiments"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 92,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 85,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of technical breakeven",
+            "Analysis of commercial viability"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 10,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Moderate"
+      },
+      {
+        "section_name": "Private Fusion Ventures Have Accelerated Timelines but Face Significant Engineering and Economic Hurdles",
+        "research_evaluation": {
+          "score": 88,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of private ventures",
+            "Analysis of engineering and economic hurdles"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 10,
+            "Scenario Analysis": 10
+          }
+        },
+        "evidence_evaluation": {
+          "score": 85,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Private ventures' targets",
+            "Discussion of engineering and economic hurdles"
+          ],
+          "negative_factors": [
+            "Limited data on private ventures"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 85,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of private ventures",
+            "Analysis of engineering and economic hurdles"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 10,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Moderate"
+      },
+      {
+        "section_name": "Fusion's Strategic Value Lies in Baseload Clean Power and Energy Independence, Not Near-Term Market Disruption",
+        "research_evaluation": {
+          "score": 92,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of strategic value",
+            "Analysis of baseload clean power"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 12,
+            "Scenario Analysis": 12
+          }
+        },
+        "evidence_evaluation": {
+          "score": 85,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Discussion of baseload clean power",
+            "Analysis of energy independence"
+          ],
+          "negative_factors": [
+            "Limited data on market disruption"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 95,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of strategic value",
+            "Analysis of baseload clean power"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 15,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Strong"
+      },
+      {
+        "section_name": "Geopolitical Implications Include Reduced Fossil Fuel Dependence and New Proliferation Challenges",
+        "research_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of geopolitical implications",
+            "Analysis of proliferation challenges"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 12,
+            "Scenario Analysis": 10
+          }
+        },
+        "evidence_evaluation": {
+          "score": 80,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Discussion of geopolitical implications",
+            "Analysis of proliferation challenges"
+          ],
+          "negative_factors": [
+            "Limited data on proliferation challenges"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 92,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 85,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of geopolitical implications",
+            "Analysis of proliferation challenges"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 10,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Moderate"
+      },
+      {
+        "section_name": "Investment Should Focus on Enabling Technologies and Diversified Portfolios Rather Than Single-Reactor Bets",
+        "research_evaluation": {
+          "score": 88,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of enabling technologies",
+            "Analysis of diversified portfolios"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 10,
+            "Scenario Analysis": 10
+          }
+        },
+        "evidence_evaluation": {
+          "score": 85,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Discussion of enabling technologies",
+            "Analysis of diversified portfolios"
+          ],
+          "negative_factors": [
+            "Limited data on investment strategies"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 85,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of enabling technologies",
+            "Analysis of diversified portfolios"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 10,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Moderate"
+      },
+      {
+        "section_name": "Regulatory Frameworks and Public Acceptance Will Be Critical Gating Factors for Fusion Deployment",
+        "research_evaluation": {
+          "score": 92,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of regulatory frameworks",
+            "Analysis of public acceptance"
+          ],
+          "negative_factors": [
+            "Limited discussion of investment strategies"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 12,
+            "Scenario Analysis": 12
+          }
+        },
+        "evidence_evaluation": {
+          "score": 85,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Discussion of regulatory frameworks",
+            "Analysis of public acceptance"
+          ],
+          "negative_factors": [
+            "Limited data on regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 95,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of regulatory frameworks",
+            "Analysis of public acceptance"
+          ],
+          "negative_factors": [
+            "Limited discussion of investment strategies"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 15,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Strong"
+      },
+      {
+        "section_name": "The First Fusion Plants Will Likely Be Built in Asia, Where Government Support and Regulatory Pathways Are Most Advanced",
+        "research_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of government support",
+            "Analysis of regulatory pathways"
+          ],
+          "negative_factors": [
+            "Limited discussion of investment strategies"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 12,
+            "Scenario Analysis": 10
+          }
+        },
+        "evidence_evaluation": {
+          "score": 80,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Discussion of government support",
+            "Analysis of regulatory pathways"
+          ],
+          "negative_factors": [
+            "Limited data on government support"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 92,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 85,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of government support",
+            "Analysis of regulatory pathways"
+          ],
+          "negative_factors": [
+            "Limited discussion of investment strategies"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 10,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Moderate"
+      },
+      {
+        "section_name": "Fusion vs. Renewables: Not a Zero-Sum Game, but a Complementary Relationship That Strengthens with Carbon Pricing",
+        "research_evaluation": {
+          "score": 92,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of complementary relationship",
+            "Analysis of carbon pricing"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 12,
+            "Scenario Analysis": 12
+          }
+        },
+        "evidence_evaluation": {
+          "score": 85,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Discussion of complementary relationship",
+            "Analysis of carbon pricing"
+          ],
+          "negative_factors": [
+            "Limited data on carbon pricing"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 95,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of complementary relationship",
+            "Analysis of carbon pricing"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 15,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Strong"
+      },
+      {
+        "section_name": "Military Interest Could Accelerate Fusion Development, but Raises Dual-Use and Arms Control Concerns",
+        "research_evaluation": {
+          "score": 90,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of military interest",
+            "Analysis of dual-use concerns"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Coverage": 25,
+            "Depth": 20,
+            "Breadth": 23,
+            "Comparative Analysis": 12,
+            "Scenario Analysis": 10
+          }
+        },
+        "evidence_evaluation": {
+          "score": 80,
+          "confidence": "Medium",
+          "positive_factors": [
+            "Discussion of military interest",
+            "Analysis of dual-use concerns"
+          ],
+          "negative_factors": [
+            "Limited data on military interest"
+          ],
+          "score_breakdown": {
+            "Data Quality": 30,
+            "Data Quantity": 20,
+            "Source Credibility": 15,
+            "Methodology": 10,
+            "Relevance": 10
+          }
+        },
+        "writing_evaluation": {
+          "score": 92,
+          "confidence": "High",
+          "positive_factors": [
+            "Clear explanation of technical concepts",
+            "Well-structured section"
+          ],
+          "negative_factors": [
+            "Some technical terms not explained"
+          ],
+          "score_breakdown": {
+            "Clarity": 30,
+            "Conciseness": 25,
+            "Organization": 20,
+            "Style": 10,
+            "Tone": 10
+          }
+        },
+        "strategic_evaluation": {
+          "score": 85,
+          "confidence": "High",
+          "positive_factors": [
+            "Discussion of military interest",
+            "Analysis of dual-use concerns"
+          ],
+          "negative_factors": [
+            "Limited discussion of regulatory frameworks"
+          ],
+          "score_breakdown": {
+            "Insight": 25,
+            "Relevance": 20,
+            "Originality": 20,
+            "Practicality": 10,
+            "Impact": 10
+          }
+        },
+        "evidence_strength": "Moderate"
+      }
+    ]
+  }
+}
