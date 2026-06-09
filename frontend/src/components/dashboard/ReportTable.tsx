@@ -2,27 +2,48 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useReports } from '@/hooks/useReports';
-import { humanStatusBadgeClasses } from '@/utils/statusHelpers';
 import { formatDate } from '@/utils/formatters';
 import { Search } from 'lucide-react';
+import { ReportStatus } from '@/types';
+
+// Badge classes inline — no need to import humanStatusBadgeClasses for just 2 states
+const STATUS_BADGE: Record<string, string> = {
+  'Needs Human Review': 'bg-blue-100 text-blue-700',
+  'In Progress':        'bg-orange-100 text-orange-700',
+};
 
 export const ReportTable: React.FC = () => {
   const navigate = useNavigate();
   const { data: reports = [], isLoading } = useReports();
   const [search, setSearch] = useState('');
 
-  const filtered = useMemo(() => {
-    if (!search) return reports;
-    const q = search.toLowerCase();
-    return reports.filter((rep) =>
-      rep.title.toLowerCase().includes(q) ||
-      rep.id.toLowerCase().includes(q)
+  // Only show:
+  //   1. Status = NeedsHumanReview  → label "Needs Human Review"
+  //   2. humanStatus = "In Progress" (review started, not yet decided)
+  const activeReports = useMemo(() => {
+    return reports.filter((r) =>
+      r.status === ReportStatus.NeedsHumanReview ||
+      r.humanStatus === 'In Progress'
     );
-  }, [reports, search]);
+  }, [reports]);
+
+  const filtered = useMemo(() => {
+    if (!search) return activeReports;
+    const q = search.toLowerCase();
+    return activeReports.filter((r) =>
+      r.title.toLowerCase().includes(q) ||
+      r.id.toLowerCase().includes(q)
+    );
+  }, [activeReports, search]);
 
   const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   }, []);
+
+  const getDisplayStatus = (status: string, humanStatus: string): string => {
+    if (status === ReportStatus.NeedsHumanReview) return 'Needs Human Review';
+    return 'In Progress';
+  };
 
   if (isLoading) {
     return <div className="text-sm text-gray-400 py-8 text-center">Loading reports…</div>;
@@ -32,7 +53,10 @@ export const ReportTable: React.FC = () => {
     <>
       {/* Controls */}
       <div className="flex items-center justify-between mb-3 gap-3">
-        <h2 className="text-sm font-semibold text-gray-800">Recent Reports</h2>
+        <div>
+          <h2 className="text-sm font-semibold text-gray-800">Active Reviews</h2>
+          <p className="text-xs text-gray-400 mt-0.5">Reports awaiting or in human review</p>
+        </div>
         <div className="relative">
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none" />
           <input
@@ -49,15 +73,19 @@ export const ReportTable: React.FC = () => {
       {/* Table */}
       {filtered.length === 0 ? (
         <div className="bg-white border border-gray-200 rounded-lg py-12 text-center">
-          <div className="text-sm font-semibold text-gray-500 mb-1">No reports found</div>
-          <div className="text-xs text-gray-400">No reports match your current search.</div>
+          <div className="text-sm font-semibold text-gray-500 mb-1">
+            {search ? 'No reports match your search' : 'No active reviews'}
+          </div>
+          <div className="text-xs text-gray-400">
+            {search ? 'Try a different search term.' : 'All reports have been reviewed or are in other stages.'}
+          </div>
         </div>
       ) : (
         <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-          <table className="w-full border-collapse" aria-label="Reports list">
+          <table className="w-full border-collapse" aria-label="Active reviews list">
             <thead>
               <tr>
-                {['Report', 'AI Score', 'Human Review', 'Comments', 'Last Updated'].map((h) => (
+                {['Report', 'AI Score', 'Review Status', 'Comments', 'Last Updated'].map((h) => (
                   <th
                     key={h}
                     className="bg-gray-50 px-4 py-2 text-left text-[11px] font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap"
@@ -69,15 +97,8 @@ export const ReportTable: React.FC = () => {
             </thead>
             <tbody>
               {filtered.map((r) => {
-                // Normalize human review status to only the two allowed values
-                let displayHumanStatus = r.humanStatus;
-                if (['Approved', 'Published', 'Ready to Publish'].includes(r.humanStatus)) {
-                  displayHumanStatus = 'Approved';
-                } else if (r.humanStatus === 'Needs Revision') {
-                  displayHumanStatus = 'Needs Revision';
-                } else if (!['In Progress', 'Needs Revision'].includes(r.humanStatus)) {
-                  displayHumanStatus = 'In Progress';
-                }
+                const displayStatus = getDisplayStatus(r.status, r.humanStatus);
+                const badgeClass = STATUS_BADGE[displayStatus] ?? 'bg-gray-100 text-gray-600';
 
                 return (
                   <tr
@@ -101,8 +122,8 @@ export const ReportTable: React.FC = () => {
                       )}
                     </td>
                     <td className="px-4 py-3">
-                      <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-[11px] font-semibold ${humanStatusBadgeClasses(displayHumanStatus)}`}>
-                        {displayHumanStatus}
+                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold ${badgeClass}`}>
+                        {displayStatus}
                       </span>
                     </td>
                     <td className="px-4 py-3">

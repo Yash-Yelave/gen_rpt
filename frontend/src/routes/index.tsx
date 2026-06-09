@@ -7,6 +7,7 @@ import { ReportReview } from '@/pages/Review/ReportReview';
 import { ApprovedReportsList } from '@/pages/ApprovedReports';
 import { PublishedList } from '@/pages/Published';
 import { RevisionsList } from '@/pages/Revisions';
+import { RejectedList } from '@/pages/Rejected';
 import { Settings } from '@/pages/Settings';
 
 export const router = createBrowserRouter([
@@ -19,8 +20,9 @@ export const router = createBrowserRouter([
       { path: 'ai-reviewed', element: <AIReviewedList /> },
       { path: 'review/:reportId', element: <ReportReview /> },
       { path: 'approved', element: <ApprovedReportsList /> },
-      { path: 'published', element: <PublishedList /> },
       { path: 'revisions', element: <RevisionsList /> },
+      { path: 'rejected', element: <RejectedList /> },
+      { path: 'published', element: <PublishedList /> },
       { path: 'settings', element: <Settings /> },
       // Legacy redirects
       { path: 'review', element: <Navigate to="/ai-reviewed" replace /> },
