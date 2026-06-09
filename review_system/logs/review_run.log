@@ -1,0 +1,8 @@
+2026-06-09 23:39:07 | INFO     | review.run | Review started | report=D:\Intenship\gen_rpt-main\test_report.md | output=review_outputs\test-run-001
+2026-06-09 23:39:07 | INFO     | review.run | Loaded report: 'D:\\Intenship\\gen_rpt-main\\test_report.md' | 472 chars | title='Test Report'
+2026-06-09 23:39:07 | INFO     | review.run | Parsed report: 4 sections, 59 words
+2026-06-09 23:39:07 | INFO     | review.run | Pipeline starting for: 'Test Report'
+2026-06-09 23:39:07 | INFO     | review.run | Step 1/5: Extracting claims
+2026-06-09 23:39:09 | INFO     | review.run | Step 2/5: Scoring across 4 dimensions
+2026-06-09 23:39:12 | INFO     | review.run | Step 3/5: Running 6 analyzers
+2026-06-09 23:39:12 | INFO     | review.run | Running evidence analyzer
