@@ -1,0 +1,4 @@
+# Review System dependencies (separate from generation pipeline)
+# Install with: pip install -r review_system/requirements.txt
+requests>=2.32.0
+python-dotenv>=1.0.0
