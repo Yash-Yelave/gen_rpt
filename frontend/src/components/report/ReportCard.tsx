@@ -41,7 +41,11 @@ export const ReportCard = React.memo(({ report: r }: Props) => {
         )}
       </div>
       <div className="flex items-center justify-between pt-3 border-t border-gray-200">
-        <span className="text-xs font-semibold text-blue-700">{r.aiScore > 0 ? r.aiGrade : 'Not scored'}</span>
+        {r.aiScore > 0 ? (
+          <span className="text-xs font-bold text-blue-700">AI Score: {r.aiScore.toFixed(1)}</span>
+        ) : (
+          <span className="text-xs text-gray-400">Not scored</span>
+        )}
         <span className="text-xs text-gray-400">{formatDate(r.lastUpdated)}</span>
       </div>
     </div>
