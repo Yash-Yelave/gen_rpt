@@ -26,10 +26,8 @@ const ExecChip: React.FC<{ label: string; ready: boolean }> = ({ label, ready })
 export const AIReviewCard: React.FC<Props> = ({ aiReview }) => {
   const scoreDisplay = aiReview ? (
     <div className="flex items-center gap-1.5">
+      <span className="text-[11px] text-gray-500 font-medium">AI Score</span>
       <span className="text-sm font-bold text-blue-700">{aiReview.scores.overall_score.toFixed(1)}</span>
-      <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded">
-        {aiReview.scores.grade}
-      </span>
     </div>
   ) : null;
 
