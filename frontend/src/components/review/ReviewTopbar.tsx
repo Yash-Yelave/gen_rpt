@@ -1,7 +1,7 @@
 // src/components/review/ReviewTopbar.tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Save, Send } from 'lucide-react';
+import { ArrowLeft, Save } from 'lucide-react';
 import { StatusBadge } from '@/components/common/StatusBadge';
 import { useReviewActions } from '@/hooks/useReviewActions';
 import { useReviewStore } from '@/store/reviewStore';
@@ -16,18 +16,13 @@ export const ReviewTopbar: React.FC<Props> = ({ report }) => {
   const navigate = useNavigate();
   const { decision } = useReviewStore();
   const { showToast } = useUIStore();
-  const { saveReview, sendToPublish } = useReviewActions(report.id);
+  const { saveReview } = useReviewActions(report.id);
 
   const handleSave = async () => {
     if (decision) {
       await saveReview.mutateAsync(decision);
     }
     showToast('Review saved successfully', 'success');
-  };
-
-  const handlePublish = async () => {
-    await sendToPublish.mutateAsync();
-    showToast('Report sent to publish queue', 'success');
   };
 
   return (
@@ -49,7 +44,7 @@ export const ReviewTopbar: React.FC<Props> = ({ report }) => {
             <StatusBadge status={report.status} className="!text-[10px] !px-1.5 !py-0" />
             {report.aiScore > 0 && (
               <span className="text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-100 px-1.5 rounded">
-                AI {report.aiScore.toFixed(1)}
+                AI Score: {report.aiScore.toFixed(1)}
               </span>
             )}
           </div>
@@ -63,13 +58,6 @@ export const ReviewTopbar: React.FC<Props> = ({ report }) => {
           className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-300 rounded text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50"
         >
           <Save className="w-4 h-4" /> Save Review
-        </button>
-        <button
-          onClick={handlePublish}
-          disabled={sendToPublish.isPending}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-700 text-white rounded text-sm font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50"
-        >
-          <Send className="w-4 h-4" /> Send to Publish
         </button>
       </div>
     </div>
