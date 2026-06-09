@@ -44,7 +44,10 @@ export const ReportTable: React.FC = () => {
   }, []);
 
   const getDisplayStatus = (status: string, humanStatus: string): string => {
-    if (status === ReportStatus.NeedsHumanReview) return 'Needs Human Review';
+    if (
+      status === ReportStatus.NeedsHumanReview ||
+      status === ReportStatus.AIReviewed
+    ) return 'Needs Human Review';
     return 'In Progress';
   };
 
