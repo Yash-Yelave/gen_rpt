@@ -9,7 +9,9 @@ const delay = (ms = 150) => new Promise((r) => setTimeout(r, ms));
 export const reviewsService = {
   async saveReview(reportId: string, decision: string): Promise<void> {
     await delay();
-    await reportsService.updateHumanStatus(reportId, decision);
+    // Always mark humanStatus as 'In Progress' when a review is saved —
+    // the decision is a draft until the reviewer explicitly approves/rejects/publishes
+    await reportsService.updateHumanStatus(reportId, 'In Progress');
   },
 
   async markDone(reportId: string): Promise<void> {
