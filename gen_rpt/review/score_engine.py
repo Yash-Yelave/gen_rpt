@@ -211,7 +211,7 @@ def _build_review_scores(raw: Dict[str, Any]) -> Dict[str, Any]:
     print(
         f"[REVIEW] Scores: Research={rq_score}/30 | Evidence={ec_score}/25 | "
         f"Strategic={sc_score}/25 | Writing={ws_score}/20 | "
-        f"Total={overall}/100 → {scores['grade']}"
+        f"Total={overall}/100 | Grade={scores['grade']}"
     )
     return scores
 
