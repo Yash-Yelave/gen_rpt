@@ -97,7 +97,7 @@ def main() -> None:
             f.write(f"- QA passed: `{qa_result.get('passed')}`\n")
             f.write(f"- QA issues: `{len(qa_result.get('issues', []))}`\n")
             f.write(f"- Assets: {len(result['asset_map'])}\n")
-            review_score = review_result.get('scores', {}).get('final_score')
+            review_score = review_result.get('scores', {}).get('overall_score')
             review_grade = review_result.get('scores', {}).get('grade')
             f.write(f"- AI Review Score: `{review_score}`\n")
             f.write(f"- AI Review Grade: `{review_grade}`\n")
