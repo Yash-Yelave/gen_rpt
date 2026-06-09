@@ -5,4 +5,5 @@ export interface DashboardMetrics {
   pendingHuman: number;
   approvedReports: number;
   needsRevision: number;
+  rejected: number;
 }

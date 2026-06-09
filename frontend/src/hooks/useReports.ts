@@ -27,10 +27,11 @@ export function useDashboardMetrics() {
   return {
     total: reports.length,
     pendingHuman: reports.filter((r: Report) =>
-      [ReportStatus.NeedsHumanReview, ReportStatus.AIReviewed].includes(r.status as ReportStatus)
+      r.status === ReportStatus.NeedsHumanReview
     ).length,
     approvedReports: reports.filter((r: Report) => r.publishReady).length,
     needsRevision: reports.filter((r: Report) => r.status === ReportStatus.NeedsRevision).length,
+    rejected: reports.filter((r: Report) => r.status === ReportStatus.Rejected).length,
   };
 }
 
