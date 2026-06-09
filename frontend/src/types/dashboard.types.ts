@@ -3,7 +3,6 @@
 export interface DashboardMetrics {
   total: number;
   pendingHuman: number;
-  aiApproved: number;
-  readyToPublish: number;
+  approvedReports: number;
   needsRevision: number;
 }

@@ -20,12 +20,11 @@ export const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatCard label="Total Reports" value={metrics.total} meta="This cycle" />
-        <StatCard label="Pending Human Review" value={metrics.pendingHuman} meta="Awaiting decision" accent="blue" />
-        <StatCard label="AI Approved" value={metrics.aiApproved} meta="Score ≥ 80" accent="green" />
-        <StatCard label="Ready to Publish" value={metrics.readyToPublish} meta="Human approved" accent="green" />
-        <StatCard label="Needs Revision" value={metrics.needsRevision} meta="Sent for regen" accent="orange" />
+        <StatCard label="Pending Review" value={metrics.pendingHuman} meta="Awaiting human decision" accent="blue" />
+        <StatCard label="Approved Reports" value={metrics.approvedReports} meta="Ready to publish" accent="green" />
+        <StatCard label="Needs Revision" value={metrics.needsRevision} meta="Awaiting revision" accent="orange" />
       </div>
 
       <ReportTable />

@@ -29,8 +29,7 @@ export function useDashboardMetrics() {
     pendingHuman: reports.filter((r: Report) =>
       [ReportStatus.NeedsHumanReview, ReportStatus.AIReviewed].includes(r.status as ReportStatus)
     ).length,
-    aiApproved: reports.filter((r: Report) => r.aiScore >= 80 && r.aiReview !== null).length,
-    readyToPublish: reports.filter((r: Report) => r.publishReady).length,
+    approvedReports: reports.filter((r: Report) => r.publishReady).length,
     needsRevision: reports.filter((r: Report) => r.status === ReportStatus.NeedsRevision).length,
   };
 }
