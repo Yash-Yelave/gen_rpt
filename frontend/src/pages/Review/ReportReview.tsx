@@ -5,7 +5,6 @@ import { useReport } from '@/hooks/useReports';
 import { useReviewStore } from '@/store/reviewStore';
 import { ReviewTopbar } from '@/components/review/ReviewTopbar';
 import { ReportPreview } from '@/components/report/ReportPreview';
-import { AIReviewCard } from '@/components/review/AIReviewCard';
 import { HumanReviewCard } from '@/components/review/HumanReviewCard';
 import { CommentThread } from '@/components/comments/CommentThread';
 import { EmptyState } from '@/components/common/EmptyState';
@@ -45,17 +44,16 @@ export const ReportReview: React.FC = () => {
   return (
     <div className="flex flex-col h-full bg-surface-body">
       <ReviewTopbar report={report} />
-      
+
       <div className="review-body-grid">
-        {/* Left: Document Preview */}
+        {/* Left: Document Preview with tabs (Report / AI Review) */}
         <div className="overflow-hidden flex flex-col h-full">
           <ReportPreview report={report} />
         </div>
 
-        {/* Right: Review Panels */}
+        {/* Right: Human Review + Comments only */}
         <div className="overflow-y-auto bg-gray-50 border-l border-gray-200">
           <div className="p-4 flex flex-col gap-4">
-            <AIReviewCard aiReview={report.aiReview} />
             <HumanReviewCard report={report} />
             <CommentThread report={report} />
           </div>
