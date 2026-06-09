@@ -1,0 +1,392 @@
+{
+  "timestamp": "2026-06-09T18:09:22.412937Z",
+  "report_title": "Test Report",
+  "report_path": "D:\\Intenship\\gen_rpt-main\\test_report.md",
+  "scores": {
+    "overall_score": 42,
+    "grade": "Red",
+    "research_quality": {
+      "score": 10,
+      "max_points": 30,
+      "justification": "The report covers the EV market expansion and its implications, but lacks depth in analysis per section. For instance, the Executive Summary mentions a 'projected 25% annual growth rate' without providing further context or multiple viewpoints. The Key Findings section presents some data, such as 'battery costs have decreased by 15% year-over-year', but does not delve into scenario or uncertainty analysis.",
+      "positive_factors": [
+        "coverage of EV market expansion"
+      ],
+      "negative_factors": [
+        "lack of depth in analysis",
+        "absence of multiple viewpoints"
+      ]
+    },
+    "evidence_and_citations": {
+      "score": 5,
+      "max_points": 25,
+      "justification": "The report lacks named sources, bibliography, and traceable statistics. Claims such as 'battery costs have decreased by 15% year-over-year' and 'government subsidies are expected to be phased out by 2030' are presented without any supporting evidence or citations. The CLAIMS AUDIT SUMMARY also indicates that 3 claims are unsupported and 3 are high-risk, with a quantification ratio of 50%.",
+      "positive_factors": [],
+      "negative_factors": [
+        "absence of named sources",
+        "lack of bibliography or traceable statistics",
+        "unsupported claims"
+      ]
+    },
+    "strategic_clarity": {
+      "score": 15,
+      "max_points": 25,
+      "justification": "The report provides some clear recommendations, such as 'increase investment in solid-state battery research' and 'expand charging network in rural areas'. However, the 'so-what' per section is not always clear, and the risk/opportunity distinction could be more explicit. The target audience for the recommendations is also not clearly defined.",
+      "positive_factors": [
+        "clear recommendations"
+      ],
+      "negative_factors": [
+        "lack of clear 'so-what' per section",
+        "unclear target audience"
+      ]
+    },
+    "writing_and_structure": {
+      "score": 12,
+      "max_points": 20,
+      "justification": "The report has a logical flow, with section titles matching the content. However, the language could be more concise, and some sections feel brief. The absence of undefined jargon is a positive aspect, but the report could benefit from more detailed explanations and examples.",
+      "positive_factors": [
+        "logical flow",
+        "absence of undefined jargon"
+      ],
+      "negative_factors": [
+        "brief sections",
+        "lack of detailed explanations"
+      ]
+    }
+  },
+  "claims_audit": {
+    "claims": [
+      {
+        "claim": "The EV market is expanding rapidly, with a projected 25% annual growth rate",
+        "section": "Executive Summary",
+        "paragraph": 1,
+        "location_ref": "Location -> [Executive Summary] | Para 1 | \"The EV market\" -> \"annual growth rate\"",
+        "evidence_provided": false,
+        "data_provided": true,
+        "source_referenced": false,
+        "quantified": true,
+        "confidence_justified": false,
+        "classification": "high_risk"
+      },
+      {
+        "claim": "This presents significant opportunities for investment in charging infrastructure",
+        "section": "Executive Summary",
+        "paragraph": 1,
+        "location_ref": "Location -> [Executive Summary] | Para 1 | \"The EV market\" -> \"annual growth rate\"",
+        "evidence_provided": false,
+        "data_provided": false,
+        "source_referenced": false,
+        "quantified": false,
+        "confidence_justified": false,
+        "classification": "unsupported"
+      },
+      {
+        "claim": "Battery costs have decreased by 15% year-over-year",
+        "section": "Key Findings",
+        "paragraph": 1,
+        "location_ref": "Location -> [Key Findings] | Para 1 | \"Battery costs\" -> \"year-over-year\"",
+        "evidence_provided": false,
+        "data_provided": true,
+        "source_referenced": false,
+        "quantified": true,
+        "confidence_justified": false,
+        "classification": "high_risk"
+      },
+      {
+        "claim": "Government subsidies are expected to be phased out by 2030",
+        "section": "Key Findings",
+        "paragraph": 1,
+        "location_ref": "Location -> [Key Findings] | Para 1 | \"Government subsidies\" -> \"by 2030\"",
+        "evidence_provided": false,
+        "data_provided": true,
+        "source_referenced": false,
+        "quantified": true,
+        "confidence_justified": false,
+        "classification": "high_risk"
+      },
+      {
+        "claim": "Increase investment in solid-state battery research",
+        "section": "Recommendations",
+        "paragraph": 1,
+        "location_ref": "Location -> [Recommendations] | Para 1 | \"Increase investment\" -> \"battery research\"",
+        "evidence_provided": false,
+        "data_provided": false,
+        "source_referenced": false,
+        "quantified": false,
+        "confidence_justified": false,
+        "classification": "unsupported"
+      },
+      {
+        "claim": "Expand charging network in rural areas to capture emerging markets",
+        "section": "Recommendations",
+        "paragraph": 1,
+        "location_ref": "Location -> [Recommendations] | Para 1 | \"Expand charging\" -> \"emerging markets\"",
+        "evidence_provided": false,
+        "data_provided": false,
+        "source_referenced": false,
+        "quantified": false,
+        "confidence_justified": false,
+        "classification": "unsupported"
+      }
+    ],
+    "quantification_ratio": 50,
+    "total_claims": 6,
+    "supported_count": 0,
+    "partially_supported_count": 0,
+    "unsupported_count": 3,
+    "high_risk_count": 3,
+    "speculative_count": 0
+  },
+  "recommendations": {
+    "strengths": [
+      {
+        "finding": "None identified.",
+        "location_ref": "N/A",
+        "severity": "Low"
+      }
+    ],
+    "weaknesses": [
+      {
+        "finding": "No named sources are provided to support claims, such as the 25% annual growth rate in the EV market",
+        "location_ref": "Location -> [Executive Summary] | Para 1",
+        "severity": "High"
+      },
+      {
+        "finding": "Lack of source diversity as no academic, industry, or government sources are mentioned",
+        "location_ref": "Location -> [Key Findings] | Para 1",
+        "severity": "High"
+      },
+      {
+        "finding": "Statistics, such as the 15% year-over-year decrease in battery costs, are not traceable to any specific source",
+        "location_ref": "Location -> [Key Findings] | Para 1",
+        "severity": "High"
+      }
+    ],
+    "data_gaps": [
+      {
+        "section": "Executive Summary",
+        "claim": "The EV market is expanding rapidly, with a projected 25% annual growth rate",
+        "location_ref": "Location -> [Executive Summary] | Para 1 | \"The EV market\" -> \"annual growth rate\"",
+        "missing_data": [
+          "Historical data to support the growth rate",
+          "Market research to validate the projection"
+        ],
+        "severity": "High"
+      },
+      {
+        "section": "Key Findings",
+        "claim": "Battery costs have decreased by 15% year-over-year",
+        "location_ref": "Location -> [Key Findings] | Para 1 | \"Battery costs\" -> \"year-over-year\"",
+        "missing_data": [
+          "Year-over-year cost comparison data",
+          "Industry benchmarks to validate the decrease"
+        ],
+        "severity": "High"
+      }
+    ],
+    "weak_assumptions": [
+      {
+        "forecast_or_claim": "Government subsidies are expected to be phased out by 2030",
+        "location_ref": "Location -> [Key Findings] | Para 1 | \"Government subsidies\" -> \"by 2030\"",
+        "missing_evidence": "Government policy statements or announcements to support the phase-out timeline",
+        "severity": "High"
+      },
+      {
+        "forecast_or_claim": "The EV market is expanding rapidly, with a projected 25% annual growth rate",
+        "location_ref": "Location -> [Executive Summary] | Para 1 | \"The EV market\" -> \"annual growth rate\"",
+        "missing_evidence": "Market research, industry trends, or historical data to support the growth rate projection",
+        "severity": "High"
+      }
+    ],
+    "writing_flaws": [
+      {
+        "flaw_type": "vague_statement",
+        "example": "presents significant opportunities for investment in charging infrastructure",
+        "location_ref": "Location -> [Executive Summary] | Para 1 | \"The EV market is expanding rapidly, with a projected 25% annual growth rate. This\" -> \"presents significant opportunities for investment in charging infrastructure\"",
+        "severity": "Medium",
+        "suggestion": "Specify the type of investment opportunities"
+      },
+      {
+        "flaw_type": "undefined_jargon",
+        "example": "solid-state battery research",
+        "location_ref": "Location -> [Recommendations] | Para 1 | \"- Increase investment in\" -> \"solid-state battery research\"",
+        "severity": "High",
+        "suggestion": "Define solid-state battery research for non-experts"
+      },
+      {
+        "flaw_type": "weak_transition",
+        "example": "",
+        "location_ref": "Location -> [Key Findings] | Para 1 | \"- Battery costs have decreased by 15% year-over-year.\" -> \"- Government subsidies are expected to be phased out by 2030\"",
+        "severity": "Medium",
+        "suggestion": "Add a transition word or phrase to connect the two sentences"
+      },
+      {
+        "flaw_type": "overloaded_sentence",
+        "example": "The EV market is expanding rapidly, with a projected 25% annual growth rate",
+        "location_ref": "Location -> [Executive Summary] | Para 1 | \"The EV market is expanding rapidly, with a projected 25% annual growth rate\"",
+        "severity": "Low",
+        "suggestion": "Break into two separate sentences for clarity"
+      }
+    ],
+    "narrative_gaps": [
+      {
+        "gap_type": "broken_flow",
+        "finding": "The Executive Summary does not explicitly connect to the Key Findings section, leaving a gap in the logical flow of the report.",
+        "location_ref": "Location -> [Executive Summary] | Para 1 | \"The EV market is expanding rapidly\" -> \"charging infrastructure\"",
+        "severity": "Medium"
+      },
+      {
+        "gap_type": "orphaned",
+        "finding": "The point about government subsidies being phased out by 2030 is introduced but not further discussed or connected to any recommendations.",
+        "location_ref": "Location -> [Key Findings] | Para 1 | \"Government subsidies\" -> \"2030\"",
+        "severity": "High"
+      },
+      {
+        "gap_type": "weak_conclusion",
+        "finding": "The report lacks a concluding section that synthesizes the key findings and recommendations, leaving the reader without a clear summary of the report's main points.",
+        "location_ref": "Location -> [Recommendations] | Para 1 | \"Increase investment\" -> \"emerging markets\"",
+        "severity": "High"
+      }
+    ],
+    "strategic_gaps": [
+      {
+        "gap_type": "missing_so_what",
+        "finding": "The report states that government subsidies are expected to be phased out by 2030 but does not discuss the implications of this on investment decisions",
+        "location_ref": "Location -> [Key Findings] | Para 1 | \"Government subsidies\" -> \"2030\"",
+        "severity": "High"
+      },
+      {
+        "gap_type": "generic_recommendation",
+        "finding": "The recommendation to 'Increase investment in solid-state battery research' is too general and does not specify how this investment should be prioritized or allocated",
+        "location_ref": "Location -> [Recommendations] | Para 1 | \"Increase investment\" -> \"research\"",
+        "severity": "Medium"
+      },
+      {
+        "gap_type": "missing_stakeholder",
+        "finding": "The report does not discuss the implications of the expanding EV market on different stakeholders, such as investors, governments, or operators",
+        "location_ref": "Location -> [Executive Summary] | Para 1 | \"The EV market\" -> \"infrastructure\"",
+        "severity": "Critical"
+      },
+      {
+        "gap_type": "absent_call_to_action",
+        "finding": "The report recommends expanding the charging network in rural areas but does not specify a timeline or responsible party for this action",
+        "location_ref": "Location -> [Recommendations] | Para 1 | \"Expand charging network\" -> \"emerging markets\"",
+        "severity": "High"
+      }
+    ],
+    "audience_relevance_gaps": [
+      {
+        "audience": "Minister",
+        "finding": "Lack of clear policy implications and regulatory or funding implications",
+        "location_ref": "Location -> Executive Summary | Para 1",
+        "severity": "High"
+      },
+      {
+        "audience": "Board",
+        "finding": "Insufficient strategic framing and financial implications",
+        "location_ref": "Location -> Key Findings | Para 1",
+        "severity": "Medium"
+      },
+      {
+        "audience": "SWF",
+        "finding": "Missing investment thesis and risk-adjusted return framing",
+        "location_ref": "Location -> Recommendations | Para 1",
+        "severity": "High"
+      }
+    ],
+    "executive_communication": {
+      "minister_ready": false,
+      "board_ready": false,
+      "swf_ready": false,
+      "minister_reason": "The report lacks clear policy implications and regulatory or funding implications, making it unsuitable for the Minister's needs.",
+      "board_reason": "Insufficient strategic framing and financial implications hinder the Board's ability to make informed decisions based on the report.",
+      "swf_reason": "The absence of a clear investment thesis and risk-adjusted return framing renders the report inadequate for the SWF's investment considerations.",
+      "flagged_sections": [
+        {
+          "section": "Executive Summary",
+          "issue": "Lack of clear policy implications"
+        },
+        {
+          "section": "Key Findings",
+          "issue": "Insufficient strategic framing"
+        },
+        {
+          "section": "Recommendations",
+          "issue": "Missing investment thesis"
+        }
+      ]
+    },
+    "improvement_tasks": [
+      {
+        "priority": "Critical",
+        "section": "Executive Summary",
+        "issue": "Lack of historical data to support the 25% annual growth rate claim",
+        "fix": "Add historical data or market research to validate the growth rate projection",
+        "expected_impact": "Enhanced credibility of the report's central claim"
+      },
+      {
+        "priority": "High",
+        "section": "Key Findings",
+        "issue": "Missing year-over-year cost comparison data for battery costs",
+        "fix": "Provide industry benchmarks or year-over-year cost comparison data to validate the 15% decrease",
+        "expected_impact": "Increased confidence in the report's key findings"
+      },
+      {
+        "priority": "High",
+        "section": "Recommendations",
+        "issue": "Undefined term 'solid-state battery research'",
+        "fix": "Define 'solid-state battery research' for non-experts to clarify the recommendation",
+        "expected_impact": "Improved clarity and specificity of recommendations"
+      },
+      {
+        "priority": "High",
+        "section": "Key Findings",
+        "issue": "Lack of government policy statements to support the phase-out timeline of subsidies",
+        "fix": "Add government policy statements or announcements to validate the phase-out timeline",
+        "expected_impact": "Enhanced credibility of the report's projections"
+      },
+      {
+        "priority": "Medium",
+        "section": "Executive Summary",
+        "issue": "Vague statement about 'significant opportunities for investment in charging infrastructure'",
+        "fix": "Specify the type of investment opportunities to enhance clarity",
+        "expected_impact": "Improved clarity and focus of the executive summary"
+      },
+      {
+        "priority": "Medium",
+        "section": "Key Findings",
+        "issue": "Weak transition between sentences about battery costs and government subsidies",
+        "fix": "Add a transition word or phrase to connect the two sentences",
+        "expected_impact": "Improved readability and flow of the report"
+      },
+      {
+        "priority": "Medium",
+        "section": "Recommendations",
+        "issue": "Generic recommendation to 'Increase investment in solid-state battery research'",
+        "fix": "Specify how the investment should be prioritized or allocated",
+        "expected_impact": "More actionable and effective recommendations"
+      },
+      {
+        "priority": "Low",
+        "section": "Executive Summary",
+        "issue": "Overloaded sentence about the EV market's growth rate",
+        "fix": "Break the sentence into two for clarity",
+        "expected_impact": "Slightly improved readability"
+      },
+      {
+        "priority": "High",
+        "section": "Key Findings",
+        "issue": "No named sources to support claims like the 25% annual growth rate",
+        "fix": "Add citations to named sources to enhance credibility",
+        "expected_impact": "Significant improvement in the report's credibility and reliability"
+      },
+      {
+        "priority": "High",
+        "section": "Recommendations",
+        "issue": "Lack of a concluding section to synthesize key findings and recommendations",
+        "fix": "Add a concluding section to summarize the report's main points",
+        "expected_impact": "Improved overall coherence and impact of the report"
+      }
+    ]
+  }
+}

@@ -6,3 +6,21 @@
 2026-06-09 23:39:09 | INFO     | review.run | Step 2/5: Scoring across 4 dimensions
 2026-06-09 23:39:12 | INFO     | review.run | Step 3/5: Running 6 analyzers
 2026-06-09 23:39:12 | INFO     | review.run | Running evidence analyzer
+2026-06-09 23:39:14 | INFO     | review.run | Running citation analyzer
+2026-06-09 23:39:15 | INFO     | review.run | Running writing analyzer
+2026-06-09 23:39:16 | INFO     | review.run | Running strategy analyzer
+2026-06-09 23:39:17 | INFO     | review.run | Running structure analyzer
+2026-06-09 23:39:18 | INFO     | review.run | Running audience analyzer
+2026-06-09 23:39:19 | INFO     | review.run | Step 4/5: Applying scoring caps and dimension finalisation
+2026-06-09 23:39:19 | INFO     | review.run | Research Quality: 10/30
+2026-06-09 23:39:20 | INFO     | review.run | Evidence cap applied: no bibliography -> max 14
+2026-06-09 23:39:20 | INFO     | review.run | Evidence cap applied: 6 bad claims -> max 18
+2026-06-09 23:39:20 | INFO     | review.run | Evidence & Citations: 5/25
+2026-06-09 23:39:20 | INFO     | review.run | Strategic Clarity: 15/25
+2026-06-09 23:39:20 | INFO     | review.run | Writing penalty: 0.5 pts for 4 high/critical flaws
+2026-06-09 23:39:20 | INFO     | review.run | Writing & Structure: 12/20
+2026-06-09 23:39:20 | INFO     | review.run | Scores: Research=10/30 | Evidence=5/25 | Strategic=15/25 | Writing=12/20 | Total=42.0/100 | Grade=Red
+2026-06-09 23:39:20 | INFO     | review.run | Step 5/5: Assembling final review data
+2026-06-09 23:39:22 | INFO     | review.run | Synthesis complete: 10 improvement tasks
+2026-06-09 23:39:22 | INFO     | review.run | ReviewData assembled | Score=42.0 | Grade=Red | Tasks=10
+2026-06-09 23:39:22 | INFO     | review.run | Review complete | score=42.0 | grade=Red

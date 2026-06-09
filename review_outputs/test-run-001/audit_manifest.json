@@ -1,0 +1,24 @@
+{
+  "review_timestamp": "2026-06-09T18:09:22.412937Z",
+  "report_title": "Test Report",
+  "report_path": "D:\\Intenship\\gen_rpt-main\\test_report.md",
+  "overall_score": 42,
+  "grade": "Red",
+  "total_claims": 6,
+  "high_risk_claims": 3,
+  "unsupported_claims": 3,
+  "improvement_tasks": 10,
+  "minister_ready": false,
+  "board_ready": false,
+  "swf_ready": false,
+  "output_dir": "review_outputs\\test-run-001",
+  "files": {
+    "review_json": "review_outputs\\test-run-001\\review.json",
+    "review_md": "review_outputs\\test-run-001\\review.md",
+    "review_html": "review_outputs\\test-run-001\\review.html",
+    "claims_json": "review_outputs\\test-run-001\\claims.json",
+    "findings_json": "review_outputs\\test-run-001\\findings.json",
+    "scores_json": "review_outputs\\test-run-001\\scores.json",
+    "audit_manifest": "review_outputs\\test-run-001\\audit_manifest.json"
+  }
+}
