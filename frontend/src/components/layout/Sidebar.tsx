@@ -3,7 +3,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard,
-  Clock,
+  Bot,
   CheckCircle,
   Send,
   RotateCcw,
@@ -15,10 +15,10 @@ import { useDashboardMetrics } from '@/hooks/useReports';
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/review', label: 'Pending Review', icon: Clock, badge: 'pendingHuman' },
-  { to: '/reviewed', label: 'Reviewed', icon: CheckCircle },
+  { to: '/ai-reviewed', label: 'AI Reviewed', icon: Bot, badge: 'pendingHuman' },
+  { to: '/approved', label: 'Approved Reports', icon: CheckCircle },
+  { to: '/revisions', label: 'Revision Queue', icon: RotateCcw, badge: 'needsRevision' },
   { to: '/published', label: 'Published', icon: Send },
-  { to: '/revisions', label: 'Revisions', icon: RotateCcw, badge: 'needsRevision' },
 ];
 
 interface Props {
