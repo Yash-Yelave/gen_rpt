@@ -10,7 +10,7 @@ export const RevisionsList: React.FC = () => (
       <p className="text-sm text-gray-500 mt-1">Reports marked for revision — awaiting backend processing and re-submission</p>
     </div>
     <ReportGrid
-      statuses={[ReportStatus.NeedsRevision, ReportStatus.Rejected]}
+      statuses={[ReportStatus.NeedsRevision]}
       emptyTitle="No reports in revision queue"
       emptyText="All reports are on track."
     />

@@ -7,6 +7,7 @@ import {
   CheckCircle,
   Send,
   RotateCcw,
+  XCircle,
   Settings,
   Waves,
 } from 'lucide-react';
@@ -18,6 +19,7 @@ const navItems = [
   { to: '/ai-reviewed', label: 'AI Reviewed', icon: Bot, badge: 'pendingHuman' },
   { to: '/approved', label: 'Approved Reports', icon: CheckCircle },
   { to: '/revisions', label: 'Revision Queue', icon: RotateCcw, badge: 'needsRevision' },
+  { to: '/rejected', label: 'Rejected', icon: XCircle, badge: 'rejected' },
   { to: '/published', label: 'Published', icon: Send },
 ];
 
@@ -68,7 +70,11 @@ export const Sidebar: React.FC<Props> = ({ onCloseMobile }) => {
                   <Icon className="w-4 h-4 flex-shrink-0" />
                   <span className="flex-1 md:hidden lg:block">{label}</span>
                   {badge && count > 0 && (
-                    <span className={`md:hidden lg:inline-flex items-center px-1.5 py-0.5 rounded-full text-[11px] font-semibold ${badge === 'needsRevision' ? 'bg-orange-100 text-orange-700' : 'bg-blue-100 text-blue-800'}`}>
+                    <span className={`md:hidden lg:inline-flex items-center px-1.5 py-0.5 rounded-full text-[11px] font-semibold ${
+                      badge === 'needsRevision' ? 'bg-orange-100 text-orange-700'
+                      : badge === 'rejected' ? 'bg-red-100 text-red-700'
+                      : 'bg-blue-100 text-blue-800'
+                    }`}>
                       {count}
                     </span>
                   )}
