@@ -17,14 +17,17 @@ export const ReportTable: React.FC = () => {
   const { data: reports = [], isLoading } = useReports();
   const [search, setSearch] = useState('');
 
-  // Only show:
-  //   1. Status = NeedsHumanReview  → label "Needs Human Review"
-  //   2. humanStatus = "In Progress" (review started, not yet decided)
+  // Show reports in the active human review phase:
+  //   1. status = NeedsHumanReview or AIReviewed → labeled "Needs Human Review"
+  //   2. humanStatus = "In Progress" (review saved but not yet finalised)
   const activeReports = useMemo(() => {
-    return reports.filter((r) =>
-      r.status === ReportStatus.NeedsHumanReview ||
-      r.humanStatus === 'In Progress'
-    );
+    return reports.filter((r) => {
+      const isAwaitingReview =
+        r.status === ReportStatus.NeedsHumanReview ||
+        r.status === ReportStatus.AIReviewed;
+      const isInProgress = r.humanStatus === 'In Progress';
+      return isAwaitingReview || isInProgress;
+    });
   }, [reports]);
 
   const filtered = useMemo(() => {
