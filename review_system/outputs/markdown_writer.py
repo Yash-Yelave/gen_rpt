@@ -137,37 +137,56 @@ def generate_markdown(review_data: Dict[str, Any]) -> str:
     md.append(f"> **Report:** {title}  \n> **Timestamp:** {ts}\n\n")
     md.append("---\n\n")
 
-    # 1. Executive Summary Table
+    # 1. Executive Summary Table (score + grade only)
     md.append("## 1. Executive Review\n\n")
     md.append("| Metric | Value |\n|--------|-------|\n")
     md.append(f"| **Overall Score** | **{overall} / 100** |\n")
-    md.append(f"| **Grade** | {_grade_badge(grade)} |\n")
-    md.append(f"| **Minister Ready** | {_ready(exec_comm.get('minister_ready', False))} — {exec_comm.get('minister_reason', 'Not assessed.')} |\n")
-    md.append(f"| **Board Ready** | {_ready(exec_comm.get('board_ready', False))} — {exec_comm.get('board_reason', 'Not assessed.')} |\n")
-    md.append(f"| **SWF Ready** | {_ready(exec_comm.get('swf_ready', False))} — {exec_comm.get('swf_reason', 'Not assessed.')} |\n\n")
+    md.append(f"| **Grade** | {_grade_badge(grade)} |\n\n")
 
-    # 2. Scores & Justifications
+    # 2. Scores — new What Works / What Fails bullet format
     md.append("## 2. Scores and Justifications\n\n")
-    for dim_key, dim_label, dim_data in [
-        ("research_quality",       "Research Quality",       rq),
-        ("evidence_and_citations", "Evidence and Citations",  ec),
-        ("strategic_clarity",      "Strategic Clarity",       sc),
-        ("writing_and_structure",  "Writing and Structure",   ws),
-    ]:
-        s   = dim_data.get("score", "N/A")
-        mx  = dim_data.get("max_points", "N/A")
-        jst = dim_data.get("justification", "Not evaluated.")
-        pos = dim_data.get("positive_factors") or []
-        neg = dim_data.get("negative_factors") or []
-        md.append(f"### {dim_label}: {s} / {mx}\n\n")
-        md.append(f"**Justification:** {jst}\n\n")
-        if pos:
-            md.append("**Strengths:**\n")
-            md.extend(f"- {p}\n" for p in pos)
-        if neg:
-            md.append("\n**Deficiencies:**\n")
-            md.extend(f"- {n}\n" for n in neg)
+
+    dim_labels = [
+        ("research_quality",       "Research Quality",      rq,  30),
+        ("evidence_and_citations", "Evidence & Citations",  ec,  25),
+        ("strategic_clarity",      "Strategic Clarity",     sc,  25),
+        ("writing_and_structure",  "Writing & Structure",   ws,  20),
+    ]
+
+    for _, dim_label, dim_data, dim_max in dim_labels:
+        s  = dim_data.get("score", "N/A")
+        ww = dim_data.get("what_works") or []
+        wf = dim_data.get("what_fails") or []
+        md.append(f"### {dim_label}: {s} / {dim_max}\n\n")
+        md.append("**What Works:**\n\n")
+        if ww:
+            for item in ww:
+                pt  = item.get("point", "") if isinstance(item, dict) else str(item)
+                loc = item.get("location_ref", "") if isinstance(item, dict) else ""
+                md.append(f"- {pt}")
+                if loc and loc != "N/A":
+                    md.append(f"  \n  > {loc}")
+                md.append("\n")
+        else:
+            md.append("- _No specific strengths identified._\n")
+        md.append("\n**What Fails:**\n\n")
+        if wf:
+            for item in wf:
+                pt  = item.get("point", "") if isinstance(item, dict) else str(item)
+                loc = item.get("location_ref", "") if isinstance(item, dict) else ""
+                md.append(f"- {pt}\n")
+                if loc and loc != "N/A":
+                    md.append(f"  > Location → {loc.replace('Location -> ', '').replace('Location → ', '')}\n")
+        else:
+            md.append("- _No specific deficiencies identified._\n")
         md.append("\n")
+
+    # Total + Grade + Audience Readiness (all in Section 2)
+    md.append(f"**Total Score: {overall} / 100**  \n")
+    md.append(f"**Grade: {_grade_badge(grade)}**\n\n")
+    md.append(f"**Minister Ready:** {_ready(exec_comm.get('minister_ready', False))} — {exec_comm.get('minister_reason', 'Not assessed.')}  \n")
+    md.append(f"**Board Ready:** {_ready(exec_comm.get('board_ready', False))} — {exec_comm.get('board_reason', 'Not assessed.')}  \n")
+    md.append(f"**SWF Ready:** {_ready(exec_comm.get('swf_ready', False))} — {exec_comm.get('swf_reason', 'Not assessed.')}  \n\n")
 
     # 3. High-Risk Claims
     md.append("## 3. High-Risk and Unsupported Claims\n\n")
