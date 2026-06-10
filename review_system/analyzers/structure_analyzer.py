@@ -3,8 +3,11 @@ review_system/analyzers/structure_analyzer.py
 
 Checks narrative integrity: argument flow, section coherence,
 logical transitions between sections, conclusion strength.
+
+In lean mode, extracts from a pre-fetched combined result (no API call).
+In full mode, makes its own API call.
 """
-from typing import Dict, Any, TYPE_CHECKING
+from typing import Dict, Any, Optional, TYPE_CHECKING
 
 from shared.report_schema import ParsedReport
 from review_system.utils.logging_utils import get_run_logger
@@ -28,7 +31,7 @@ SECTION LIST: {section_list}
 
 TASK: Evaluate narrative structure and logical coherence.
 Every finding must have a location reference.
-Format: "Location -> [<section>] | Para <N> | \\"<open>\\" -> \\"<close>\\""
+Format: "Location -> [<section>] | Para <N> | \"<open>\" -> \"<close>\""
 
 CHECK FOR:
 1. Circular arguments: Conclusion restates premise without new evidence
@@ -56,10 +59,22 @@ def run(
     engine: "GroqReviewEngine",
     parsed: ParsedReport,
     claims_audit: Dict[str, Any] = None,
+    combined: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
-    """Run structure analysis. Returns narrative gaps dict."""
-    log.info("Running structure analyzer")
+    """
+    Run structure analysis.
+    If `combined` is provided (lean mode), extract from it — no API call.
+    Otherwise, make an individual API call (full mode).
+    Returns narrative gaps dict.
+    """
+    if combined is not None:
+        log.info("Structure analyzer: extracting from combined result (lean mode)")
+        return {
+            "narrative_gaps":              combined.get("narrative_gaps", []),
+            "overall_narrative_coherence": combined.get("overall_narrative_coherence", "Unknown"),
+        }
 
+    log.info("Running structure analyzer (full mode)")
     report_text = parsed.as_prompt_text(max_chars=14_000)
     section_list = ", ".join(parsed.section_titles)
     prompt = _USER.format(report_text=report_text, section_list=section_list)
@@ -77,6 +92,6 @@ def run(
         result = {}
 
     return {
-        "narrative_gaps":               result.get("narrative_gaps", []),
-        "overall_narrative_coherence":  result.get("overall_narrative_coherence", "Unknown"),
+        "narrative_gaps":              result.get("narrative_gaps", []),
+        "overall_narrative_coherence": result.get("overall_narrative_coherence", "Unknown"),
     }
