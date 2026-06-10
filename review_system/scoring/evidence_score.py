@@ -55,9 +55,8 @@ def score(
 
     log.info("Evidence & Citations: %d/%d", dim_score, _MAX)
     return {
-        "score":            dim_score,
-        "max_points":       _MAX,
-        "justification":    raw.get("justification", "Not evaluated."),
-        "positive_factors": raw.get("positive_factors") or [],
-        "negative_factors": raw.get("negative_factors") or [],
+        "score":      dim_score,
+        "max_points": _MAX,
+        "what_works": raw.get("what_works") or [],
+        "what_fails": raw.get("what_fails") or [],
     }
