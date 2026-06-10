@@ -3,8 +3,11 @@ review_system/analyzers/strategy_analyzer.py
 
 Identifies strategic gaps: missing so-what, generic recommendations,
 missing decision implications, absence of risk/opportunity distinction.
+
+In lean mode, extracts from a pre-fetched combined result (no API call).
+In full mode, makes its own API call.
 """
-from typing import Dict, Any, TYPE_CHECKING
+from typing import Dict, Any, Optional, TYPE_CHECKING
 
 from shared.report_schema import ParsedReport
 from review_system.utils.logging_utils import get_run_logger
@@ -26,7 +29,7 @@ REPORT TEXT (by section and paragraph):
 
 TASK: Identify specific strategic gaps.
 Every finding must include an exact location reference.
-Format: "Location -> [<section>] | Para <N> | \\"<open>\\" -> \\"<close>\\""
+Format: "Location -> [<section>] | Para <N> | \"<open>\" -> \"<close>\""
 
 CHECK FOR:
 1. Missing "so-what": Section presents findings but draws no decision implication
@@ -55,10 +58,23 @@ def run(
     engine: "GroqReviewEngine",
     parsed: ParsedReport,
     claims_audit: Dict[str, Any] = None,
+    combined: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
-    """Run strategy analysis. Returns strategic gaps dict."""
-    log.info("Running strategy analyzer")
+    """
+    Run strategy analysis.
+    If `combined` is provided (lean mode), extract from it — no API call.
+    Otherwise, make an individual API call (full mode).
+    Returns strategic gaps dict.
+    """
+    if combined is not None:
+        log.info("Strategy analyzer: extracting from combined result (lean mode)")
+        return {
+            "strategic_gaps":               combined.get("strategic_gaps", []),
+            "has_explicit_recommendations": combined.get("has_explicit_recommendations", False),
+            "has_risk_opportunity_split":   combined.get("has_risk_opportunity_split", False),
+        }
 
+    log.info("Running strategy analyzer (full mode)")
     report_text = parsed.as_prompt_text(max_chars=16_000)
     prompt = _USER.format(report_text=report_text)
 
@@ -75,7 +91,7 @@ def run(
         result = {}
 
     return {
-        "strategic_gaps":                 result.get("strategic_gaps", []),
-        "has_explicit_recommendations":   result.get("has_explicit_recommendations", False),
-        "has_risk_opportunity_split":     result.get("has_risk_opportunity_split", False),
+        "strategic_gaps":               result.get("strategic_gaps", []),
+        "has_explicit_recommendations": result.get("has_explicit_recommendations", False),
+        "has_risk_opportunity_split":   result.get("has_risk_opportunity_split", False),
     }
