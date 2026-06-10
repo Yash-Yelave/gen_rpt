@@ -1,53 +1,95 @@
 {
-  "overall_score": 76,
-  "grade": "Silver",
+  "overall_score": 72,
+  "grade": "Bronze",
   "research_quality": {
-    "score": 26,
+    "score": 24,
     "max_points": 30,
-    "justification": "The report provides a comprehensive analysis of the China private equity market, covering topics such as market size, regulatory changes, sector dynamics, and competitive landscape. For example, the section 'China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy' offers a detailed examination of the market's growth trajectory and the impact of regulatory and economic shifts. Additionally, the report presents multiple viewpoints, including the perspectives of LPs and GPs, as seen in the 'Fundraising Has Slowed but AUM Continues to Grow as Existing Funds Deploy Capital' section. However, the report could benefit from more explicit scenario and uncertainty analysis to further strengthen its conclusions.",
-    "positive_factors": [
-      "comprehensive analysis",
-      "multiple viewpoints"
+    "what_works": [
+      {
+        "point": "The report provides a comprehensive analysis of the China private equity market, covering key trends, regulatory changes, and sector dynamics, as seen in the section 'China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy'"
+      },
+      {
+        "point": "The report offers a detailed examination of the shift in deal activity toward technology, healthcare, and green energy sectors, including specific examples and data, as discussed in 'Deal Activity Is Shifting Toward Technology, Healthcare, and Green Energy Sectors'"
+      },
+      {
+        "point": "The analysis of exit channels, including IPO markets, trade sales, and secondary transactions, is thorough and well-supported, as presented in 'Exit Channels Are Constrained by Weak IPO Markets and Geopolitical Uncertainty'"
+      }
     ],
-    "negative_factors": [
-      "limited scenario and uncertainty analysis"
+    "what_fails": [
+      {
+        "point": "Lack of deeper analysis on the impact of geopolitical tensions on the private equity market",
+        "location_ref": "Location -> [China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy] | Para 4 | 'Geopolitical tensions, particularly between the US and China, have further complicated the landscape.' -> 'For PE investors, these tensions create both risks and opportunities.'"
+      },
+      {
+        "point": "Insufficient discussion on the role of government guidance funds in shaping the private equity market",
+        "location_ref": "Location -> [Fundraising Has Slowed but AUM Continues to Grow as Existing Funds Deploy Capital] | Para 2 | 'Government guidance funds, which are state-backed investment vehicles, have become a significant source of capital, particularly for funds focused on strategic sectors like semiconductors, AI, and renewable energy.' -> 'These funds often come with policy objectives, such as promoting local economic development or supporting national priorities, which can influence investment decisions.'"
+      }
     ]
   },
   "evidence_and_citations": {
     "score": 14,
     "max_points": 25,
-    "justification": "While the report presents various statistics and data points, such as the $1.5 trillion AUM and the 30% decline in fundraising, it lacks explicit citations and a bibliography. The absence of named sources for some claims, like the survey by Coller Capital, reduces the score. However, the report does provide some traceable statistics, such as the $50 billion commitment by the National Integrated Circuit Industry Investment Fund, which supports its conclusions.",
-    "positive_factors": [
-      "traceable statistics"
+    "what_works": [
+      {
+        "point": "The report cites specific data and statistics, such as the $1.5 trillion AUM of the China private equity market and the 30% decline in fundraising, to support its claims"
+      },
+      {
+        "point": "The analysis of sector trends, including the growth of technology, healthcare, and green energy, is backed by examples and data, as seen in 'Deal Activity Is Shifting Toward Technology, Healthcare, and Green Energy Sectors'"
+      }
     ],
-    "negative_factors": [
-      "lack of explicit citations",
-      "absence of bibliography"
+    "what_fails": [
+      {
+        "point": "Lack of named sources to support key claims, such as the impact of regulatory changes on the private equity market",
+        "location_ref": "Location -> [China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy] | Para 3 | 'Regulatory changes have been a defining feature of the market since 2020.' -> 'These regulations impose stricter requirements on data handling, antitrust reviews for large deals, and foreign investment screening in sensitive sectors.'"
+      },
+      {
+        "point": "Absence of a bibliography or traceable sources for statistics and data, such as the $400 billion 'dry powder' estimate",
+        "location_ref": "Location -> [Fundraising Has Slowed but AUM Continues to Grow as Existing Funds Deploy Capital] | Para 3 | 'This dry powder provides a cushion for future dealmaking but also creates pressure to deploy capital in a market where valuations remain elevated in certain sectors.' -> 'The competition for quality assets is intense, particularly in technology and healthcare, where valuations have not corrected as much as in other sectors.'"
+      }
     ]
   },
   "strategic_clarity": {
     "score": 18,
     "max_points": 25,
-    "justification": "The report offers clear implications for decision-making, particularly in the 'Deal Activity Is Shifting Toward Technology, Healthcare, and Green Energy Sectors' section, where it highlights the opportunities and risks in these sectors. The 'Exit Channels Are Constrained by Weak IPO Markets and Geopolitical Uncertainty' section also provides actionable recommendations for GPs and LPs. However, some sections could benefit from more explicit 'so-what' statements to further enhance strategic clarity.",
-    "positive_factors": [
-      "clear implications for decision-making",
-      "actionable recommendations"
+    "what_works": [
+      {
+        "point": "The report provides clear implications for investors, including the need to adapt to a bifurcated market and to focus on niche sectors like advanced manufacturing, biotech, and energy transition"
+      },
+      {
+        "point": "The analysis of exit channels offers actionable recommendations for investors, such as exploring alternative exit routes and managing portfolio risk"
+      }
     ],
-    "negative_factors": [
-      "some sections lack explicit 'so-what' statements"
+    "what_fails": [
+      {
+        "point": "Lack of explicit decision implications for specific investor groups, such as sovereign wealth funds or pension funds",
+        "location_ref": "Location -> [Fundraising Has Slowed but AUM Continues to Grow as Existing Funds Deploy Capital] | Para 1 | 'LPs are increasingly concerned about regulatory unpredictability, geopolitical risks, and the economic slowdown.' -> 'A survey by Coller Capital in 2024 found that 45% of institutional investors plan to reduce their China PE allocation over the next two years, up from 30% in 2022.'"
+      },
+      {
+        "point": "Insufficient discussion on the potential risks and opportunities associated with the shift in deal activity toward technology, healthcare, and green energy sectors",
+        "location_ref": "Location -> [Deal Activity Is Shifting Toward Technology, Healthcare, and Green Energy Sectors] | Para 1 | 'The technology sector remains the largest and most dynamic area for PE investment in China.' -> 'Within technology, semiconductors and AI are the top sub-sectors, driven by government initiatives to achieve self-sufficiency and reduce dependence on foreign technology.'"
+      }
     ]
   },
   "writing_and_structure": {
-    "score": 18,
+    "score": 16,
     "max_points": 20,
-    "justification": "The report's structure is logical, with clear section titles that match the content. The writing is generally clear and concise, although some paragraphs are lengthy and could be broken up for better readability. The report also avoids undefined jargon and filler language, making it accessible to the target audience. However, the absence of a summary or conclusion section reduces the score.",
-    "positive_factors": [
-      "logical structure",
-      "clear writing"
+    "what_works": [
+      {
+        "point": "The report is well-organized, with clear section titles and a logical flow of ideas"
+      },
+      {
+        "point": "The writing is clear and concise, making it easy to follow the analysis and recommendations"
+      }
     ],
-    "negative_factors": [
-      "lengthy paragraphs",
-      "absence of summary or conclusion section"
+    "what_fails": [
+      {
+        "point": "Some sections, such as 'China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy', are overly long and could be broken up for easier reading",
+        "location_ref": "Location -> [China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy] | Para 1-4"
+      },
+      {
+        "point": "The report could benefit from more visual aids, such as charts or graphs, to illustrate key trends and data",
+        "location_ref": "Location -> [Deal Activity Is Shifting Toward Technology, Healthcare, and Green Energy Sectors] | Para 1-4"
+      }
     ]
   }
 }

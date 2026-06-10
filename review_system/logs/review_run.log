@@ -100,3 +100,22 @@
 2026-06-10 14:13:32 | INFO     | review.run | Step 3/4: Running combined analysis (lean mode — 1 API call)
 2026-06-10 14:13:33 | WARNING  | review.run | Rate-limited (429). Waiting 10s (attempt 1)
 2026-06-10 14:13:43 | WARNING  | review.run | Rate-limited (429). Waiting 20s (attempt 2)
+2026-06-10 14:14:07 | INFO     | review.run | Evidence analyzer: extracting from combined result (lean mode)
+2026-06-10 14:14:07 | INFO     | review.run | Citation analyzer: extracting from combined result (lean mode)
+2026-06-10 14:14:07 | INFO     | review.run | Writing analyzer: extracting from combined result (lean mode)
+2026-06-10 14:14:07 | INFO     | review.run | Strategy analyzer: extracting from combined result (lean mode)
+2026-06-10 14:14:07 | INFO     | review.run | Structure analyzer: extracting from combined result (lean mode)
+2026-06-10 14:14:07 | INFO     | review.run | Audience analyzer: extracting from combined result (lean mode)
+2026-06-10 14:14:07 | INFO     | review.run | Step 4/4: Applying scoring caps and dimension finalisation
+2026-06-10 14:14:07 | INFO     | review.run | Research Quality: 24/30
+2026-06-10 14:14:07 | INFO     | review.run | Evidence cap applied: no bibliography -> max 14
+2026-06-10 14:14:07 | INFO     | review.run | Evidence & Citations: 14/25
+2026-06-10 14:14:07 | INFO     | review.run | Strategic soft cap: no explicit recommendations -> 18
+2026-06-10 14:14:07 | INFO     | review.run | Strategic Clarity: 18/25
+2026-06-10 14:14:07 | INFO     | review.run | Writing penalty: 0.5 pts for 2 high/critical flaws
+2026-06-10 14:14:07 | INFO     | review.run | Writing & Structure: 16/20
+2026-06-10 14:14:07 | INFO     | review.run | Scores: Research=24/30 | Evidence=14/25 | Strategic=18/25 | Writing=16/20 | Total=72.0/100 | Grade=Bronze
+2026-06-10 14:14:07 | INFO     | review.run | Step 5/5: Assembling final review data
+2026-06-10 14:14:10 | INFO     | review.run | Synthesis complete: 8 improvement tasks
+2026-06-10 14:14:10 | INFO     | review.run | ReviewData assembled | Score=72.0 | Grade=Bronze | Tasks=8
+2026-06-10 14:14:10 | INFO     | review.run | Review complete | score=72.0 | grade=Bronze
