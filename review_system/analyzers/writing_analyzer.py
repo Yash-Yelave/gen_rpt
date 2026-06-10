@@ -3,8 +3,11 @@ review_system/analyzers/writing_analyzer.py
 
 Detects writing flaws: vague language, undefined jargon, repeated phrases,
 weak transitions, filler text, overloaded sentences.
+
+In lean mode, extracts from a pre-fetched combined result (no API call).
+In full mode, makes its own API call.
 """
-from typing import Dict, Any, TYPE_CHECKING
+from typing import Dict, Any, Optional, TYPE_CHECKING
 
 from shared.report_schema import ParsedReport
 from review_system.utils.logging_utils import get_run_logger
@@ -26,7 +29,7 @@ REPORT TEXT (by section and paragraph):
 
 TASK: Identify specific writing flaws in the following categories.
 For each flaw, quote the problematic text exactly and provide a location reference.
-Format: "Location -> [<section>] | Para <N> | \\"<open>\\" -> \\"<close>\\""
+Format: "Location -> [<section>] | Para <N> | \"<open>\" -> \"<close>\""
 
 CATEGORIES:
 - vague_statement    : Unclear, hedge-y, or uncommitted language
@@ -55,10 +58,19 @@ def run(
     engine: "GroqReviewEngine",
     parsed: ParsedReport,
     claims_audit: Dict[str, Any] = None,
+    combined: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
-    """Run writing analysis. Returns dict with writing_flaws list."""
-    log.info("Running writing analyzer")
+    """
+    Run writing analysis.
+    If `combined` is provided (lean mode), extract from it — no API call.
+    Otherwise, make an individual API call (full mode).
+    Returns dict with writing_flaws list.
+    """
+    if combined is not None:
+        log.info("Writing analyzer: extracting from combined result (lean mode)")
+        return {"writing_flaws": combined.get("writing_flaws", [])}
 
+    log.info("Running writing analyzer (full mode)")
     report_text = parsed.as_prompt_text(max_chars=16_000)
     prompt = _USER.format(report_text=report_text)
 
