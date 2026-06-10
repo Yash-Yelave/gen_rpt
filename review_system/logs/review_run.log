@@ -57,3 +57,10 @@
 2026-06-10 13:49:21 | INFO     | review.run | Running audience analyzer
 2026-06-10 13:49:22 | WARNING  | review.run | Rate-limited (429). Waiting 10s (attempt 1)
 2026-06-10 13:49:32 | WARNING  | review.run | Rate-limited (429). Waiting 20s (attempt 2)
+2026-06-10 13:59:47 | INFO     | review.run | Review started | report=D:\Intenship\gen_rpt-main\reports\2026-05-29-china-private-equity-market\report.md | output=review_outputs\2026-05-29-china-private-equity-market_review
+2026-06-10 13:59:47 | INFO     | review.run | Loaded report: 'D:\\Intenship\\gen_rpt-main\\reports\\2026-05-29-china-private-equity-market\\report.md' | 16853 chars | title='China Private Equity Market: Navigating a Bifurcated Landscape Amid Regulatory and Economic Shifts'
+2026-06-10 13:59:47 | INFO     | review.run | Parsed report: 8 sections, 2384 words
+2026-06-10 13:59:47 | INFO     | review.run | Pipeline starting for: 'China Private Equity Market: Navigating a Bifurcated Landscape Amid Regulatory and Economic Shifts' (lean_mode=True)
+2026-06-10 13:59:47 | INFO     | review.run | Step 1/4: Extracting claims
+2026-06-10 13:59:52 | INFO     | review.run | Step 2/4: Scoring across 4 dimensions
+2026-06-10 13:59:55 | INFO     | review.run | Step 3/4: Running combined analysis (lean mode — 1 API call)
