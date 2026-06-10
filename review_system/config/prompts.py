@@ -274,7 +274,7 @@ High-risk / unsupported claims:
 TASK: In a single response, cover ALL categories A through I below.
 Location format: "Location -> [<section>] | Para <N> | \"<first 6 words>\" -> \"<last 6 words>\""
 If no issue exists in a category, output:
-  {"finding": "None identified — <brief reason>", "location_ref": "N/A", "severity": "Low"}
+  {{"finding": "None identified — <brief reason>", "location_ref": "N/A", "severity": "Low"}}
 
 A. STRENGTHS — What the report does particularly well. Cite specific sections.
 B. WEAKNESSES — Specific content/structural problems with location.
