@@ -61,6 +61,18 @@
       "classification": "supported"
     },
     {
+      "claim": "LP sentiment is bifurcated: some institutional investors are reducing exposure, but top-tier managers with strong track records continue to attract capital",
+      "section": "Key highlights",
+      "paragraph": 1,
+      "location_ref": "Location -> [Key highlights] | Para 1 | \"LP sentiment\" -> \"attract capital\"",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": true,
+      "classification": "partially_supported"
+    },
+    {
       "claim": "The Chinese private equity market has experienced a remarkable growth trajectory over the past decade, with AUM expanding from approximately $500 billion in 2015 to over $1.5 trillion in 2024",
       "section": "China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy",
       "paragraph": 1,
@@ -87,8 +99,8 @@
     {
       "claim": "The number of funds closed in 2024 is expected to be 30% lower than in 2021",
       "section": "China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy",
-      "paragraph": 1,
-      "location_ref": "Location -> [China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy] | Para 1 | \"The number\" -> \"in 2021\"",
+      "paragraph": 2,
+      "location_ref": "Location -> [China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy] | Para 2 | \"The number\" -> \"in 2021\"",
       "evidence_provided": true,
       "data_provided": true,
       "source_referenced": false,
@@ -97,10 +109,82 @@
       "classification": "supported"
     },
     {
-      "claim": "The average time to deploy a fund has increased from 3-4 years to 4-5 years",
+      "claim": "China's GDP growth has slowed to around 4.5% in 2024, down from 5.2% in 2023",
+      "section": "China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy",
+      "paragraph": 2,
+      "location_ref": "Location -> [China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy] | Para 2 | \"China's GDP\" -> \"in 2023\"",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": false,
+      "quantified": true,
+      "confidence_justified": true,
+      "classification": "supported"
+    },
+    {
+      "claim": "The introduction of the Data Security Law (DSL), the Personal Information Protection Law (PIPL), and the Anti-Monopoly Guidelines have reshaped the operating environment for PE investors",
+      "section": "China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy",
+      "paragraph": 3,
+      "location_ref": "Location -> [China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy] | Para 3 | \"The introduction\" -> \"PE investors\"",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": true,
+      "classification": "partially_supported"
+    },
+    {
+      "claim": "The antitrust review process for large transactions can now take 6-12 months, compared to 3-6 months previously",
+      "section": "China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy",
+      "paragraph": 3,
+      "location_ref": "Location -> [China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy] | Para 3 | \"The antitrust\" -> \"previously\"",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": false,
+      "quantified": true,
+      "confidence_justified": true,
+      "classification": "supported"
+    },
+    {
+      "claim": "The fundraising slowdown is a global phenomenon, but it is particularly acute in China due to specific local factors",
+      "section": "Fundraising Has Slowed but AUM Continues to Grow as Existing Funds Deploy Capital",
+      "paragraph": 1,
+      "location_ref": "Location -> [Fundraising Has Slowed but AUM Continues to Grow as Existing Funds Deploy Capital] | Para 1 | \"The fundraising\" -> \"local factors\"",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": true,
+      "classification": "partially_supported"
+    },
+    {
+      "claim": "A survey by Coller Capital in 2024 found that 45% of institutional investors plan to reduce their China PE allocation over the next two years",
+      "section": "Fundraising Has Slowed but AUM Continues to Grow as Existing Funds Deploy Capital",
+      "paragraph": 1,
+      "location_ref": "Location -> [Fundraising Has Slowed but AUM Continues to Grow as Existing Funds Deploy Capital] | Para 1 | \"A survey\" -> \"two years\"",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": true,
+      "quantified": true,
+      "confidence_justified": true,
+      "classification": "supported"
+    },
+    {
+      "claim": "The composition of fundraising is also shifting, with domestic currency funds (RMB funds) now accounting for over 70% of total fundraising",
+      "section": "Fundraising Has Slowed but AUM Continues to Grow as Existing Funds Deploy Capital",
+      "paragraph": 2,
+      "location_ref": "Location -> [Fundraising Has Slowed but AUM Continues to Grow as Existing Funds Deploy Capital] | Para 2 | \"The composition\" -> \"fundraising\"",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": false,
+      "quantified": true,
+      "confidence_justified": true,
+      "classification": "supported"
+    },
+    {
+      "claim": "The average time to deploy a fund has increased from 3-4 years to 4-5 years, as GPs exercise greater caution in a challenging deal environment",
       "section": "Fundraising Has Slowed but AUM Continues to Grow as Existing Funds Deploy Capital",
       "paragraph": 3,
-      "location_ref": "Location -> [Fundraising Has Slowed but AUM Continues to Grow as Existing Funds Deploy Capital] | Para 3 | \"The average\" -> \"4-5 years\"",
+      "location_ref": "Location -> [Fundraising Has Slowed but AUM Continues to Grow as Existing Funds Deploy Capital] | Para 3 | \"The average\" -> \"deal environment\"",
       "evidence_provided": true,
       "data_provided": true,
       "source_referenced": false,
@@ -121,18 +205,6 @@
       "classification": "supported"
     },
     {
-      "claim": "Fundraising is expected to remain subdued in 2025, with total commitments likely in the range of $150-180 billion",
-      "section": "Fundraising Has Slowed but AUM Continues to Grow as Existing Funds Deploy Capital",
-      "paragraph": 4,
-      "location_ref": "Location -> [Fundraising Has Slowed but AUM Continues to Grow as Existing Funds Deploy Capital] | Para 4 | \"Fundraising is\" -> \"billion\"",
-      "evidence_provided": true,
-      "data_provided": true,
-      "source_referenced": false,
-      "quantified": true,
-      "confidence_justified": true,
-      "classification": "supported"
-    },
-    {
       "claim": "The technology sector remains the largest and most dynamic area for PE investment in China",
       "section": "Deal Activity Is Shifting Toward Technology, Healthcare, and Green Energy Sectors",
       "paragraph": 1,
@@ -145,10 +217,34 @@
       "classification": "partially_supported"
     },
     {
-      "claim": "The number of IPOs on the Shanghai STAR Market and the Shenzhen ChiNext Board has declined in 2024",
-      "section": "Exit Channels Are Constrained by Weak IPO Markets and Geopolitical Uncertainty",
+      "claim": "The National Integrated Circuit Industry Investment Fund (the 'Big Fund') has committed over $50 billion to semiconductor projects",
+      "section": "Deal Activity Is Shifting Toward Technology, Healthcare, and Green Energy Sectors",
       "paragraph": 1,
-      "location_ref": "Location -> [Exit Channels Are Constrained by Weak IPO Markets and Geopolitical Uncertainty] | Para 1 | \"The number\" -> \"in 2024\"",
+      "location_ref": "Location -> [Deal Activity Is Shifting Toward Technology, Healthcare, and Green Energy Sectors] | Para 1 | \"The National\" -> \"semiconductor projects\"",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": false,
+      "quantified": true,
+      "confidence_justified": true,
+      "classification": "supported"
+    },
+    {
+      "claim": "Healthcare has emerged as a resilient and high-growth sector for PE investment, with top-quartile funds achieving IRRs of 20-25%",
+      "section": "Deal Activity Is Shifting Toward Technology, Healthcare, and Green Energy Sectors",
+      "paragraph": 2,
+      "location_ref": "Location -> [Deal Activity Is Shifting Toward Technology, Healthcare, and Green Energy Sectors] | Para 2 | \"Healthcare\" -> \"25%\"",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": false,
+      "quantified": true,
+      "confidence_justified": true,
+      "classification": "supported"
+    },
+    {
+      "claim": "Green energy is a rapidly growing area for PE investment, driven by China's commitment to peak carbon emissions by 2030 and achieve carbon neutrality by 2060",
+      "section": "Deal Activity Is Shifting Toward Technology, Healthcare, and Green Energy Sectors",
+      "paragraph": 3,
+      "location_ref": "Location -> [Deal Activity Is Shifting Toward Technology, Healthcare, and Green Energy Sectors] | Para 3 | \"Green energy\" -> \"by 2060\"",
       "evidence_provided": true,
       "data_provided": false,
       "source_referenced": false,
@@ -157,10 +253,22 @@
       "classification": "partially_supported"
     },
     {
-      "claim": "The average time from investment to IPO has increased from 3-4 years to 5-6 years",
+      "claim": "The onshore IPO market has been a key exit route for PE-backed companies, but the number of IPOs has declined in 2024",
       "section": "Exit Channels Are Constrained by Weak IPO Markets and Geopolitical Uncertainty",
       "paragraph": 1,
-      "location_ref": "Location -> [Exit Channels Are Constrained by Weak IPO Markets and Geopolitical Uncertainty] | Para 1 | \"The average\" -> \"5-6 years\"",
+      "location_ref": "Location -> [Exit Channels Are Constrained by Weak IPO Markets and Geopolitical Uncertainty] | Para 1 | \"The onshore\" -> \"in 2024\"",
+      "evidence_provided": true,
+      "data_provided": false,
+      "source_referenced": false,
+      "quantified": false,
+      "confidence_justified": true,
+      "classification": "partially_supported"
+    },
+    {
+      "claim": "The average time from investment to IPO has increased from 3-4 years to 5-6 years, extending fund lives and pressuring returns",
+      "section": "Exit Channels Are Constrained by Weak IPO Markets and Geopolitical Uncertainty",
+      "paragraph": 1,
+      "location_ref": "Location -> [Exit Channels Are Constrained by Weak IPO Markets and Geopolitical Uncertainty] | Para 1 | \"The average\" -> \"pressuring returns\"",
       "evidence_provided": true,
       "data_provided": true,
       "source_referenced": false,
@@ -179,12 +287,24 @@
       "quantified": true,
       "confidence_justified": true,
       "classification": "supported"
+    },
+    {
+      "claim": "Secondary transactions have grown, accounting for 25% of exit value, but often occur at discounts to net asset value",
+      "section": "Exit Channels Are Constrained by Weak IPO Markets and Geopolitical Uncertainty",
+      "paragraph": 3,
+      "location_ref": "Location -> [Exit Channels Are Constrained by Weak IPO Markets and Geopolitical Uncertainty] | Para 3 | \"Secondary transactions\" -> \"net asset value\"",
+      "evidence_provided": true,
+      "data_provided": true,
+      "source_referenced": false,
+      "quantified": true,
+      "confidence_justified": true,
+      "classification": "supported"
     }
   ],
   "quantification_ratio": 70,
-  "total_claims": 15,
-  "supported_count": 10,
-  "partially_supported_count": 5,
+  "total_claims": 25,
+  "supported_count": 16,
+  "partially_supported_count": 9,
   "unsupported_count": 0,
   "high_risk_count": 0,
   "speculative_count": 0
