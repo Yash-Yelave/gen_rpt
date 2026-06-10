@@ -8,3 +8,5 @@
 2026-06-10 13:59:52 | INFO     | review.claims | Claims extracted: total=15 supported=10 partial=5 unsupported=0 high_risk=0 speculative=0
 2026-06-10 14:01:02 | INFO     | review.claims | Starting claim extraction for: 'China Private Equity Market: Navigating a Bifurcated Landscape Amid Regulatory and Economic Shifts'
 2026-06-10 14:01:12 | INFO     | review.claims | Claims extracted: total=25 supported=16 partial=9 unsupported=0 high_risk=0 speculative=0
+2026-06-10 14:13:23 | INFO     | review.claims | Starting claim extraction for: 'China Private Equity Market: Navigating a Bifurcated Landscape Amid Regulatory and Economic Shifts'
+2026-06-10 14:13:28 | INFO     | review.claims | Claims extracted: total=15 supported=10 partial=5 unsupported=0 high_risk=0 speculative=0
