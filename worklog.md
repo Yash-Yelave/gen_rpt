@@ -35,3 +35,26 @@
   - Rectified Vite build configuration (`manualChunks` type discrepancies) and path alias resolving in `tsconfig.app.json` to compile cleanly.
 - **Frontend Architecture Documentation**: Created a detailed, comprehensive [README.md](file:///d:/Intenship/gen_rpt-main/frontend/README.md) inside the `frontend/` directory outlining the folder layout, installation instructions, execution steps, and state management guidelines.
 
+# Worklog - June 9, 2026
+
+## Tasks Completed
+
+- **File Migration & Workspace Cleanup**:
+  - Migrated all files from `gen_rpt_original/` to the root of `gen_rpt-main/` to restore original files while explicitly preserving existing README files.
+  - Successfully deleted the `gen_rpt_original/` folder and clean-deleted the deprecated `review_output/` folder containing obsolete test outputs.
+- **Dynamic Output Folder Naming**:
+  - Updated folder naming logic in `review_system/main.py` (`_resolve_output_dir()`) and the CLI to use clean, descriptive names derived from the report file (e.g., `2026-05-29-china-private-equity-market_review`).
+  - Added parent-directory fallback logic to ensure that generic report filenames (such as `report.md`, `index.md`, `main.md`) resolve to a folder named after their enclosing parent directory.
+- **Review System Documentation**:
+  - Created a comprehensive [README.md](file:///d:/Intenship/gen_rpt-main/review_system/README.md) within `review_system/` describing components (extractors, analyzers, scoring, orchestrator, utilities), prerequisites, and command-line execution instructions.
+- **Groq API Rate-Limit Mitigation (Lean Mode)**:
+  - Designed and implemented a "Lean Mode" pipeline option to handle free-tier Groq API 429 rate limit exceptions, reducing total model calls from 9 to 3 per report review.
+  - Consolidated the 6 individual analyzers (evidence, citation, writing, strategy, structure, audience) into a single consolidated prompt and call in `review_orchestrator.py` (`_run_combined_analysis()`).
+  - Updated each individual analyzer to support extracting from the combined result if present.
+  - Added a `--full-analysis` command-line flag to allow switching back to the full 9-call granular pipeline on paid accounts.
+- **Strict Scorecard Format Overhaul (Section 2)**:
+  - Overhauled scoring prompt instructions and formatting rules to replace generic paragraphs with structured, non-generic `What Works` and `What Fails` bullet points.
+  - Enforced that all `What Fails` bullet points must contain exact location references in the report in the format: `Location → [Section Title] | Para X | "opening words" → "closing words"`.
+  - Refactored `review_system/config/prompts.py`, individual score modules (`research_score.py`, `evidence_score.py`, `strategic_score.py`, `writing_score.py`), and the markdown rendering logic in `markdown_writer.py` to ensure compliant scoring outputs.
+  - Verified outputs run successfully, achieving clean, location-anchored feedback formatting in the generated reviews.
+
