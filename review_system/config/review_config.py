@@ -60,6 +60,7 @@ EVIDENCE_SCORE_CAP_MANY_UNSUPPORTED = 18  # out of 25
 CLAIM_EXTRACTION_MAX_CHARS = 24_000
 SCORING_MAX_CHARS = 20_000
 ISSUE_DETECTION_MAX_CHARS = 20_000
+COMBINED_ANALYSIS_MAX_CHARS = 18_000   # slightly smaller to keep combined response under token limit
 SYNTHESIS_MAX_CHARS = 8_000
 
 # ---------------------------------------------------------------------------

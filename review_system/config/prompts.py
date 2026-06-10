@@ -241,3 +241,78 @@ Return JSON:
   ]
 }}
 """
+
+# ===========================================================================
+# COMBINED ANALYSIS  (lean mode — 1 call replaces 6 separate analyzer calls)
+# ===========================================================================
+
+COMBINED_ANALYSIS_SYSTEM = (
+    "You are a senior institutional research auditor and strategy reviewer. "
+    "In a single pass, analyse all quality dimensions of the report: evidence, "
+    "citations, writing, strategy, narrative structure, and audience readiness. "
+    "Base every finding ONLY on the provided report text. "
+    "Never produce generic observations — every finding must cite a specific section "
+    "and paragraph. Return strict JSON only."
+)
+
+COMBINED_ANALYSIS_USER = """\
+REPORT TEXT (structured by section and paragraph):
+{report_text}
+
+SECTION LIST: {section_list}
+
+CLAIMS AUDIT:
+- Total claims  : {total_claims}
+- Supported     : {supported} | Partially supported: {partial}
+- Unsupported   : {unsupported} | High-risk: {high_risk} | Speculative: {speculative}
+- Source-referenced claims: {sourced}
+- Quantification ratio: {quant_ratio}%
+
+High-risk / unsupported claims:
+{bad_claims_list}
+
+TASK: In a single response, cover ALL categories A through I below.
+Location format: "Location -> [<section>] | Para <N> | \"<first 6 words>\" -> \"<last 6 words>\""
+If no issue exists in a category, output:
+  {"finding": "None identified — <brief reason>", "location_ref": "N/A", "severity": "Low"}
+
+A. STRENGTHS — What the report does particularly well. Cite specific sections.
+B. WEAKNESSES — Specific content/structural problems with location.
+C. DATA GAPS — Claims made without supporting data. State what data is missing.
+D. WEAK ASSUMPTIONS — Forecasts or timelines not backed by evidence.
+E. CITATION QUALITY — Assess named sources, bibliography presence, source diversity,
+   statistic traceability. Produce separate citation_strengths and citation_weaknesses lists.
+F. WRITING FLAWS — Vague language, undefined jargon, repeated phrases, filler text,
+   overloaded sentences. Quote the problematic text exactly.
+G. NARRATIVE GAPS — Broken argument flow, orphaned analysis, weak intro/conclusion.
+H. STRATEGIC GAPS — Missing so-what, generic advice, absent call-to-action,
+   no risk/opportunity split.
+I. AUDIENCE READINESS — For Minister, Board, SWF: YES/NO readiness with a one-sentence
+   reason grounded in the report text.
+
+Return JSON in this EXACT structure:
+{{
+  "strengths":         [{"finding":"...","location_ref":"Location -> ...","severity":"Low"}],
+  "weaknesses":        [{"finding":"...","location_ref":"Location -> ...","severity":"High"}],
+  "data_gaps":         [{"section":"...","claim":"...","location_ref":"Location -> ...","missing_data":["..."],"severity":"High"}],
+  "weak_assumptions":  [{"forecast_or_claim":"...","location_ref":"Location -> ...","missing_evidence":"...","severity":"High"}],
+  "citation_strengths":[{"finding":"...","location_ref":"Location -> ...","severity":"Low"}],
+  "citation_weaknesses":[{"finding":"...","location_ref":"Location -> ...","severity":"High"}],
+  "has_bibliography":  false,
+  "named_sources_count": 0,
+  "writing_flaws":     [{"flaw_type":"vague_statement|undefined_jargon|repeated_phrase|weak_transition|filler_text|overloaded_sentence","example":"<exact quote>","location_ref":"Location -> ...","severity":"High|Medium|Low","suggestion":"<one-line fix>"}],
+  "narrative_gaps":    [{"gap_type":"circular|broken_flow|orphaned|weak_intro|weak_conclusion","finding":"...","location_ref":"Location -> ...","severity":"High|Medium|Low"}],
+  "overall_narrative_coherence": "Strong|Moderate|Weak",
+  "strategic_gaps":    [{"gap_type":"missing_so_what|generic_recommendation|no_risk_opportunity_split|missing_stakeholder|absent_call_to_action","finding":"...","location_ref":"Location -> ...","severity":"Critical|High|Medium|Low"}],
+  "has_explicit_recommendations": false,
+  "has_risk_opportunity_split":   false,
+  "audience_relevance_gaps":[{"audience":"Minister|Board|SWF","finding":"...","location_ref":"Location -> ...","severity":"High|Medium|Low"}],
+  "minister_ready":    false,
+  "board_ready":       false,
+  "swf_ready":         false,
+  "minister_reason":   "<one sentence grounded in report content>",
+  "board_reason":      "<one sentence>",
+  "swf_reason":        "<one sentence>",
+  "flagged_sections":  [{"section":"...","issue":"..."}]
+}}
+"""
