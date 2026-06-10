@@ -292,27 +292,27 @@ I. AUDIENCE READINESS — For Minister, Board, SWF: YES/NO readiness with a one-
 
 Return JSON in this EXACT structure:
 {{
-  "strengths":         [{"finding":"...","location_ref":"Location -> ...","severity":"Low"}],
-  "weaknesses":        [{"finding":"...","location_ref":"Location -> ...","severity":"High"}],
-  "data_gaps":         [{"section":"...","claim":"...","location_ref":"Location -> ...","missing_data":["..."],"severity":"High"}],
-  "weak_assumptions":  [{"forecast_or_claim":"...","location_ref":"Location -> ...","missing_evidence":"...","severity":"High"}],
-  "citation_strengths":[{"finding":"...","location_ref":"Location -> ...","severity":"Low"}],
-  "citation_weaknesses":[{"finding":"...","location_ref":"Location -> ...","severity":"High"}],
+  "strengths":         [{{"finding":"...","location_ref":"Location -> ...","severity":"Low"}}],
+  "weaknesses":        [{{"finding":"...","location_ref":"Location -> ...","severity":"High"}}],
+  "data_gaps":         [{{"section":"...","claim":"...","location_ref":"Location -> ...","missing_data":["..."],"severity":"High"}}],
+  "weak_assumptions":  [{{"forecast_or_claim":"...","location_ref":"Location -> ...","missing_evidence":"...","severity":"High"}}],
+  "citation_strengths":[{{"finding":"...","location_ref":"Location -> ...","severity":"Low"}}],
+  "citation_weaknesses":[{{"finding":"...","location_ref":"Location -> ...","severity":"High"}}],
   "has_bibliography":  false,
   "named_sources_count": 0,
-  "writing_flaws":     [{"flaw_type":"vague_statement|undefined_jargon|repeated_phrase|weak_transition|filler_text|overloaded_sentence","example":"<exact quote>","location_ref":"Location -> ...","severity":"High|Medium|Low","suggestion":"<one-line fix>"}],
-  "narrative_gaps":    [{"gap_type":"circular|broken_flow|orphaned|weak_intro|weak_conclusion","finding":"...","location_ref":"Location -> ...","severity":"High|Medium|Low"}],
+  "writing_flaws":     [{{"flaw_type":"vague_statement|undefined_jargon|repeated_phrase|weak_transition|filler_text|overloaded_sentence","example":"<exact quote>","location_ref":"Location -> ...","severity":"High|Medium|Low","suggestion":"<one-line fix>"}}],
+  "narrative_gaps":    [{{"gap_type":"circular|broken_flow|orphaned|weak_intro|weak_conclusion","finding":"...","location_ref":"Location -> ...","severity":"High|Medium|Low"}}],
   "overall_narrative_coherence": "Strong|Moderate|Weak",
-  "strategic_gaps":    [{"gap_type":"missing_so_what|generic_recommendation|no_risk_opportunity_split|missing_stakeholder|absent_call_to_action","finding":"...","location_ref":"Location -> ...","severity":"Critical|High|Medium|Low"}],
+  "strategic_gaps":    [{{"gap_type":"missing_so_what|generic_recommendation|no_risk_opportunity_split|missing_stakeholder|absent_call_to_action","finding":"...","location_ref":"Location -> ...","severity":"Critical|High|Medium|Low"}}],
   "has_explicit_recommendations": false,
   "has_risk_opportunity_split":   false,
-  "audience_relevance_gaps":[{"audience":"Minister|Board|SWF","finding":"...","location_ref":"Location -> ...","severity":"High|Medium|Low"}],
+  "audience_relevance_gaps":[{{"audience":"Minister|Board|SWF","finding":"...","location_ref":"Location -> ...","severity":"High|Medium|Low"}}],
   "minister_ready":    false,
   "board_ready":       false,
   "swf_ready":         false,
   "minister_reason":   "<one sentence grounded in report content>",
   "board_reason":      "<one sentence>",
   "swf_reason":        "<one sentence>",
-  "flagged_sections":  [{"section":"...","issue":"..."}]
+  "flagged_sections":  [{{"section":"...","issue":"..."}}]
 }}
 """
