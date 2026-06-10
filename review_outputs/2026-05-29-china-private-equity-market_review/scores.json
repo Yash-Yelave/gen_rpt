@@ -1,0 +1,53 @@
+{
+  "overall_score": 76,
+  "grade": "Silver",
+  "research_quality": {
+    "score": 26,
+    "max_points": 30,
+    "justification": "The report provides a comprehensive analysis of the China private equity market, covering topics such as market size, regulatory changes, sector dynamics, and competitive landscape. For example, the section 'China Private Equity Market Remains Large but Faces Headwinds from Regulation and Economy' offers a detailed examination of the market's growth trajectory and the impact of regulatory and economic shifts. Additionally, the report presents multiple viewpoints, including the perspectives of LPs and GPs, as seen in the 'Fundraising Has Slowed but AUM Continues to Grow as Existing Funds Deploy Capital' section. However, the report could benefit from more explicit scenario and uncertainty analysis to further strengthen its conclusions.",
+    "positive_factors": [
+      "comprehensive analysis",
+      "multiple viewpoints"
+    ],
+    "negative_factors": [
+      "limited scenario and uncertainty analysis"
+    ]
+  },
+  "evidence_and_citations": {
+    "score": 14,
+    "max_points": 25,
+    "justification": "While the report presents various statistics and data points, such as the $1.5 trillion AUM and the 30% decline in fundraising, it lacks explicit citations and a bibliography. The absence of named sources for some claims, like the survey by Coller Capital, reduces the score. However, the report does provide some traceable statistics, such as the $50 billion commitment by the National Integrated Circuit Industry Investment Fund, which supports its conclusions.",
+    "positive_factors": [
+      "traceable statistics"
+    ],
+    "negative_factors": [
+      "lack of explicit citations",
+      "absence of bibliography"
+    ]
+  },
+  "strategic_clarity": {
+    "score": 18,
+    "max_points": 25,
+    "justification": "The report offers clear implications for decision-making, particularly in the 'Deal Activity Is Shifting Toward Technology, Healthcare, and Green Energy Sectors' section, where it highlights the opportunities and risks in these sectors. The 'Exit Channels Are Constrained by Weak IPO Markets and Geopolitical Uncertainty' section also provides actionable recommendations for GPs and LPs. However, some sections could benefit from more explicit 'so-what' statements to further enhance strategic clarity.",
+    "positive_factors": [
+      "clear implications for decision-making",
+      "actionable recommendations"
+    ],
+    "negative_factors": [
+      "some sections lack explicit 'so-what' statements"
+    ]
+  },
+  "writing_and_structure": {
+    "score": 18,
+    "max_points": 20,
+    "justification": "The report's structure is logical, with clear section titles that match the content. The writing is generally clear and concise, although some paragraphs are lengthy and could be broken up for better readability. The report also avoids undefined jargon and filler language, making it accessible to the target audience. However, the absence of a summary or conclusion section reduces the score.",
+    "positive_factors": [
+      "logical structure",
+      "clear writing"
+    ],
+    "negative_factors": [
+      "lengthy paragraphs",
+      "absence of summary or conclusion section"
+    ]
+  }
+}

@@ -71,3 +71,23 @@
 2026-06-10 14:01:02 | INFO     | review.run | Step 1/4: Extracting claims
 2026-06-10 14:01:12 | INFO     | review.run | Step 2/4: Scoring across 4 dimensions
 2026-06-10 14:01:15 | INFO     | review.run | Step 3/4: Running combined analysis (lean mode — 1 API call)
+2026-06-10 14:01:15 | WARNING  | review.run | Rate-limited (429). Waiting 10s (attempt 1)
+2026-06-10 14:01:28 | INFO     | review.run | Evidence analyzer: extracting from combined result (lean mode)
+2026-06-10 14:01:28 | INFO     | review.run | Citation analyzer: extracting from combined result (lean mode)
+2026-06-10 14:01:28 | INFO     | review.run | Writing analyzer: extracting from combined result (lean mode)
+2026-06-10 14:01:28 | INFO     | review.run | Strategy analyzer: extracting from combined result (lean mode)
+2026-06-10 14:01:28 | INFO     | review.run | Structure analyzer: extracting from combined result (lean mode)
+2026-06-10 14:01:28 | INFO     | review.run | Audience analyzer: extracting from combined result (lean mode)
+2026-06-10 14:01:28 | INFO     | review.run | Step 4/4: Applying scoring caps and dimension finalisation
+2026-06-10 14:01:28 | INFO     | review.run | Research Quality: 26/30
+2026-06-10 14:01:28 | INFO     | review.run | Evidence cap applied: no bibliography -> max 14
+2026-06-10 14:01:28 | INFO     | review.run | Evidence & Citations: 14/25
+2026-06-10 14:01:28 | INFO     | review.run | Strategic soft cap: no explicit recommendations -> 18
+2026-06-10 14:01:28 | INFO     | review.run | Strategic Clarity: 18/25
+2026-06-10 14:01:28 | INFO     | review.run | Writing & Structure: 18/20
+2026-06-10 14:01:28 | INFO     | review.run | Scores: Research=26/30 | Evidence=14/25 | Strategic=18/25 | Writing=18/20 | Total=76.0/100 | Grade=Silver
+2026-06-10 14:01:28 | INFO     | review.run | Step 5/5: Assembling final review data
+2026-06-10 14:01:30 | WARNING  | review.run | Rate-limited (429). Waiting 10s (attempt 1)
+2026-06-10 14:01:42 | INFO     | review.run | Synthesis complete: 8 improvement tasks
+2026-06-10 14:01:42 | INFO     | review.run | ReviewData assembled | Score=76.0 | Grade=Silver | Tasks=8
+2026-06-10 14:01:42 | INFO     | review.run | Review complete | score=76.0 | grade=Silver

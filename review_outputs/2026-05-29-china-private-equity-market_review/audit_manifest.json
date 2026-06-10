@@ -1,0 +1,24 @@
+{
+  "review_timestamp": "2026-06-10T08:31:42.589088Z",
+  "report_title": "China Private Equity Market: Navigating a Bifurcated Landscape Amid Regulatory and Economic Shifts",
+  "report_path": "D:\\Intenship\\gen_rpt-main\\reports\\2026-05-29-china-private-equity-market\\report.md",
+  "overall_score": 76,
+  "grade": "Silver",
+  "total_claims": 25,
+  "high_risk_claims": 0,
+  "unsupported_claims": 0,
+  "improvement_tasks": 8,
+  "minister_ready": false,
+  "board_ready": false,
+  "swf_ready": false,
+  "output_dir": "review_outputs\\2026-05-29-china-private-equity-market_review",
+  "files": {
+    "review_json": "review_outputs\\2026-05-29-china-private-equity-market_review\\review.json",
+    "review_md": "review_outputs\\2026-05-29-china-private-equity-market_review\\review.md",
+    "review_html": "review_outputs\\2026-05-29-china-private-equity-market_review\\review.html",
+    "claims_json": "review_outputs\\2026-05-29-china-private-equity-market_review\\claims.json",
+    "findings_json": "review_outputs\\2026-05-29-china-private-equity-market_review\\findings.json",
+    "scores_json": "review_outputs\\2026-05-29-china-private-equity-market_review\\scores.json",
+    "audit_manifest": "review_outputs\\2026-05-29-china-private-equity-market_review\\audit_manifest.json"
+  }
+}
