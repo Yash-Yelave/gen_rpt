@@ -109,35 +109,49 @@ SCORING DIMENSIONS AND MAX POINTS:
    Section titles match content, logical flow, absence of undefined jargon,
    clarity and conciseness, absence of repeated or filler language.
 
-RULES:
+SCORING RULES:
 - Each score must be an INTEGER in [0, dimension_max].
-- Every positive/negative factor MUST cite specific report content (section, claim, or quote).
-- Generic phrases like "good analysis" are forbidden.
+- Do NOT write a justification paragraph. Use bullet points ONLY.
+- Produce two sub-lists for each dimension: what_works and what_fails.
+- Every bullet must be specific enough to locate in the report — cite the section name, claim, or quote it applies to.
+- Generic phrases like "well-structured" or "good analysis" are FORBIDDEN.
+- what_fails bullets MUST include a location_ref in this format:
+  "Location -> [<Section Title>] | Para <N> | \"<opening words>\" -> \"<closing words>\""
+- what_works bullets do NOT need location refs unless tied to a very specific passage.
+- Minimum 2 bullets per sub-list. If fewer than 2 genuine strengths exist, reduce the score accordingly.
 - Many unsupported/high-risk claims => Evidence & Citations <= 18/25.
 - No bibliography/traceable sources => Evidence & Citations <= 14/25.
+- CRITICAL: Do NOT duplicate findings that belong to later audit sections (Data Gaps, Weak
+  Assumptions, High-Risk Claims). If a flaw is severe enough for those sections, omit it
+  from what_fails here and let the later section handle it.
 
 Return JSON:
 {{
   "research_quality": {{
     "score": <0-30>, "max_points": 30,
-    "justification": "<2-4 sentences citing specific report content>",
-    "positive_factors": ["<specific strength>"],
-    "negative_factors": ["<specific deficiency>"]
+    "what_works": [
+      {{"point": "<specific strength naming the actual section or claim>"}},
+      {{"point": "<another specific strength>"}}
+    ],
+    "what_fails": [
+      {{"point": "<specific gap or problem>", "location_ref": "Location -> [<Section>] | Para <N> | \"<open>\" -> \"<close>\""}},
+      {{"point": "<another specific problem>", "location_ref": "Location -> [<Section>] | Para <N> | \"<open>\" -> \"<close>\""}}
+    ]
   }},
   "evidence_and_citations": {{
     "score": <0-25>, "max_points": 25,
-    "justification": "<2-4 sentences>",
-    "positive_factors": [], "negative_factors": []
+    "what_works": [{{"point": "..."}}, {{"point": "..."}}],
+    "what_fails": [{{"point": "...", "location_ref": "..."}}, {{"point": "...", "location_ref": "..."}}]
   }},
   "strategic_clarity": {{
     "score": <0-25>, "max_points": 25,
-    "justification": "<2-4 sentences>",
-    "positive_factors": [], "negative_factors": []
+    "what_works": [{{"point": "..."}}, {{"point": "..."}}],
+    "what_fails": [{{"point": "...", "location_ref": "..."}}, {{"point": "...", "location_ref": "..."}}]
   }},
   "writing_and_structure": {{
     "score": <0-20>, "max_points": 20,
-    "justification": "<2-4 sentences>",
-    "positive_factors": [], "negative_factors": []
+    "what_works": [{{"point": "..."}}, {{"point": "..."}}],
+    "what_fails": [{{"point": "...", "location_ref": "..."}}, {{"point": "...", "location_ref": "..."}}]
   }}
 }}
 """
