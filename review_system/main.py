@@ -83,6 +83,16 @@ Examples:
         metavar="MODEL",
         help="Groq model name to use (default: llama-3.3-70b-versatile)",
     )
+    parser.add_argument(
+        "--full-analysis",
+        action="store_true",
+        default=False,
+        help=(
+            "Run all 6 analyzers as separate API calls (9 total calls). "
+            "Use only if you have a paid Groq plan. "
+            "Default: lean mode (3 API calls)."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -101,12 +111,14 @@ def _resolve_output_dir(args: argparse.Namespace, report_path: Path) -> Path:
     return Path("review_outputs") / folder
 
 
-def _print_banner(report_path: Path, output_dir: Path) -> None:
+def _print_banner(report_path: Path, output_dir: Path, lean_mode: bool) -> None:
+    mode = "Lean (3 API calls)" if lean_mode else "Full (9 API calls)"
     print("=" * 62)
     print("  AI REVIEW SYSTEM — Evidence-Based Report Auditor")
     print("=" * 62)
     print(f"  Report : {report_path}")
     print(f"  Output : {output_dir}")
+    print(f"  Mode   : {mode}")
     print("=" * 62)
 
 
@@ -148,7 +160,8 @@ def main() -> None:
     output_dir = _resolve_output_dir(args, report_path)
     safe_mkdir(output_dir)
 
-    _print_banner(report_path, output_dir)
+    lean_mode = not args.full_analysis
+    _print_banner(report_path, output_dir, lean_mode)
     log.info("Review started | report=%s | output=%s", report_path, output_dir)
 
     # ── Check GROQ_API_KEY ──────────────────────────────────────────────────
@@ -179,7 +192,7 @@ def main() -> None:
 
     # ── Run review pipeline ─────────────────────────────────────────────────
     try:
-        pipeline_results = run_pipeline(engine, parsed, output_dir)
+        pipeline_results = run_pipeline(engine, parsed, output_dir, lean_mode=lean_mode)
     except Exception as e:
         print(f"Review pipeline failed: {e}")
         err.exception("Pipeline failed")
