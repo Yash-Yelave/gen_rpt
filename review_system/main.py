@@ -89,8 +89,15 @@ Examples:
 def _resolve_output_dir(args: argparse.Namespace, report_path: Path) -> Path:
     if args.output.strip():
         return Path(args.output)
-    timestamp  = datetime.now().strftime("%Y%m%d_%H%M%S")
-    folder     = f"{report_path.stem}_{timestamp}"
+    
+    stem = report_path.stem
+    # If the file is generically named (like 'report.md'), use its parent folder name
+    if stem.lower() in ("report", "index", "main") and report_path.parent.name and report_path.parent.name not in (".", "reports", "gen_rpt-main"):
+        base_name = report_path.parent.name
+    else:
+        base_name = stem
+        
+    folder = f"{base_name}_review"
     return Path("review_outputs") / folder
 
 

@@ -50,8 +50,14 @@ def main():
         print(f"Error: Not a file: {file_path}")
         sys.exit(1)
 
-    timestamp   = datetime.now().strftime("%Y%m%d_%H%M%S")
-    folder_name = f"{file_path.stem}_review_{timestamp}"
+    stem = file_path.stem
+    # If the file is generically named (like 'report.md'), use its parent folder name
+    if stem.lower() in ("report", "index", "main") and file_path.parent.name and file_path.parent.name not in (".", "reports", "gen_rpt-main"):
+        base_name = file_path.parent.name
+    else:
+        base_name = stem
+        
+    folder_name = f"{base_name}_review"
     output_dir  = base_out / folder_name
 
     print("=" * 60)
