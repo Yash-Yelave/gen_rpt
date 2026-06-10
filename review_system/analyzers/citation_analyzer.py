@@ -3,8 +3,11 @@ review_system/analyzers/citation_analyzer.py
 
 Checks source traceability, bibliography presence, and citation quality.
 Returns findings: strengths and weaknesses related to citations.
+
+In lean mode, extracts from a pre-fetched combined result (no API call).
+In full mode, makes its own API call.
 """
-from typing import Dict, Any, TYPE_CHECKING
+from typing import Dict, Any, Optional, TYPE_CHECKING
 
 from shared.report_schema import ParsedReport
 from review_system.utils.logging_utils import get_run_logger
@@ -55,10 +58,24 @@ def run(
     engine: "GroqReviewEngine",
     parsed: ParsedReport,
     claims_audit: Dict[str, Any],
+    combined: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
-    """Run citation analysis. Returns citation findings dict."""
-    log.info("Running citation analyzer")
+    """
+    Run citation analysis.
+    If `combined` is provided (lean mode), extract from it — no API call.
+    Otherwise, make an individual API call (full mode).
+    Returns citation findings dict.
+    """
+    if combined is not None:
+        log.info("Citation analyzer: extracting from combined result (lean mode)")
+        return {
+            "citation_strengths":  combined.get("citation_strengths", []),
+            "citation_weaknesses": combined.get("citation_weaknesses", []),
+            "has_bibliography":    combined.get("has_bibliography", False),
+            "named_sources_count": combined.get("named_sources_count", 0),
+        }
 
+    log.info("Running citation analyzer (full mode)")
     report_text = parsed.as_prompt_text(max_chars=16_000)
     total = claims_audit.get("total_claims", 0)
     sourced = sum(
