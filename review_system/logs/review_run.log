@@ -24,3 +24,36 @@
 2026-06-09 23:39:22 | INFO     | review.run | Synthesis complete: 10 improvement tasks
 2026-06-09 23:39:22 | INFO     | review.run | ReviewData assembled | Score=42.0 | Grade=Red | Tasks=10
 2026-06-09 23:39:22 | INFO     | review.run | Review complete | score=42.0 | grade=Red
+2026-06-10 13:45:37 | INFO     | review.run | Review started | report=D:\Intenship\gen_rpt-main\reports\2026-05-29-china-private-equity-market\report.md | output=review_outputs\2026-05-29-china-private-equity-market_review
+2026-06-10 13:45:37 | INFO     | review.run | Loaded report: 'D:\\Intenship\\gen_rpt-main\\reports\\2026-05-29-china-private-equity-market\\report.md' | 16853 chars | title='China Private Equity Market: Navigating a Bifurcated Landscape Amid Regulatory and Economic Shifts'
+2026-06-10 13:45:37 | INFO     | review.run | Parsed report: 8 sections, 2384 words
+2026-06-10 13:45:37 | INFO     | review.run | Pipeline starting for: 'China Private Equity Market: Navigating a Bifurcated Landscape Amid Regulatory and Economic Shifts'
+2026-06-10 13:45:37 | INFO     | review.run | Step 1/5: Extracting claims
+2026-06-10 13:45:42 | INFO     | review.run | Step 2/5: Scoring across 4 dimensions
+2026-06-10 13:45:45 | INFO     | review.run | Step 3/5: Running 6 analyzers
+2026-06-10 13:45:45 | INFO     | review.run | Running evidence analyzer
+2026-06-10 13:45:46 | WARNING  | review.run | Rate-limited (429). Waiting 10s (attempt 1)
+2026-06-10 13:45:56 | WARNING  | review.run | Rate-limited (429). Waiting 20s (attempt 2)
+2026-06-10 13:46:21 | INFO     | review.run | Running citation analyzer
+2026-06-10 13:46:21 | WARNING  | review.run | Rate-limited (429). Waiting 10s (attempt 1)
+2026-06-10 13:47:38 | INFO     | review.run | Review started | report=D:\Intenship\gen_rpt-main\reports\2026-05-29-china-private-equity-market\report.md | output=review_outputs\2026-05-29-china-private-equity-market_review
+2026-06-10 13:47:38 | INFO     | review.run | Loaded report: 'D:\\Intenship\\gen_rpt-main\\reports\\2026-05-29-china-private-equity-market\\report.md' | 16853 chars | title='China Private Equity Market: Navigating a Bifurcated Landscape Amid Regulatory and Economic Shifts'
+2026-06-10 13:47:38 | INFO     | review.run | Parsed report: 8 sections, 2384 words
+2026-06-10 13:47:38 | INFO     | review.run | Pipeline starting for: 'China Private Equity Market: Navigating a Bifurcated Landscape Amid Regulatory and Economic Shifts'
+2026-06-10 13:47:38 | INFO     | review.run | Step 1/5: Extracting claims
+2026-06-10 13:47:44 | INFO     | review.run | Step 2/5: Scoring across 4 dimensions
+2026-06-10 13:47:46 | INFO     | review.run | Step 3/5: Running 6 analyzers
+2026-06-10 13:47:46 | INFO     | review.run | Running evidence analyzer
+2026-06-10 13:47:47 | WARNING  | review.run | Rate-limited (429). Waiting 10s (attempt 1)
+2026-06-10 13:48:02 | INFO     | review.run | Running citation analyzer
+2026-06-10 13:48:02 | WARNING  | review.run | Rate-limited (429). Waiting 10s (attempt 1)
+2026-06-10 13:48:12 | WARNING  | review.run | Rate-limited (429). Waiting 20s (attempt 2)
+2026-06-10 13:48:34 | INFO     | review.run | Running writing analyzer
+2026-06-10 13:48:35 | WARNING  | review.run | Rate-limited (429). Waiting 10s (attempt 1)
+2026-06-10 13:48:47 | INFO     | review.run | Running strategy analyzer
+2026-06-10 13:48:47 | WARNING  | review.run | Rate-limited (429). Waiting 10s (attempt 1)
+2026-06-10 13:48:57 | WARNING  | review.run | Rate-limited (429). Waiting 20s (attempt 2)
+2026-06-10 13:49:20 | INFO     | review.run | Running structure analyzer
+2026-06-10 13:49:21 | INFO     | review.run | Running audience analyzer
+2026-06-10 13:49:22 | WARNING  | review.run | Rate-limited (429). Waiting 10s (attempt 1)
+2026-06-10 13:49:32 | WARNING  | review.run | Rate-limited (429). Waiting 20s (attempt 2)
