@@ -58,3 +58,28 @@
   - Refactored `review_system/config/prompts.py`, individual score modules (`research_score.py`, `evidence_score.py`, `strategic_score.py`, `writing_score.py`), and the markdown rendering logic in `markdown_writer.py` to ensure compliant scoring outputs.
   - Verified outputs run successfully, achieving clean, location-anchored feedback formatting in the generated reviews.
 
+# Worklog - June 10, 2026
+
+## Tasks Completed
+
+- **Core Review System Architecture & Package Integration**:
+  - Restructured the AI-based report review system into a modular, standalone package (`review_system/`) at the root of the workspace.
+  - Established clean boundaries between key functional modules: `extractors` for loading/parsing, `reviewers` for LLM orchestration, `scoring` for evaluation metrics, `outputs` for formatting, and `config` for configurations.
+- **Centralized Prompt & Schema Configuration**:
+  - Integrated centralized configuration in `review_system/config/prompts.py` and `review_system/config/review_config.py` to manage LLM prompts and templates for claim extraction, scoring dimensions, issue detection, and report synthesis.
+- **Scoring Engine with Custom Penalties & Caps**:
+  - Refactored scoring modules (`research_score.py`, `evidence_score.py`, `strategic_score.py`, and `writing_score.py`) to incorporate advanced scoring penalties, cap thresholds, and confidence intervals.
+  - Implemented flaw-based penalties for writing quality issues, soft scoring deductions for missing recommendations, and hard caps for unsupported claims or missing bibliographies.
+- **Markdown Writer Utility**:
+  - Developed the `review_system/outputs/markdown_writer.py` utility to render JSON scores, findings, and improvement recommendations into structured, highly polished markdown review reports (`review.md`).
+- **Lean Mode Execution Support**:
+  - Implemented Lean Mode execution support in `review_orchestrator.py` to resolve 429 rate limit exceptions on free-tier Groq API accounts.
+  - Consolidated 6 specialized analyzer calls into a single API query with fallback logic to extract findings individually.
+- **Workspace Migration & Cleanup**:
+  - Relocated files from the temporary `gen_rpt_original/` folder to the root workspace to restore standard organization and deleted obsolete output and temporary directories.
+- **Dynamic Output Folder Naming**:
+  - Implemented parent-directory fallback folder naming to avoid name collisions for generically named files (e.g., `report.md`) and keep review output directories clean and organized.
+- **Pipeline Run & Verification**:
+  - Successfully ran the review pipeline on the China Private Equity Market report, producing complete JSON/Markdown audit artifacts (`audit_manifest.json`, `claims.json`, `findings.json`, `review.json`, `review.md`, and `scores.json`) and verified log entries under `review_system/logs/`.
+
+
