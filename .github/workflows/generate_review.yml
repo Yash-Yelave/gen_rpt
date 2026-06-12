@@ -1,0 +1,199 @@
+name: Generate AI Review
+
+# ─── Trigger ────────────────────────────────────────────────────────────────
+# Fires only when "Generate Deep Research Report" completes successfully.
+# If report generation fails this workflow does NOT run.
+on:
+  workflow_run:
+    workflows: ["Generate Deep Research Report"]
+    types: [completed]
+
+# ─── Permissions ────────────────────────────────────────────────────────────
+permissions:
+  contents: read
+  actions: read
+
+# ─── Concurrency ────────────────────────────────────────────────────────────
+concurrency:
+  group: gen-review-${{ github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  generate-review:
+    # Only run if the triggering report workflow succeeded.
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      REVIEW_MODEL: llama-3.3-70b-versatile
+
+    steps:
+      # ── 1. Checkout ──────────────────────────────────────────────────────
+      # The report workflow commits the new report back to main before finishing,
+      # so a fresh checkout already contains the generated report files.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      # ── 2. Python setup ──────────────────────────────────────────────────
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # ── 3. Install review dependencies ───────────────────────────────────
+      - name: Install review dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r review_system/requirements.txt
+
+      # ── 4. Validate GROQ_API_KEY ─────────────────────────────────────────
+      - name: Validate GROQ_API_KEY secret
+        run: |
+          if [ -z "$GROQ_API_KEY" ]; then
+            echo "::error::GROQ_API_KEY secret is not set. Add it in repo Settings → Secrets." >&2
+            exit 1
+          fi
+          echo "GROQ_API_KEY is present."
+
+      # ── 5. Locate the newest report ───────────────────────────────────────
+      # The report workflow produces a directory under reports/ named
+      # YYYY-MM-DD-<slug>/  containing at minimum report.md.
+      # We find whichever was most recently modified.
+      - name: Locate latest report directory
+        id: find_report
+        run: |
+          set -euo pipefail
+
+          # Find directories under reports/ that contain a report.md
+          REPORT_DIR=$(
+            find reports -maxdepth 2 -name "report.md" -printf '%T@ %h\n' \
+              2>/dev/null \
+            | sort -nr \
+            | head -1 \
+            | awk '{print $2}'
+          )
+
+          if [ -z "$REPORT_DIR" ]; then
+            echo "::error::No report.md found under reports/. Did the report workflow succeed?" >&2
+            exit 1
+          fi
+
+          # Derive a stable REPORT_ID from the directory name
+          REPORT_ID="$(basename "$REPORT_DIR")"
+          REPORT_PATH="$REPORT_DIR/report.md"
+
+          echo "Found report : $REPORT_PATH"
+          echo "Report ID    : $REPORT_ID"
+
+          # Expose to subsequent steps
+          echo "report_path=$REPORT_PATH"   >> "$GITHUB_OUTPUT"
+          echo "report_id=$REPORT_ID"       >> "$GITHUB_OUTPUT"
+          echo "output_dir=review_outputs/$REPORT_ID" >> "$GITHUB_OUTPUT"
+
+      # ── 6. Run AI review ─────────────────────────────────────────────────
+      - name: Run AI review pipeline
+        id: run_review
+        run: |
+          set -euo pipefail
+
+          REPORT_PATH="${{ steps.find_report.outputs.report_path }}"
+          OUTPUT_DIR="${{ steps.find_report.outputs.output_dir }}"
+          REPORT_ID="${{ steps.find_report.outputs.report_id }}"
+
+          echo "========================================"
+          echo "  Starting AI Review"
+          echo "  Report  : $REPORT_PATH"
+          echo "  Output  : $OUTPUT_DIR"
+          echo "  Model   : $REVIEW_MODEL"
+          echo "========================================"
+
+          python review_system/main.py \
+            --report  "$REPORT_PATH" \
+            --output  "$OUTPUT_DIR" \
+            --model   "$REVIEW_MODEL"
+
+      # ── 7. Verify expected output files exist ─────────────────────────────
+      - name: Verify review outputs
+        run: |
+          set -euo pipefail
+          OUTPUT_DIR="${{ steps.find_report.outputs.output_dir }}"
+
+          EXPECTED=(review.md review.json review.html claims.json findings.json scores.json)
+          MISSING=()
+
+          for f in "${EXPECTED[@]}"; do
+            if [ ! -f "$OUTPUT_DIR/$f" ]; then
+              MISSING+=("$f")
+            fi
+          done
+
+          if [ ${#MISSING[@]} -gt 0 ]; then
+            echo "::warning::Some expected review output files are missing: ${MISSING[*]}"
+          else
+            echo "All expected review output files verified."
+          fi
+
+          # List what was actually produced
+          echo "--- Produced files ---"
+          ls -lh "$OUTPUT_DIR/"
+
+      # ── 8. Write review_status.json ───────────────────────────────────────
+      - name: Write review_status.json
+        if: always()
+        run: |
+          OUTPUT_DIR="${{ steps.find_report.outputs.output_dir }}"
+          REPORT_ID="${{ steps.find_report.outputs.report_id }}"
+          STATUS="${{ steps.run_review.outcome }}"   # success | failure | skipped
+
+          mkdir -p "$OUTPUT_DIR"
+
+          python - <<'PYEOF'
+          import json, os
+          from datetime import datetime, timezone
+
+          output_dir = os.environ.get("OUTPUT_DIR", "review_outputs/unknown")
+          report_id  = os.environ.get("REPORT_ID", "unknown")
+          status     = os.environ.get("STATUS", "unknown")
+
+          payload = {
+              "report_id":      report_id,
+              "review_status":  status,
+              "timestamp_utc":  datetime.now(timezone.utc).isoformat(),
+              "workflow_run_id": os.environ.get("GITHUB_RUN_ID", ""),
+              "model":          os.environ.get("REVIEW_MODEL", "llama-3.3-70b-versatile"),
+          }
+          out_path = os.path.join(output_dir, "review_status.json")
+          os.makedirs(output_dir, exist_ok=True)
+          with open(out_path, "w") as f:
+              json.dump(payload, f, indent=2)
+          print(f"review_status.json written to {out_path}")
+          PYEOF
+        env:
+          OUTPUT_DIR: ${{ steps.find_report.outputs.output_dir }}
+          REPORT_ID:  ${{ steps.find_report.outputs.report_id }}
+          STATUS:     ${{ steps.run_review.outcome }}
+
+      # ── 9. Upload review package artifact ─────────────────────────────────
+      - name: Upload review package
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-package
+          path: ${{ steps.find_report.outputs.output_dir }}/
+          retention-days: 30
+          if-no-files-found: warn
+
+      # ── 10. Upload review logs artifact ───────────────────────────────────
+      - name: Upload review logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-logs
+          path: review_system/logs/
+          retention-days: 30
+          if-no-files-found: warn
