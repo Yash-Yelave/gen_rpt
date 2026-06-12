@@ -82,4 +82,23 @@
 - **Pipeline Run & Verification**:
   - Successfully ran the review pipeline on the China Private Equity Market report, producing complete JSON/Markdown audit artifacts (`audit_manifest.json`, `claims.json`, `findings.json`, `review.json`, `review.md`, and `scores.json`) and verified log entries under `review_system/logs/`.
 
+# Worklog - June 12, 2026
 
+## Tasks Completed
+
+- **Automated AI Review GitHub Actions Workflow**:
+  - Created `.github/workflows/generate_review.yml` — a new, fully independent workflow that triggers automatically via `workflow_run` whenever `Generate Deep Research Report` completes with `conclusion: success`.
+  - The review workflow does not modify and is not coupled to the report generation workflow (`generate_deep_research.yml`). If review fails, the report workflow remains marked as successful.
+- **Workflow Design (artifact transfer via git)**:
+  - The report workflow commits generated reports back to `main` via `git push` rather than uploading GitHub Actions artifacts. The review workflow exploits this: after checkout it scans `reports/` for the most recently modified directory containing `report.md` and derives a `REPORT_ID` from the folder name.
+- **Review Execution**:
+  - Runs `review_system/main.py --report <path> --output review_outputs/<REPORT_ID> --model llama-3.3-70b-versatile` using `GROQ_API_KEY` from GitHub Secrets.
+- **Output Verification Step**:
+  - Added an explicit verification step that checks for all expected output files (`review.md`, `review.json`, `review.html`, `claims.json`, `findings.json`, `scores.json`) and warns in the Actions log if any are absent.
+- **`review_status.json` Generation**:
+  - An inline Python script writes a `review_status.json` (report_id, status, timestamp, run_id, model) into the output directory on every run, including failures, using `if: always()`.
+- **Artifact Upload**:
+  - `review-package` artifact: all files in `review_outputs/<REPORT_ID>/`, 30-day retention.
+  - `review-logs` artifact: all files in `review_system/logs/`, 30-day retention.
+- **Dependency Fix**:
+  - Added `groq>=0.9.0` to `review_system/requirements.txt`. The package was used by `GroqReviewEngine` but was missing from the declared dependencies, which would have caused the workflow runner to fail at import time.
